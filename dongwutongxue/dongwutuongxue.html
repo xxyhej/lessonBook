@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+<META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
+<META HTTP-EQUIV="expires" CONTENT="0">
+
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="../css/vip.css" />
+<script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../js/vue.min.js" ></script>
+
+<title>每天听本书</title>
+
+
+
+</head>
+
+<body>
+	<div id="everyDayLesson" class="splitByMonth">
+		<div class="top-head"><a href="#" onClick="javascript :history.back(-1);"><span></span></a>东吴相对论</div>
+		
+		<div class="book-detail" v-for="book in books">
+			<div class="book-image"><img src="../img/book-default.jpg"></div>
+			<div class="book-right-content"> 
+				<div class="book-title">{{book.bookName}}</div>
+				<div class="book-info">{{book.info}}</div>
+				<div class="book-time" @click="allArticle(book.url)">查看全文<span>{{book.time}}</span></div>
+				<div class="play-button" @click="playBook(book.voiceUrl)">播放</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="bottom-content" v-if="isShowPlay">
+			<audio autoplay="autoplay" controls="controls"loop="loop" preload="auto"
+            v-bind:src="voiceUrl">
+
+            </audio>
+
+		</div>
+	
+		
+		<div   v-if="isShowCodePopUp" style="position: fixed;width: 100%;height: 100%;background: #000; filter:alpha(Opacity=50); opacity: 0.5;top: 0;"></div>
+		<div  class="popup" v-if="isShowCodePopUp"> 
+		   <div class="content"> 
+		   	<div class="head">糟糕了！好像过期了</div>
+		   	<div class="info"> 
+		   		<div class="the-info-content">分享到朋友圈获得38个赞联系微信18358597258获取！！</div>
+		   		
+		   		<input v-model="theKey" />
+		   		<div class="confirm-button" @click="activate()">输入激活码</div>
+		   	</div>  
+		   </div>
+		</div>	
+		
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var everyDayLessonApp = new Vue({
+			el:'#everyDayLesson',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				books:[
+				 { bookName:"No.37 幸福的接口",voiceUrl:"http://audio.xmcdn.com/group34/M09/D4/79/wKgJYFnolLXRC4ZzAMgwqGpHdbQ077.m4a",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"No. 36 摘掉年龄的标签",voiceUrl:"http://audio.xmcdn.com/group34/M0B/89/4A/wKgJYFnl46SDK5LlALm8NHMBQBo898.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.35 逃离虽爽但无用",voiceUrl:"http://audio.xmcdn.com/group34/M07/3F/A6/wKgJYVnfUtvirxXNAMh-e66YGG8953.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.34 原子化生存",voiceUrl:"http://audio.xmcdn.com/group34/M08/E9/FB/wKgJYVnclx2jNUACAMqcVQR1_SA036.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.33 隐秘的造化",voiceUrl:"http://audio.xmcdn.com/group30/M06/38/C2/wKgJXlnMzq_wO5g2ANMm1ZNqi80032.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.32 品牌的纹章",voiceUrl:"http://audio.xmcdn.com/group30/M01/0F/0D/wKgJWlnKLSLQGLufAMrwCrFcnlQ531.m4a",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"No.31 教育的边界与自由",voiceUrl:"http://audio.xmcdn.com/group31/M08/73/36/wKgJX1nDoJzwxNXpAM6aX4w-jl4052.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.30 iPhone十年",voiceUrl:"http://audio.xmcdn.com/group33/M02/DB/89/wKgJTFnA5Q6wnGaQANB5FiUgOZ8084.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.29 理财酒还能火多久",voiceUrl:"http://audio.xmcdn.com/group31/M0B/1C/D5/wKgJX1m6VQOg9e08AMU8bKonPpw448.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.28 特朗普的营销圈套",voiceUrl:"http://audio.xmcdn.com/group30/M01/AC/25/wKgJXlm3jBahzg0bAM_kw2sd2WA289.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.27 信息的暗网",voiceUrl:"http://audio.xmcdn.com/group33/M02/40/D6/wKgJTFmwlHfCVzHoAM9ZRAtBB3Y636.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.26 诗性与理性",voiceUrl:"http://audio.xmcdn.com/group31/M06/3C/E5/wKgJSVmtgErgS7gnAMvoNT4chgo704.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"No.25 夹缝中的留学生",voiceUrl:"http://audio.xmcdn.com/group32/M09/E9/40/wKgJS1mm6w7hFrs1AMwM6ZmlwNQ656.m4a",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"No.24 从城市到城市群",voiceUrl:"http://audio.xmcdn.com/group32/M0A/CD/EB/wKgJnFmkEMrS1sz-AMkM7GPzFVc408.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.23 不容小觑的意志力",voiceUrl:"http://audio.xmcdn.com/group32/M03/77/01/wKgJnFmdimHSfnsQAM3izxKVOpA754.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.22 菲佣的张力",voiceUrl:"http://audio.xmcdn.com/group32/M05/50/EE/wKgJS1ma-lPRf8QPAMwIgmxpiZ0204.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.21 多维度生存",voiceUrl:"http://audio.xmcdn.com/group30/M04/F3/BC/wKgJXlmVHfuS0_s5AM-3PUiPF1Y202.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.20 统一的中国和部落化的印度",voiceUrl:"http://audio.xmcdn.com/group30/M01/F3/77/wKgJXlmVG-SSVF3jANPujBCUKQM714.m4a",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"No.19 细节的收益",voiceUrl:"http://audio.xmcdn.com/group31/M09/C0/98/wKgJSVmLEhiRRlFhAMyLM3YGuuw507.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.18 超越沟通",voiceUrl:"http://audio.xmcdn.com/group31/M05/01/EA/wKgJSVmNZC_DXDeAANLaetsvivY031.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.17 逆全球化时代",voiceUrl:"http://audio.xmcdn.com/group30/M06/3E/D9/wKgJXlmBkR_DCGFPAMkRUxJIXTo195.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.16 低欲望社会",voiceUrl:"http://audio.xmcdn.com/group31/M01/FF/2B/wKgJSVl_IVmxoIF9AMz9vos5Xlc542.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.15 昂贵与高贵",voiceUrl:"http://audio.xmcdn.com/group30/M05/45/FA/wKgJXll4prXzK0LSANArP5Dn9Yo292.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.14 被消费的月光族",voiceUrl:"http://audio.xmcdn.com/group31/M05/7E/F2/wKgJSVl2GwPCd0cVAM-ucAyjAG0384.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.13 大头派，小头派",voiceUrl:"http://audio.xmcdn.com/group31/M04/1D/49/wKgJX1lvX7vxEiNTAMZKm8gobjk415.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.12 共享的狂欢",voiceUrl:"http://audio.xmcdn.com/group28/M02/6C/B7/wKgJXFlsu-fwiERQAM5SamKxzMQ740.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.11 人生故事线",voiceUrl:"http://audio.xmcdn.com/group28/M02/2A/52/wKgJSFlmMv6iijBmAMzWF5rR_GI348.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    {bookName:"No.10 职场八股PPT",voiceUrl:"http://audio.xmcdn.com/group28/M0A/07/CC/wKgJSFljt8KgK9u3AM4n5ZJj8w4355.m4a",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"No.9 乔布斯的“苹果禅”（下）",voiceUrl:"http://audio.xmcdn.com/group29/M09/A7/0A/wKgJWVlc_2WTvxK_AMqbuI4zSAU346.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.8 乔布斯的“苹果禅”（上）",voiceUrl:"http://audio.xmcdn.com/group29/M05/7D/45/wKgJXVlaRv2xvS8FAM5OBB5IZ4M802.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.7 当无用成为主流",voiceUrl:"http://audio.xmcdn.com/group29/M06/2B/B5/wKgJXVlTyxaSeKSYAM__4U9klJM126.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.6 游戏化生存",voiceUrl:"http://audio.xmcdn.com/group29/M09/FC/48/wKgJXVlQtKyw4bo8AMwusrfu-Wo759.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.5 人工“弱智”",voiceUrl:"http://audio.xmcdn.com/group28/M02/AF/CD/wKgJXFlKkRSgG9dNAM2xLxqa_mo950.m4a",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"No.4 语言的囚笼",voiceUrl:"http://audio.xmcdn.com/group29/M03/83/5D/wKgJXVlHrS6gLpwmAMD8ULmhqck518.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.3 赋能新零售",voiceUrl:"http://audio.xmcdn.com/group29/M08/27/95/wKgJWVlBdEGgI3ATAMvWlk1Y2vU519.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.2 有多少投资可以重来",voiceUrl:"http://audio.xmcdn.com/group29/M08/FD/D1/wKgJXVk-r-LzfL5_ANICnWBWMNo585.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"No.1 冬吴2.0：陪伴是最长情的告白",voiceUrl:"http://audio.xmcdn.com/group29/M00/A1/D5/wKgJXVk4PLyzkYlXAMwdEwVT-ho810.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"How Are You，冬吴回归预告",voiceUrl:"http://audio.xmcdn.com/group29/M0A/7C/38/wKgJXVk2KLvSpnynAAkGIfuWnKM491.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					
+				]
+			},
+		    created:function () {
+
+		    },
+			methods:{
+				   allArticle:function(url){
+				   	  var articleDetail="articleDetail.html"+"?"+"articleUrl="+url
+				   	  window.location.assign(articleDetail); 
+				      console.log(articleDetail)
+				   },
+				   playBook:function(voiceUrl){
+				   	  this.isShowPlay=true;
+				   	  this.voiceUrl=voiceUrl;
+				   },
+				   activate:function(){
+				   	var dd=this.theKey;
+					for(i=0;i<dd.length;i++){
+				   
+				    	if(dd.charAt(0)=='y'&&dd.charAt(1)=='x'&&dd.charAt(dd.length-1)=="f"){
+				//  		alert("22")
+				          localStorage.setItem("Mtime","9904624053231");
+				           this.isShowCodePopUp=false;
+				    		
+				    	}
+				    }
+				   }
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+
