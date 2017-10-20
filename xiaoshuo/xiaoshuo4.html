@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="../css/vip.css" />
+<script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../js/vue.min.js" ></script>
+
+<title>每天听本书</title>
+
+
+
+</head>
+
+<body>
+	<div id="everyDayLesson" class="xiaoshuo splitByMonth">
+		<div class="top-head"><a href="#" onClick="javascript :history.back(-1);"><span></span></a>晓说</div>
+		<div class="title"><span></span>按季查询</div>
+		<ul>
+			<li><a href="xiaoshuo1.html">2017</a></li>
+			<li><a href="xiaoshuo2.html">第四季</a></li>
+			<li><a href="xiaoshuo3.html">第三季</a></li>
+			<li><a href="xiaoshuo4.html">第二季</a></li>
+			<li><a href="xiaoshuo5.html">第一季</a></li>
+
+			
+			<div class="clearfix"></div>
+		</ul>
+		<div class="book-detail" v-for="book in books">
+			<div class="book-image"><img src="../img/xiaoshuo.jpg"></div>
+			<div class="book-right-content"> 
+				<div class="book-title">{{book.bookName}}</div>
+				<div class="book-info">{{book.info}}</div>
+				<div class="book-time" @click="allArticle(book.url)">查看全文<span>{{book.time}}</span></div>
+				<div class="play-button" @click="playBook(book.voiceUrl)">播放</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="bottom-content" v-if="isShowPlay">
+			<audio autoplay="autoplay" controls="controls"loop="loop" preload="auto"
+            v-bind:src="voiceUrl">
+
+            </audio>
+
+		</div>
+	
+		
+		
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var everyDayLessonApp = new Vue({
+			el:'#everyDayLesson',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				books:[
+				    { bookName:"56期：【晓说】第二季130405第1期《“遥远”的新加坡》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/366aa54f-8b79-4e2c-878c-ce6fb741efe5.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"57期：【晓说】第二季130412第2期《漫谈北京地名》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/89971695-a9b6-4eae-8988-d91d17d659c6.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"58期：【晓说】第二季130419第3期《南城北城看北京》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/5f02aa0f-cfae-453c-8a04-feb8fcc6bde6.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"59期：【晓说】第二季130426第4期《趣谈古代婚姻制度（上）》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/4c601343-9ccb-42e9-9c9a-0fc4f465ce81.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"60期：【晓说】第二季130503第5期《趣说古代婚姻制度（下）》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/fdeea32c-3d16-48de-aa00-3a14534831f0.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"61期：【晓说】第二季130510第6期《八一八欧罗巴(一)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/691b3e2e-d56d-444e-944d-5d1855ddf827.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"62期：【晓说】第二季130517第7期《八一八欧罗巴(二)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/7e3ac5dd-c45c-4911-b720-424fe048881b.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"63期：【晓说】第二季130524第8期《八一八欧罗巴(三)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/0a608e69-71bc-439f-bd5c-ce1879a0b597.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"64期：【晓说】第二季130531第9期《八一八欧罗巴(四)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/69486045-529f-4ca3-8e3d-7120ffc8c58c.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"65期：【晓说】第二季130607第10期《八一八欧罗巴(五)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/7404f1c8-8a61-4065-9449-4450bfdf483c.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"67期：【晓说】第二季130628第13期《美国军人总统们(二)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/f4f744d4-ac00-4a1c-b055-59c1a16e974c.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"68期：【晓说】第二季130712第15期《美国军人总统们(三)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/17a2c665-5e79-4f60-bcee-50442acf0aaa.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"69期：【晓说】第二季130726第17期《八一八欧罗巴(七)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/db8a732f-c46f-4fd5-a7db-ff88b26de788.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"70期：【晓说】第二季130802第18期《漫谈中美警察制度(上)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/bb1c0abc-f4de-4fe5-9a31-e3c8f20f2cb1.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"71期：【晓说】第二季130809第19期《漫谈中美警察制度(下)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/1158332d-3838-4d2e-b134-ac3b2a675292.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"72期：【晓说】第二季130816第20期《铁马冰河山海关（上集）》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/dd9f7849-534f-4639-b61c-823f31bcc20a.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"73期：【晓说】第二季130823第21期《铁马冰河山海关（下）》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/25ecc010-5736-45e5-b415-a1d66cac0fb1.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"74期：【晓说】第二季130830第22期《东瀛日本(一) 》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/5887b998-76f4-4030-9dc1-0f1426075772.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"75期：【晓说】第二季130906第23期《东瀛日本(二) 》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/7572dee9-5084-497c-9d3e-052fd36c882b.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"76期：【晓说】第二季130913第24期《东瀛日本(三) 》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/65777868-a72d-48a4-b369-5f10984a221c.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"77期：【晓说】第二季130920第25期《东瀛日本(四) 》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/75fadbb3-0e8a-46c6-b95c-b779c11ba305.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"78期：【晓说】第二季130927第26期《东瀛日本(五)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/4a108ab0-8627-44da-b511-606708c06c4f.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"79期：【晓说】第二季131004第27期《东瀛日本(六)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/c49d5803-00a2-4db1-b0e2-8d5506c9f084.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"80期：【晓说】第二季131011第28期《美国政府停摆(上) 》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/c4bd80cb-8d3d-4262-ab44-921192fe7944.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"81期：【晓说】第二季131018第29期《美国政府停摆(下)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/dba83a51-02ec-42cc-ad68-3e31da8fd618.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"82期：【晓说】第二季131025第30期《东瀛日本(七)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/0db8fd9f-42fb-470e-b0ca-e7ee9de45656.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					 { bookName:"83期：【晓说】第二季131101第31期《东瀛日本(八)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/bc6f52ea-648e-4474-a6b8-5f437879196c.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"84期：【晓说】第二季131108第32期《日本拾遗》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/8c3e702a-1d88-4ea1-a03d-7f0afbd60c4d.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"85期：【晓说】第二季131115第33期《妄人列传之蒙巴顿》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/7107e1ab-2c07-4a08-b4cb-849007ae4994.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"86期：【晓说】第二季131122第34期《妄人列传之康有为》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/f96df61e-3499-483d-b0d8-851480697af5.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"87期：【晓说】第二季131206第36期《莽莽俄罗斯(二) 》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/f8f017e4-f709-4d91-9cd8-78435f2dddf9.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"88期：【晓说】第二季131213第37期《莽莽俄罗斯(三) 》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/fef18abd-1f5d-4d27-bde7-4a0972a38ff8.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"89期：【晓说】第二季131220第38期《莽莽俄罗斯(四) 》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/e56907c4-ed5b-4e9f-8db2-dbdeeef1c051.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"90期：【晓说】第二季131227第39期《莽莽俄罗斯(五)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/6b938601-b7cb-4b13-a07f-d3af9024bf65.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"91期：【晓说】第二季140103第40期《大航海时代(一) 》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/cf7656d0-9875-4843-ba00-786eb578f088.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"92期：【晓说】第二季140110第41期《大航海时代(二)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/a0143133-e2ad-4272-8127-0370a5231af2.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"93期：【晓说】第二季140117第42期《漫谈美国流行音乐》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/84b15bfe-14a7-41f8-a85b-a114582b5854.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"94期：【晓说】第二季140124第43期《大航海时代(三)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/6910300f-6f31-48cc-87c8-37cec1ac0211.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"95期：【晓说】第二季140131《番外篇：新年特别节目 回顾2013》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/cd2f8bc2-ce56-4796-a834-002dd293a227.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					 { bookName:"96期：【晓说】第二季140207第44期《大航海时代(四)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/0d2ded93-1e99-4479-8aef-aed904c5f1fa.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"97期：【晓说】第二季140214第45期《漫谈冬奥-傲慢与偏见》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/3e5c581d-c88c-4f04-99ff-deb6028c2040.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"98期：【晓说】第二季140221第46期《虎啸南天-对越反击战35周年祭》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/de755159-8383-4382-92c3-166c358eb7ff.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"99期：【晓说】第二季140228第47期《用力过猛时代 奥斯卡颁奖大预测》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/7a409ef7-7659-4566-b9a7-fb4b9144471e.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"100期：【晓说】第二季140307第48期《中美娱乐业四大差距》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/de2d7526-1061-43f3-8d2a-b3664ca4b1ed.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"101期：【晓说】第二季140314第49期《阿根廷别哭泣》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/b2a61379-0379-4c5c-9b8f-d7fbc56ae846.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"102期：【晓说】第二季140321第50期《妄人列传之三-切·格瓦拉》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/3431016b-7d57-44f5-bb31-8f6747938de4.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"103期：【晓说】第二季140328第51期《土豪之家-迪拜(上)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/40ccef8f-33f2-4f98-9a73-c68cc04a9964.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"104期：【晓说】第二季140404第52期《土豪之家-迪拜(下)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/724ec4e1-b9a6-4bf3-972e-a6712c8ea146.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"105期：【晓说】第二季140411第53期《王的爱情-中外君王敢爱史》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/184c0893-547b-4fc1-90ac-821da6783c40.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"106期：【晓说】第二季140418第54期《普京的克里米亚(上) 》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/e22a2631-8fc7-4ac1-990d-8f088e0fd3dd.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"107期：【晓说】第二季140425第55期《普京的克里米亚(下) 》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/7651d8e4-adf0-4745-a484-db58768065ec.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"108期：【晓说】第二季140502第56期《中土世界新西兰(上)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/46aa75bc-8616-434a-a9f4-67a0b306a78f.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{ bookName:"109期：【晓说】第二季140509第57期《中土世界新西兰(下)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/e11997d8-e613-4004-b2c3-a89f3910c82a.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"110期：【晓说】第二季140516第58期《上海大班(上)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/a60ada76-744c-4164-8b91-9f9b2ed79db1.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"111期：【晓说】第二季140523第59期《上海大班(下) 》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/cc02af28-5a3a-4da9-9944-08fae284b78c.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"112期：【晓说】第二季140529第60期《世界辽阔 后会有期》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/051a071f-acd8-474f-af1e-8865f3bb95e0.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"113期：【晓说】第二季140606第61期《说在旅途之中土之旅 新西兰》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/25f94cd8-18e2-4854-b26b-abdb2e50c8b2.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"114期：【晓说】第二季140613第62期《双城记《晓说》俄罗斯行》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/35800eb7-33f4-4c8d-8a69-70c4fa3add53.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"115期：【晓说】第二季140620第63期《极地之旅：晓说南极行》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/f851392e-1a22-4b0d-8771-cebf70071fa3.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"116期：【晓说】第二季140627第64期《沙漠中的奇迹之城：迪拜》",voiceUrl:"http://image.kaolafm.net/mz/audios/201604/66f13322-1012-4a91-801b-4ac87816364f.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					
+				]
+			},
+		  
+			methods:{
+				   allArticle:function(url){
+				   	  var articleDetail="articleDetail.html"+"?"+"articleUrl="+url
+				   	  window.location.assign(articleDetail); 
+				      console.log(articleDetail)
+				   },
+				   playBook:function(voiceUrl){
+				   	  this.isShowPlay=true;
+				   	  this.voiceUrl=voiceUrl;
+				   }
+				   
+				 
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+

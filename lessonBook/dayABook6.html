@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="../css/vip.css" />
+<script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../js/vue.min.js" ></script>
+
+<title>每天听本书</title>
+
+
+
+</head>
+
+<body>
+	<div id="everyDayLesson" class="splitByMonth">
+		<div class="top-head"><a href="#" onClick="javascript :history.back(-1);"><span></span></a>每天听本书</div>
+		<div class="title"><span></span>按月查询</div>
+		<ul>
+			<li><a href="dayABook10.html">10月</a></li>
+			<li><a href="dayABook9.html">9月</a></li>
+			<li><a href="dayABook8.html">8月</a></li>
+			<li><a href="dayABook7.html">7月</a></li>
+			<li><a href="dayABook6.html">6月</a></li>
+			<li><a href="dayABook5.html">5月</a></li>
+			<li><a href="dayABook4.html">4月</a></li>
+			<li><a href="dayABook3.html">3月</a></li>
+			<li><a href="dayABook2.html">2月</a></li>
+			<li><a href="dayABook1.html">2017年1月</a></li>
+			<div class="clearfix"></div>
+		</ul>
+		<div class="book-detail" v-for="book in books">
+			<div class="book-image"><img src="../img/book-default.jpg"></div>
+			<div class="book-right-content"> 
+				<div class="book-title">{{book.bookName}}</div>
+				<div class="book-info">{{book.info}}</div>
+				<div class="book-time" @click="allArticle(book.url)">查看全文<span>{{book.time}}</span></div>
+				<div class="play-button" @click="playBook(book.voiceUrl)">播放</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="bottom-content" v-if="isShowPlay">
+			<audio autoplay="autoplay" controls="controls"loop="loop" preload="auto"
+            v-bind:src="voiceUrl">
+
+            </audio>
+
+		</div>
+	
+		
+		<div   v-if="isShowCodePopUp" style="position: fixed;width: 100%;height: 100%;background: #000; filter:alpha(Opacity=50); opacity: 0.5;top: 0;"></div>
+		<div  class="popup" v-if="isShowCodePopUp"> 
+		   <div class="content"> 
+		   	<div class="head">糟糕了！好像过期了</div>
+		   	<div class="info"> 
+		   		<div class="the-info-content">分享到朋友圈获得38个赞联系微信18358597258获取！！</div>
+		   		
+		   		<input v-model="theKey" />
+		   		<div class="confirm-button" @click="activate()">输入激活码</div>
+		   	</div>  
+		   </div>
+		</div>	
+		
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var everyDayLessonApp = new Vue({
+			el:'#everyDayLesson',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				books:[
+				    { bookName:"0630《这才是心理学》",voiceUrl:"http://l.na.ppsrc.com/jYlnwtfZocXHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"0629《数学》 秦瞳解读",voiceUrl:"http://l.na.ppsrc.com/1TihbkE8MEnHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0628《超级符号就是超级创意》",voiceUrl:"http://l.na.ppsrc.com/cwQbSCLw47PHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0627《避开错误决策的四个陷阱》",voiceUrl:"http://l.na.ppsrc.com/m3h4C-1o6BPHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0626对权威的服从",voiceUrl:"http://l.na.ppsrc.com/KosijTcFr8bHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0625《奇特的一生》",voiceUrl:"http://l.na.ppsrc.com/_YbgvR4gSBzHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"0624《象与骑象人》 成甲解读",voiceUrl:"http://l.na.ppsrc.com/MOFWzL2Ugw3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0623《日本的八个审美意识》",voiceUrl:"http://l.na.ppsrc.com/tnEAy_S6xdfHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0622《斐多》 刘玮解读",voiceUrl:"http://l.na.ppsrc.com/WBrsey5rg03HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0621《暗时间》 张凯解读",voiceUrl:"http://l.na.ppsrc.com/u2u6tum2HgbHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0620《给人好印象的秘诀》）",voiceUrl:"http://l.na.ppsrc.com/BpHCQwj1mrHHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0619汪花生解读",voiceUrl:"http://l.na.ppsrc.com/cHKUzjs2KUDHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"0618《培养高情商的孩子》",voiceUrl:"http://l.na.ppsrc.com/8TR-yPs0f_HHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"0617《金字塔原理》 成甲解读",voiceUrl:"http://l.na.ppsrc.com/-etNSf-VCjLHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0616《武士道》 少文解读",voiceUrl:"http://l.na.ppsrc.com/OjJLiEYU7mfHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0615巴黎文学散步地图",voiceUrl:"http://l.na.ppsrc.com/IxH-R_OHbQjHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0614《高效演讲》 张凯解读",voiceUrl:"http://l.na.ppsrc.com/6fFLJw7wba_HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0613《叫魂》 方宏进解读",voiceUrl:"http://l.na.ppsrc.com/fvFUG9zboMjHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"0612《社会性动物》 王非解读",voiceUrl:"http://l.na.ppsrc.com/ovqXo2FWLn3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0611《煤的故事》 王敬时解读",voiceUrl:"http://l.na.ppsrc.com/1kqQqe_YUn_HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0610《鳕鱼往事》 怀沙解读",voiceUrl:"http://l.na.ppsrc.com/fjYaD7KAxErHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0609《盐的故事》 肖万里解读",voiceUrl:"http://l.na.ppsrc.com/4xRJ9Gm3hAvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0608六个瓶子里的历史",voiceUrl:"http://l.na.ppsrc.com/B6MmcagxdJjHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0607《米开朗基罗传》 张凯解读",voiceUrl:"http://l.na.ppsrc.com/9f8tbvN3xOnHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0606《梵高传》 余艳娜解读",voiceUrl:"http://l.na.ppsrc.com/oWPEVzPx09vHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0605《将心注入》 李睿睿解读",voiceUrl:"http://l.na.ppsrc.com/lpgFTxUilrrHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0604《游戏化思维》 张凯解读",voiceUrl:"http://l.na.ppsrc.com/BLTsSupyubHHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    {bookName:"0603《清单革命》 成甲解读",voiceUrl:"http://l.na.ppsrc.com/Je9aGCE5043HrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"0602《激活个体》 张凯解读",voiceUrl:"http://l.na.ppsrc.com/AFNX_Lwrp43HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0601《养育的选择》 李晓光解读",voiceUrl:"http://l.na.ppsrc.com/A1_FU3yl4uLHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""}
+					
+				]
+			},
+		    created:function () {
+
+		    	    var dt = localStorage.getItem("Mtime");
+		    	    console.log(dt)
+			        var data = new Date();
+			        var regeditTime = data.getTime();
+			       
+			        if(dt==null){
+			        	localStorage.setItem("Mtime",regeditTime);
+			        }
+			        else{
+			        	var nowT= data.getTime();
+			        	pastT=nowT-dt;
+			        	//432000000毫秒=5天
+			        	if(pastT<=432000000){
+			//           alert(pastT);
+			//           alert("没过期");
+			        	}else{
+			            this.isShowCodePopUp=true;
+					             
+			        	}
+			        }
+		    },
+			methods:{
+				   allArticle:function(url){
+				   	  var articleDetail="articleDetail.html"+"?"+"articleUrl="+url
+				   	  window.location.assign(articleDetail); 
+				      console.log(articleDetail)
+				   },
+				   playBook:function(voiceUrl){
+				   	  this.isShowPlay=true;
+				   	  this.voiceUrl=voiceUrl;
+				   },
+				   activate:function(){
+				   	var dd=this.theKey;
+					for(i=0;i<dd.length;i++){
+				   
+				    	if(dd.charAt(0)=='y'&&dd.charAt(1)=='x'&&dd.charAt(dd.length-1)=="f"){
+				//  		alert("22")
+				          localStorage.setItem("Mtime","9904624053231");
+				           this.isShowCodePopUp=false;
+				    		
+				    	}
+				    }
+				   }
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+

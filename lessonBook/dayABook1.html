@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="../css/vip.css" />
+<script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../js/vue.min.js" ></script>
+
+<title>每天听本书</title>
+
+
+
+</head>
+
+<body>
+	<div id="everyDayLesson" class="splitByMonth">
+		<div class="top-head"><a href="#" onClick="javascript :history.back(-1);"><span></span></a>每天听本书</div>
+		<div class="title"><span></span>按月查询</div>
+		<ul>
+			<li><a href="dayABook10.html">10月</a></li>
+			<li><a href="dayABook9.html">9月</a></li>
+			<li><a href="dayABook8.html">8月</a></li>
+			<li><a href="dayABook7.html">7月</a></li>
+			<li><a href="dayABook6.html">6月</a></li>
+			<li><a href="dayABook5.html">5月</a></li>
+			<li><a href="dayABook4.html">4月</a></li>
+			<li><a href="dayABook3.html">3月</a></li>
+			<li><a href="dayABook2.html">2月</a></li>
+			<li><a href="dayABook1.html">2017年1月</a></li>
+			<div class="clearfix"></div>
+		</ul>
+		<div class="book-detail" v-for="book in books">
+			<div class="book-image"><img src="../img/book-default.jpg"></div>
+			<div class="book-right-content"> 
+				<div class="book-title">{{book.bookName}}</div>
+				<div class="book-info">{{book.info}}</div>
+				<div class="book-time" @click="allArticle(book.url)">查看全文<span>{{book.time}}</span></div>
+				<div class="play-button" @click="playBook(book.voiceUrl)">播放</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="bottom-content" v-if="isShowPlay">
+			<audio autoplay="autoplay" controls="controls"loop="loop" preload="auto"
+            v-bind:src="voiceUrl">
+
+            </audio>
+
+		</div>
+	
+		
+		<div   v-if="isShowCodePopUp" style="position: fixed;width: 100%;height: 100%;background: #000; filter:alpha(Opacity=50); opacity: 0.5;top: 0;"></div>
+		<div  class="popup" v-if="isShowCodePopUp"> 
+		   <div class="content"> 
+		   	<div class="head">糟糕了！好像过期了</div>
+		   	<div class="info"> 
+		   		<div class="the-info-content">分享到朋友圈获得38个赞联系微信18358597258获取！！</div>
+		   		
+		   		<input v-model="theKey" />
+		   		<div class="confirm-button" @click="activate()">输入激活码</div>
+		   	</div>  
+		   </div>
+		</div>	
+		
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var everyDayLessonApp = new Vue({
+			el:'#everyDayLesson',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				books:[
+				    { bookName:"0131哈佛中国史4",voiceUrl:"http://l.na.ppsrc.com/_cNP1XHlBUHHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"0130哈佛中国史3",voiceUrl:"http://l.na.ppsrc.com/6wm4gfnXrJrHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0129哈佛中国史2",voiceUrl:"http://l.na.ppsrc.com/NEqVj8rNBvPHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0128哈佛中国史1",voiceUrl:"http://l.na.ppsrc.com/VrZe5MiYbN_HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0127把时间当作朋友",voiceUrl:"http://l.na.ppsrc.com/BkxDS7TN-qrHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0126零售的哲学",voiceUrl:"http://l.na.ppsrc.com/CwXgbicTgVjHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"0125合适",voiceUrl:"http://l.na.ppsrc.com/7gYW1R71vr_HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0124迪士尼体验",voiceUrl:"http://l.na.ppsrc.com/m_eLYMsvJifHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0123扫除力",voiceUrl:"http://l.na.ppsrc.com/cANPIPZJdErHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0122家庭断舍离",voiceUrl:"http://l.na.ppsrc.com/hYGo-TkIOn3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0121怦然心动的人生整理魔法",voiceUrl:"http://l.na.ppsrc.com/D3ZO5i39PQzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0120卧底经济学4",voiceUrl:"http://l.na.ppsrc.com/Y1O7cAiCemvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"0119卧底经济学3",voiceUrl:"http://l.na.ppsrc.com/2BAWnPz2m3rHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"0118卧底经济学家2",voiceUrl:"http://l.na.ppsrc.com/Irdp499mYmfHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0117卧底经济学家1",voiceUrl:"http://l.na.ppsrc.com/cNgqwonUtvXHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0116你的灯亮着吗？",voiceUrl:"http://l.na.ppsrc.com/hC4AIY_l_1bHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0115心情词典",voiceUrl:"http://l.na.ppsrc.com/Q45Md8cFTArHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0114理解未来的7个原则",voiceUrl:"http://l.na.ppsrc.com/TrjqUjzx5njHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"1.13你的生存本能正在杀死你",voiceUrl:"http://l.na.ppsrc.com/oBxnbyEFu1PHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0112创新者的方法",voiceUrl:"http://l.na.ppsrc.com/D4jR6dW3PujHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0111富爸爸穷爸爸",voiceUrl:"http://l.na.ppsrc.com/J_lsdazSjdrHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0110一胜九败",voiceUrl:"http://l.na.ppsrc.com/As8IGGkhdMjHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0109微习惯",voiceUrl:"http://l.na.ppsrc.com/ow0T-hJl-ZnHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0108迷因效应",voiceUrl:"http://l.na.ppsrc.com/ae0FcAxCwPfHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0107最强大脑",voiceUrl:"http://l.na.ppsrc.com/BTswH8ubFh3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0106探询式领导",voiceUrl:"http://l.na.ppsrc.com/Shd9o2ebXBbHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0105出奇制胜",voiceUrl:"http://l.na.ppsrc.com/NXnpooR2nQ_HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    {bookName:"0104谈判思考的技术",voiceUrl:"http://l.na.ppsrc.com/fLcSzxnmA3DHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"0103阿米巴经营",voiceUrl:"http://l.na.ppsrc.com/nO_4EvVl_9bHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0102干法",voiceUrl:"http://l.na.ppsrc.com/UFIWqM9WRqTHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0101成功的真谛",voiceUrl:"http://l.na.ppsrc.com/xntegFyDu47HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""}
+					
+				]
+			},
+		    created:function () {
+
+		    	    var dt = localStorage.getItem("Mtime");
+		    	    console.log(dt)
+			        var data = new Date();
+			        var regeditTime = data.getTime();
+			       
+			        if(dt==null){
+			        	localStorage.setItem("Mtime",regeditTime);
+			        }
+			        else{
+			        	var nowT= data.getTime();
+			        	pastT=nowT-dt;
+			        	//432000000毫秒=5天
+			        	if(pastT<=432000000){
+			//           alert(pastT);
+			//           alert("没过期");
+			        	}else{
+			            this.isShowCodePopUp=true;
+					             
+			        	}
+			        }
+		    },
+			methods:{
+				   allArticle:function(url){
+				   	  var articleDetail="articleDetail.html"+"?"+"articleUrl="+url
+				   	  window.location.assign(articleDetail); 
+				      console.log(articleDetail)
+				   },
+				   playBook:function(voiceUrl){
+				   	  this.isShowPlay=true;
+				   	  this.voiceUrl=voiceUrl;
+				   },
+				   activate:function(){
+				   	var dd=this.theKey;
+					for(i=0;i<dd.length;i++){
+				   
+				    	if(dd.charAt(0)=='y'&&dd.charAt(1)=='x'&&dd.charAt(dd.length-1)=="f"){
+				//  		alert("22")
+				          localStorage.setItem("Mtime","9904624053231");
+				           this.isShowCodePopUp=false;
+				    		
+				    	}
+				    }
+				   }
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+

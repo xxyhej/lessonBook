@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="../../css/vip.css" />
+<script type="text/javascript" src="../../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../../js/vue.min.js" ></script>
+
+<title>每天听本书</title>
+
+
+
+</head>
+
+<body>
+	<div id="xxfjjk" class="splitByMonth">
+		<div class="top-head"><a href="#" onClick="javascript :history.back(-1);"><span></span></a>薛兆丰经济学</div>
+		<div class="title"><span></span>按月查询</div>
+		<ul>
+			<li><a href="xxfjjk2.html">2月</a></li>
+			<li><a href="xxfjjk3.html">3月</a></li>
+			<li><a href="xxfjjk4.html">4月</a></li>
+			<li><a href="xxfjjk5.html">5月</a></li>
+			<li><a href="xxfjjk6.html">6月</a></li>
+			<li><a href="xxfjjk7.html">7月</a></li>
+			<li><a href="xxfjjk8.html">8月</a></li>
+			<li><a href="xxfjjk9.html">9月</a></li>
+			<li><a href="xxfjjk10.html">10月</a></li>
+			<div class="clearfix"></div>
+		</ul>
+		<div class="book-detail" v-for="book in books">
+			<div class="book-image"><img src="../../img/book-default.jpg"></div>
+			<div class="book-right-content"> 
+				<div class="book-title">{{book.bookName}}</div>
+				<div class="book-info">{{book.info}}</div>
+				<div class="book-time" @click="allArticle(book.url)">查看全文<span>{{book.time}}</span></div>
+				<div class="play-button" v-if="book.voiceUrl!==''" @click="playBook(book.voiceUrl)">播放</div>
+				<div class="play-button" v-if="book.voiceUrl==''" >该课无音频</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="bottom-content" v-if="isShowPlay">
+			<audio autoplay="autoplay" controls="controls"loop="loop" preload="preload"
+            v-bind:src="voiceUrl">
+
+            </audio>
+
+		</div>
+	
+		
+		<div   v-if="isShowCodePopUp" style="position: fixed;width: 100%;height: 100%;background: #000; filter:alpha(Opacity=50); opacity: 0.5;top: 0;"></div>
+		<div  class="popup" v-if="isShowCodePopUp"> 
+		   <div class="content"> 
+		   	<div class="head">糟糕了！好像过期了</div>
+		   	<div class="info"> 
+		   		<div class="the-info-content">分享到朋友圈获得38个赞联系微信18358597258获取！！</div>
+		   		
+		   		<input v-model="theKey" />
+		   		<div class="confirm-button" @click="activate()">输入激活码</div>
+		   	</div>  
+		   </div>
+		</div>	
+		
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var xxfjjkApp = new Vue({
+			el:'#xxfjjk',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				books:[
+				    {bookName:"第060讲丨产权保护之二：责任原则",voiceUrl:"http://l.na.ppsrc.com/coKjw5lTCWXHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第15周问答  应不应该和刘翔竞争短跑？",voiceUrl:"http://l.na.ppsrc.com/gqHdMv2igzDHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第061讲丨产权保护之三：不可转让原则2",voiceUrl:"http://l.na.ppsrc.com/t1HUzQ4DniXHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第062讲丨产权保护之三：不可转让原则（续）",voiceUrl:"http://l.na.ppsrc.com/0lcqWFsQW03HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第063讲丨边际收益递减定律",voiceUrl:"http://l.na.ppsrc.com/75Svb7GjFwzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+			        {bookName:"第064讲丨集体所有制",voiceUrl:"http://l.na.ppsrc.com/r3C4a_5q4UvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第065讲丨私有制",voiceUrl:"http://l.na.ppsrc.com/oRZjiNZIM4jHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第066讲丨全员所有制",voiceUrl:"http://l.na.ppsrc.com/rWcx00irINvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第067讲丨公地真会悲剧吗？",voiceUrl:"http://l.na.ppsrc.com/Jf-2t2Bk_a7HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第068讲丨政府所有制",voiceUrl:"http://l.na.ppsrc.com/SYjSDqKh0IPHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第17周问答  每个人都有自己的“渔船”",voiceUrl:"http://l.na.ppsrc.com/KnJxS_CMiHLHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第069讲丨经济学家百年论堵",voiceUrl:"http://l.na.ppsrc.com/I1mRxzVQiqPHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第070讲丨拥堵费的实践",voiceUrl:"http://l.na.ppsrc.com/0Dd6Ow90G2jHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第071讲丨公用品和私用品",voiceUrl:"http://l.na.ppsrc.com/bFcI41Sh80HHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第072讲丨灯塔的故事",voiceUrl:"http://l.na.ppsrc.com/MUcwN6Voze7HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第18周问答丨成长就是变得复杂",voiceUrl:"http://l.na.ppsrc.com/HAT3n_eqvQDHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第073讲丨易耗品与耐用品",voiceUrl:"http://l.na.ppsrc.com/NsD_pFDkbWzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第074讲丨不耐产生交易",voiceUrl:"http://l.na.ppsrc.com/XSTGz57sXS3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第075讲丨利率管制与高利贷",voiceUrl:"http://l.na.ppsrc.com/ponJmxhdW4XHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				]
+			},
+		    created:function () {
+
+		    	    var dt = localStorage.getItem("Mtime");
+		    	    console.log(dt)
+			        var data = new Date();
+			        var regeditTime = data.getTime();
+			      
+			        if(dt==null){
+			        	localStorage.setItem("Mtime",regeditTime);
+			        }
+			        else{
+			        	var nowT= data.getTime();
+			        	pastT=nowT-dt;
+			        	console.log(pastT)
+			        	//432000000毫秒=5天
+			        	if(pastT<=432000000){
+			//           alert(pastT);
+			//           alert("没过期");
+			        	}else{
+			            this.isShowCodePopUp=true;
+					             
+			        	}
+			        }
+		    },
+			methods:{
+				   allArticle:function(url){
+				   	  var articleDetail="articleDetail.html"+"?"+"articleUrl="+url
+				   	  window.location.assign(articleDetail); 
+				      console.log(articleDetail)
+				   },
+				   playBook:function(voiceUrl){
+				   	  this.isShowPlay=true;
+				   	  this.voiceUrl=voiceUrl;
+				   },
+				   activate:function(){
+				   	var dd=this.theKey;
+					for(i=0;i<dd.length;i++){
+				   
+				    	if(dd.charAt(0)=='y'&&dd.charAt(1)=='x'&&dd.charAt(dd.length-1)=="f"){
+				//  		alert("22")
+				          localStorage.setItem("Mtime","9904624053231");
+				           this.isShowCodePopUp=false;
+				    		
+				    	}
+				    }
+				   }
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+

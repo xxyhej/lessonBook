@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="../css/vip.css" />
+<script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../js/vue.min.js" ></script>
+
+<title>每天听本书</title>
+
+
+
+</head>
+
+<body>
+	<div id="everyDayLesson" class="splitByMonth">
+		<div class="top-head"><a href="#" onClick="javascript :history.back(-1);"><span></span></a>每天听本书</div>
+		<div class="title"><span></span>按月查询</div>
+		<ul>
+			<li><a href="dayABook10.html">10月</a></li>
+			<li><a href="dayABook9.html">9月</a></li>
+			<li><a href="dayABook8.html">8月</a></li>
+			<li><a href="dayABook7.html">7月</a></li>
+			<li><a href="dayABook6.html">6月</a></li>
+			<li><a href="dayABook5.html">5月</a></li>
+			<li><a href="dayABook4.html">4月</a></li>
+			<li><a href="dayABook3.html">3月</a></li>
+			<li><a href="dayABook2.html">2月</a></li>
+			<li><a href="dayABook1.html">2017年1月</a></li>
+			<div class="clearfix"></div>
+		</ul>
+		<div class="book-detail" v-for="book in books">
+			<div class="book-image"><img src="../img/book-default.jpg"></div>
+			<div class="book-right-content"> 
+				<div class="book-title">{{book.bookName}}</div>
+				<div class="book-info">{{book.info}}</div>
+				<div class="book-time" @click="allArticle(book.url)">查看全文<span>{{book.time}}</span></div>
+				<div class="play-button" @click="playBook(book.voiceUrl)">播放</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="bottom-content" v-if="isShowPlay">
+			<audio autoplay="autoplay" controls="controls"loop="loop" preload="auto"
+            v-bind:src="voiceUrl">
+
+            </audio>
+
+		</div>
+	
+		
+		<div   v-if="isShowCodePopUp" style="position: fixed;width: 100%;height: 100%;background: #000; filter:alpha(Opacity=50); opacity: 0.5;top: 0;"></div>
+		<div  class="popup" v-if="isShowCodePopUp"> 
+		   <div class="content"> 
+		   	<div class="head">糟糕了！好像过期了</div>
+		   	<div class="info"> 
+		   		<div class="the-info-content">分享到朋友圈获得38个赞联系微信18358597258获取！！</div>
+		   		
+		   		<input v-model="theKey" />
+		   		<div class="confirm-button" @click="activate()">输入激活码</div>
+		   	</div>  
+		   </div>
+		</div>	
+		
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var everyDayLessonApp = new Vue({
+			el:'#everyDayLesson',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				books:[
+				    { bookName:"0731《经验的疆界》 成甲解读",voiceUrl:"http://l.na.ppsrc.com/RDr5FUJOIy_HrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"0730《恶俗》 韩巍解读",voiceUrl:"http://l.na.ppsrc.com/_b6TuLxBvjzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0729《格调》 韩巍解读",voiceUrl:"http://l.na.ppsrc.com/JtlABURZIoXHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0728超级谈话术乐多解读",voiceUrl:"http://l.na.ppsrc.com/tShQhVLhXGXHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0727《信息简史》 唐婷婷解读 关于作者",voiceUrl:"http://l.na.ppsrc.com/kWQoaAKtM0zHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0726《怪诞行为学》 奥小绿解读",voiceUrl:"http://l.na.ppsrc.com/4TH7uWBTLoPHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"0725《失败的逻辑》 成甲解读",voiceUrl:"http://l.na.ppsrc.com/XwnWMQBQ6-LHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0724《关键对话》 王海解读",voiceUrl:"http://l.na.ppsrc.com/n5-ZYQxUT6jHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0723《教出乐观的孩子》 秋秋解读",voiceUrl:"http://l.na.ppsrc.com/SHyKdU-4rmzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0722《活出最乐观的自己》 秋秋解读 ",voiceUrl:"http://l.na.ppsrc.com/UDbWimif2LvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0721《爱迪生传》 无锋解读",voiceUrl:"http://l.na.ppsrc.com/ivyBsnb6nx7HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0720《黑科技》 丁雨解读",voiceUrl:"http://l.na.ppsrc.com/lziidntNjtbHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"0719《超越感觉》 解读",voiceUrl:"http://l.na.ppsrc.com/tVUoUxoRsnzHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"0718《具身认知》 姜黎明解读",voiceUrl:"http://l.na.ppsrc.com/Ww1bon_V5VPHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0717《番茄工作法》 成甲解读(1)",voiceUrl:"http://l.na.ppsrc.com/j9Oq6td-5IzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0716《快速阅读》 张凯解读",voiceUrl:"http://l.na.ppsrc.com/b5tD-0XU9zjHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0715《自私的皮球》 怀沙解读",voiceUrl:"http://l.na.ppsrc.com/tDeJ8QMJDl3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0714《真实的幸福》 秋秋解读",voiceUrl:"http://l.na.ppsrc.com/ySeL40C5xpvHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"0713《麦肯锡精英的谈判策略》 谙之解读",voiceUrl:"http://l.na.ppsrc.com/01T44n5GFdXHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0712《硅谷模式》 東西堂主解读",voiceUrl:"http://l.na.ppsrc.com/89WbWC_F1yrHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0711《选择的价值》 陈敏诚解读",voiceUrl:"http://l.na.ppsrc.com/5KmKzr97OBzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0710《格鲁夫给经理人的第一课》 关于作者",voiceUrl:"http://l.na.ppsrc.com/pE_fPD4LxSXHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0709《活法》 成甲解读",voiceUrl:"http://l.na.ppsrc.com/AYTE1NxMx3PHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0708《认识自己，接纳自己》 秋秋解读",voiceUrl:"http://l.na.ppsrc.com/qzkMrVKtXPvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0707《自私的基因》 郑学解读",voiceUrl:"http://l.na.ppsrc.com/sNKtPAnkiwzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0706《未来的工作》 时康洁解读",voiceUrl:"http://l.na.ppsrc.com/RfmpBya8j8zHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0705《定位》 成甲解读",voiceUrl:"http://l.na.ppsrc.com/ozVKU4skrbnHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    {bookName:"0704《创新公司：皮克斯的启示2》 秋秋解读",voiceUrl:"http://l.na.ppsrc.com/CWuCe0SVwxTHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"0703《创新公司：皮克斯的启示1》",voiceUrl:"http://l.na.ppsrc.com/0Y0dtt35D0rHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0702《黑客与画家》 张凯解读",voiceUrl:"http://l.na.ppsrc.com/ukajjTeYdE_HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0701《魅力史》 東西堂主解读",voiceUrl:"http://l.na.ppsrc.com/NnTkuPp_vC7HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""}
+				]
+			},
+		    created:function () {
+
+		    	    var dt = localStorage.getItem("Mtime");
+		    	    console.log(dt)
+			        var data = new Date();
+			        var regeditTime = data.getTime();
+			       
+			        if(dt==null){
+			        	localStorage.setItem("Mtime",regeditTime);
+			        }
+			        else{
+			        	var nowT= data.getTime();
+			        	pastT=nowT-dt;
+			        	//432000000毫秒=5天
+			        	if(pastT<=432000000){
+			//           alert(pastT);
+			//           alert("没过期");
+			        	}else{
+			            this.isShowCodePopUp=true;
+					             
+			        	}
+			        }
+		    },
+			methods:{
+				   allArticle:function(url){
+				   	  var articleDetail="articleDetail.html"+"?"+"articleUrl="+url
+				   	  window.location.assign(articleDetail); 
+				      console.log(articleDetail)
+				   },
+				   playBook:function(voiceUrl){
+				   	  this.isShowPlay=true;
+				   	  this.voiceUrl=voiceUrl;
+				   },
+				   activate:function(){
+				   	var dd=this.theKey;
+					for(i=0;i<dd.length;i++){
+				   
+				    	if(dd.charAt(0)=='y'&&dd.charAt(1)=='x'&&dd.charAt(dd.length-1)=="f"){
+				//  		alert("22")
+				          localStorage.setItem("Mtime","9904624053231");
+				           this.isShowCodePopUp=false;
+				    		
+				    	}
+				    }
+				   }
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+

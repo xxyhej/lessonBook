@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+<META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
+<META HTTP-EQUIV="expires" CONTENT="0">
+
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="../css/vip.css" />
+<script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../js/vue.min.js" ></script>
+
+<title>每天听本书</title>
+
+
+
+</head>
+
+<body>
+	<div id="everyDayLesson" class="splitByMonth">
+		<div class="top-head"><a href="#" onClick="javascript :history.back(-1);"><span></span></a>每天听本书</div>
+		<div class="title"><span></span>按月查询</div>
+		<ul>
+			<li><a href="dayABook10.html" style="color: #FF4500;">10月</a></li>
+			<li><a href="dayABook9.html">9月</a></li>
+			<li><a href="dayABook8.html">8月</a></li>
+			<li><a href="dayABook7.html">7月</a></li>
+			<li><a href="dayABook6.html">6月</a></li>
+			<li><a href="dayABook5.html">5月</a></li>
+			<li><a href="dayABook4.html">4月</a></li>
+			<li><a href="dayABook3.html">3月</a></li>
+			<li><a href="dayABook2.html">2月</a></li>
+			<li><a href="dayABook1.html">2017年1月</a></li>
+			<div class="clearfix"></div>
+		</ul>
+		<div class="book-detail" v-for="book in books">
+			<div class="book-image"><img src="../img/book-default.jpg"></div>
+			<div class="book-right-content"> 
+				<div class="book-title">{{book.bookName}}</div>
+				<div class="book-info">{{book.info}}</div>
+				<div class="book-time" @click="allArticle(book.url)">查看全文<span>{{book.time}}</span></div>
+				<div class="play-button" @click="playBook(book.voiceUrl)">播放</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="bottom-content" v-if="isShowPlay">
+			<audio autoplay="autoplay" controls="controls"loop="loop" preload="preload"
+            v-bind:src="voiceUrl">
+
+            </audio>
+
+		</div>
+	
+		
+		<div   v-if="isShowCodePopUp" style="position: fixed;width: 100%;height: 100%;background: #000; filter:alpha(Opacity=50); opacity: 0.5;top: 0;"></div>
+		<div  class="popup" v-if="isShowCodePopUp"> 
+		   <div class="content"> 
+		   	<div class="head">糟糕了！好像过期了</div>
+		   	<div class="info"> 
+		   		<div class="the-info-content">分享到朋友圈获得38个赞联系微信18358597258获取！！</div>
+		   		
+		   		<input v-model="theKey" />
+		   		<div class="confirm-button" @click="activate()">输入激活码</div>
+		   	</div>  
+		   </div>
+		</div>	
+		
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var everyDayLessonApp = new Vue({
+			el:'#everyDayLesson',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				books:[
+				    { bookName:"1013魔鬼出没的世界",voiceUrl:"http://l.na.ppsrc.com/kz1lxjJDmvDHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"1013科学究竟是什么",voiceUrl:"http://l.na.ppsrc.com/-xx6RVcqMnjHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1013惊人的假说",voiceUrl:"http://l.na.ppsrc.com/neMMaDpYofLHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1012智识分子",voiceUrl:"http://l.na.ppsrc.com/P9tug8S-hSnHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1012高效的秘密",voiceUrl:"http://l.na.ppsrc.com/a0AAHJb1uSPHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1012高盛帝国",voiceUrl:"http://l.na.ppsrc.com/vLjHfPcYs5DHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"1011我包罗万象",voiceUrl:"http://l.na.ppsrc.com/kCrW5P5OhszHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1011人人都会说谎",voiceUrl:"http://l.na.ppsrc.com/se59C7pKRFnHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1011流血的仕途：李斯与秦帝国（下)",voiceUrl:"http://l.na.ppsrc.com/hz67W46ft4fHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1011流血的仕途：李斯与秦帝国（上）",voiceUrl:"http://l.na.ppsrc.com/ODDc2J87HhHHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1010微表情",voiceUrl:"http://l.na.ppsrc.com/LdzupNlU62DHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1010联盟",voiceUrl:"http://l.na.ppsrc.com/STq6GDUw5SzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"1010疯传",voiceUrl:"http://l.na.ppsrc.com/LKSzhKJ9Y7rHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"1010-20世纪最伟大的心理学实验（下）",voiceUrl:"http://l.na.ppsrc.com/DovRqILeLPrHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1010-20世纪最伟大的心理学实验（上）",voiceUrl:"http://l.na.ppsrc.com/6qrrK9YKUgzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1009思维力",voiceUrl:"http://l.na.ppsrc.com/Osgm6nxyhfzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1009人性中的善良天使（下）",voiceUrl:"http://l.na.ppsrc.com/79_o3_lLUIrHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1009人性中的善良天使（上）",voiceUrl:"http://l.na.ppsrc.com/_RBOgzuJKm3HrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"1009链接",voiceUrl:"http://l.na.ppsrc.com/4CzRfV0up0rHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1009合作的进化",voiceUrl:"http://l.na.ppsrc.com/g1Ct8GBzuLXHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1008至关重要的关系",voiceUrl:"http://l.na.ppsrc.com/-tuRfyTET93HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1008深度工作",voiceUrl:"http://l.na.ppsrc.com/mZdml16XWfjHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1008如何学习",voiceUrl:"http://l.na.ppsrc.com/5admtrl3dSPHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1008靠谱",voiceUrl:"http://l.na.ppsrc.com/5oXQOsehllDHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1008精力管理",voiceUrl:"http://l.na.ppsrc.com/0j2PkhBAfS_HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1008Succeed",voiceUrl:"http://l.na.ppsrc.com/MhY4EYGPJu3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1007《种子的胜利》",voiceUrl:"http://l.na.ppsrc.com/SBHZyjP9HtbHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    {bookName:"1007《血疫》",voiceUrl:"http://l.na.ppsrc.com/vFvfeFpYm23HrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"1007《唐诗宋词里的趣事》",voiceUrl:"http://l.na.ppsrc.com/qh9BUPe3e3rHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1007《睡眠革命》",voiceUrl:"http://l.na.ppsrc.com/mJZLbJQ_VZ_HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1007《日本漫画60年》",voiceUrl:"http://l.na.ppsrc.com/e9f1UToCHs7HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1007《茶书》",voiceUrl:"http://l.na.ppsrc.com/if3Lh5Qc2LrHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1006《猿猴的把戏》",voiceUrl:"http://l.na.ppsrc.com/-mN7Mym6pZ_HrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"1006《利他之心》",voiceUrl:"http://l.na.ppsrc.com/w0HGP8YwyRvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1006《疯狂人类进化史》(1)",voiceUrl:"http://l.na.ppsrc.com/ltS7x9WbEhjHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1006《得他之心》",voiceUrl:"http://l.na.ppsrc.com/c4fwUHarFRzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1006《基因的私密历史》",voiceUrl:"http://l.na.ppsrc.com/w0HGP8YwyRvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1005《宇宙的琴弦》",voiceUrl:"http://l.na.ppsrc.com/_e6vKoOjvlfHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1005《宇宙的结构》",voiceUrl:"http://l.na.ppsrc.com/mGP1IBCtVorHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1005《宇宙的尺度》",voiceUrl:"http://l.na.ppsrc.com/KoR_R-MoIkvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1005《万物起源》",voiceUrl:"http://l.na.ppsrc.com/FBJl6OvmdvfHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1004《傅雷家书》",voiceUrl:"http://l.na.ppsrc.com/b4ytETpk5N_HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1003《朱雀》",voiceUrl:"http://l.na.ppsrc.com/xgZcrnfm14zHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1003《古代中国的动物与灵异》",voiceUrl:"http://l.na.ppsrc.com/WVbOofvWgUTHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1003《构造另一个宇宙》",voiceUrl:"http://l.na.ppsrc.com/2NStwp0Ig8THrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1002《乱世佳人（下）》",voiceUrl:"http://l.na.ppsrc.com/F97fRGsz-KDHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1002《乱世佳人（上）》",voiceUrl:"http://l.na.ppsrc.com/JrCSGuhlvR3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1002《巴黎圣母院》",voiceUrl:"http://l.na.ppsrc.com/UP0YgJgSioTHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1001艺术150年",voiceUrl:"http://l.na.ppsrc.com/LStgUWcMdgzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1001《与艺术相伴》",voiceUrl:"http://l.na.ppsrc.com/XWAJtlfXmxDHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1001《如何看懂印象派》",voiceUrl:"http://l.na.ppsrc.com/vROCJVuY9gHHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1001《剧本》",voiceUrl:"http://l.na.ppsrc.com/G_h75DeyAIbHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"1001《电影编辑创作指南》",voiceUrl:"http://l.na.ppsrc.com/hgNE18JXx9bHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					
+				]
+			},
+		    created:function () {
+
+		    	    var dt = localStorage.getItem("Mtime");
+		    	    console.log(dt)
+			        var data = new Date();
+			        var regeditTime = data.getTime();
+			      
+			        if(dt==null){
+			        	localStorage.setItem("Mtime",regeditTime);
+			        }
+			        else{
+			        	var nowT= data.getTime();
+			        	pastT=nowT-dt;
+			        	console.log(pastT)
+			        	//432000000毫秒=5天
+			        	if(pastT<=432000000){
+			//           alert(pastT);
+			//           alert("没过期");
+			        	}else{
+			            this.isShowCodePopUp=true;
+					             
+			        	}
+			        }
+		    },
+			methods:{
+				   allArticle:function(url){
+				   	  var articleDetail="articleDetail.html"+"?"+"articleUrl="+url
+				   	  window.location.assign(articleDetail); 
+				      console.log(articleDetail)
+				   },
+				   playBook:function(voiceUrl){
+				   	  this.isShowPlay=true;
+				   	  this.voiceUrl=voiceUrl;
+				   },
+				   activate:function(){
+				   	var dd=this.theKey;
+					for(i=0;i<dd.length;i++){
+				   
+				    	if(dd.charAt(0)=='y'&&dd.charAt(1)=='x'&&dd.charAt(dd.length-1)=="f"){
+				//  		alert("22")
+				          localStorage.setItem("Mtime","9904624053231");
+				           this.isShowCodePopUp=false;
+				    		
+				    	}
+				    }
+				   }
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+

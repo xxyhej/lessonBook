@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="../../css/vip.css" />
+<script type="text/javascript" src="../../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../../js/vue.min.js" ></script>
+
+<title>每天听本书</title>
+
+
+
+</head>
+
+<body>
+	<div id="wwgjyrk" class="splitByMonth" style="display: none;">
+		<div class="top-head"><a href="#" onClick="javascript :history.back(-1);"><span></span></a>万维钢精英日课</div>
+		<div class="title"><span></span>按月查询</div>
+		<ul>
+			
+			<li><a href="wwgjyrk8.html">8月</a></li>
+			<li><a href="wwgjyrk7.html">7月</a></li>
+			<li><a href="wwgjyrk6.html">6月</a></li>
+			<li><a href="wwgjyrk5.html">5月</a></li>
+			<li><a href="wwgjyrk4.html" style="color: #FF4500;">4月</a></li>
+			<li><a href="wwgjyrk3.html">3月</a></li>
+			<li><a href="wwgjyrk2.html">2月</a></li>
+			
+			<div class="clearfix"></div>
+		</ul>
+		<div class="book-detail" v-for="book in books">
+			<div class="book-image"><img src="../../img/book-default.jpg"></div>
+			<div class="book-right-content"> 
+				<div class="book-title">{{book.bookName}}</div>
+				<div class="book-info">{{book.info}}</div>
+				<div class="book-time" @click="allArticle(book.url)">查看全文<span>{{book.time}}</span></div>
+				<div class="play-button" v-if="book.voiceUrl!==''" @click="playBook(book.voiceUrl)">播放</div>
+				<div class="play-button" v-if="book.voiceUrl==''" >该课无音频</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="bottom-content" v-if="isShowPlay">
+			<audio autoplay="autoplay" controls="controls"loop="loop" preload="preload"
+            v-bind:src="voiceUrl">
+
+            </audio>
+
+		</div>
+	
+		
+		<div   v-if="isShowCodePopUp" style="position: fixed;width: 100%;height: 100%;background: #000; filter:alpha(Opacity=50); opacity: 0.5;top: 0;"></div>
+		<div  class="popup" v-if="isShowCodePopUp"> 
+		   <div class="content"> 
+		   	<div class="head">糟糕了！好像过期了</div>
+		   	<div class="info"> 
+		   		<div class="the-info-content">分享到朋友圈获得38个赞联系微信18358597258获取！！</div>
+		   		
+		   		<input v-model="theKey" />
+		   		<div class="confirm-button" @click="activate()">输入激活码</div>
+		   	</div>  
+		   </div>
+		</div>	
+		
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var wwgjyrkApp = new Vue({
+			el:'#wwgjyrk',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				books:[
+				    {bookName:"jy0429周末小议｜好思想都在哪里？",voiceUrl:"http://l.na.ppsrc.com/hrhDMd05mTbHrOczY7uuTg",url:"",info:"欢迎大家继续学习第二季",time:""},				
+				    { bookName:"jy0428日课177｜怎样培养抗打击能力",voiceUrl:"http://l.na.ppsrc.com/Qr4P65pJDGvHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"jy0427日课176｜选项的价值",voiceUrl:"http://l.na.ppsrc.com/dXdRNH8YcqrHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy0426日课175｜贫困病",voiceUrl:"http://l.na.ppsrc.com/6-DB_NDk_QzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy0425日课174｜到底什么是厉害的决策法",voiceUrl:"http://l.na.ppsrc.com/Iep7yr2-NWHHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy0422日课173丨人不是工业品，世界不能标准化",voiceUrl:"http://l.na.ppsrc.com/iNsEaVqMNTPHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy0421日课172丨最简单的科学决策法",voiceUrl:"http://l.na.ppsrc.com/yi8UQNeRJFLHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"jy0420日课171丨意会大师的三个故事",voiceUrl:"http://l.na.ppsrc.com/t7jt8z2dka_HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					 { bookName:"jy0419日课170丨面试根本不靠谱",voiceUrl:"http://l.na.ppsrc.com/lJwDAsPwaSLHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"jy0418日课169丨获得“洞见”的内功",voiceUrl:"http://l.na.ppsrc.com/BVxw8Yfvqw3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					 {bookName:"jy0417周末小议丨答熊逸：说精英，谁是精英",voiceUrl:"http://l.na.ppsrc.com/q4P9YkksWIPHrOczY7uuTg",url:"",info:"欢迎大家继续学习第二季",time:""},				
+				    { bookName:"jt0415第105天丨荣誉还是生命？",voiceUrl:"http://l.na.ppsrc.com/AVHLred8e_zHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"jy0414日课167丨为什么坐飞机的体验越来越差？",voiceUrl:"http://l.na.ppsrc.com/vf6s_5hiISjHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy0413日课166丨索罗斯的见识",voiceUrl:"http://l.na.ppsrc.com/jNYPGEXo9d7HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy0412日课165丨知道是什么，知道该怎么，和知道为什么",voiceUrl:"http://l.na.ppsrc.com/G3LeeQMAC6_HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy0411日课164丨专家的五重境界",voiceUrl:"http://l.na.ppsrc.com/3JewWCLlgC3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy0410周末小议丨熊逸答：国学的三个问题",voiceUrl:"http://l.na.ppsrc.com/wvGUosOAYPzHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"jy0408老年人有知识，年轻人有数据",voiceUrl:"http://l.na.ppsrc.com/08gW7fyADIrHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					 { bookName:"jy0407日课162丨心理学黑套路的实战应用",voiceUrl:"http://l.na.ppsrc.com/o4P-r9pSGk3HrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"jy0406日课161丨你用“算法”，我用“意会”",voiceUrl:"http://l.na.ppsrc.com/ftyvH_OC2cLHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					 {bookName:"jy0404日课159丨什么故事最好使？",voiceUrl:"http://l.na.ppsrc.com/2GCMpGzgTNLHrOczY7uuTg",url:"",info:"欢迎大家继续学习第二季",time:""},				
+				    { bookName:"jy0403周末小议  问熊逸：国学的三个问题",voiceUrl:"http://l.na.ppsrc.com/0Oe9zD9dItDHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					 { bookName:"jy0401日课158丨高手修炼手册4：风险投资人的养成",voiceUrl:"http://l.na.ppsrc.com/ERUiaPUnce3HrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					
+				]
+			},
+		    created:function () {
+                    $('#wwgjyrk').show();
+		    	    var dt = localStorage.getItem("wanweigang");
+		    	    console.log(dt)
+			        var data = new Date();
+			        var regeditTime = data.getTime();
+			      
+			        if(dt==null){
+			        	localStorage.setItem("wanweigang",regeditTime);
+			        }
+			        else{
+			        	var nowT= data.getTime();
+			        	pastT=nowT-dt;
+			        	console.log(pastT)
+			        	//432000000毫秒=5天
+			        	if(pastT<=432000000){
+			//           alert(pastT);
+			//           alert("没过期");
+			        	}else{
+			            this.isShowCodePopUp=true;
+					             
+			        	}
+			        }
+		    },
+			methods:{
+				   allArticle:function(url){
+				   	  var articleDetail="articleDetail.html"+"?"+"articleUrl="+url
+				   	  window.location.assign(articleDetail); 
+				      console.log(articleDetail)
+				   },
+				   playBook:function(voiceUrl){
+				   	  this.isShowPlay=true;
+				   	  this.voiceUrl=voiceUrl;
+				   },
+				   activate:function(){
+				   	var dd=this.theKey;
+					for(i=0;i<dd.length;i++){
+				   
+				    	if(dd.charAt(0)=='y'&&dd.charAt(1)=='x'&&dd.charAt(dd.length-1)=="f"){
+				//  		alert("22")
+				          localStorage.setItem("wanweigang","9904624053231");
+				           this.isShowCodePopUp=false;
+				    		
+				    	}
+				    }
+				   }
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+

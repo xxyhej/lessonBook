@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+		
+		<meta name="misapplication-tap-highlight" content="no"/>
+		
+		<meta name="HandheldFriendly" content="true"/>
+		
+		<meta name="MobileOptimized" content="320"/>
+		<link rel="stylesheet" type="text/css" href="../css/vip.css" />
+		<script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
+		<script type="text/javascript" src="../js/vue.min.js" ></script>
+
+		<title>文章详情</title>
+	</head>
+	<body>
+		<div id="articleDetail"> 
+			<div v-for="content in articleContent">
+				暂未开放敬请期待！
+				<img  v-bind:src="content">
+			</div>
+		</div>
+		<script>
+			var articleDetailApp = new Vue({
+				el:'#articleDetail',
+				data:{
+					articleContent:[]
+				},
+				created:function(){
+					var url=location.href; 
+                    var content=url.split("?articleUrl=")[1];
+                    var contentArr=content.split(",,");
+                    this.articleContent=contentArr;
+					console.log(contentArr)
+				}
+			});
+		</script>
+	</body>
+</html>

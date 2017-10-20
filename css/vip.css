@@ -1,0 +1,139 @@
+input{border: none;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td,img {padding:0;margin:0;}
+.aarand{display: none;}
+li{list-style-type:none}
+a{ text-decoration:none;color: #666666;}
+div ,a,span,body{font-family: "Microsoft YaHei"}
+.vip-app-bd{width: 100%;background: #ffffff;}
+.vip-app-bd .logo{
+    width: 160px;
+    margin: 0 auto;
+    height: 184px;
+    background: url('../img/logo.png') 1px 40px no-repeat;
+    background-size: 100%;
+    }
+
+.vip-app-bd .input{width: 85%;height:40px;margin: 10px auto;}
+.vip-app-bd .input input{   
+	border: 1px solid#561a18;
+    border-radius: 16px;
+    width: 96%;
+    height: 36px;
+    padding-left: 20px;
+    }
+
+.vip-app-bd .confirm-button{
+	width: 168px;
+	height: 38px;
+	border-radius: 14px;
+    background: #561A18;
+    margin: 10px auto;
+    text-align: center;
+    line-height: 38px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #FFFFFF;
+    margin-top: 85px;
+    cursor: pointer;
+    }
+.vip-app-bd .info{
+	line-height: 30px;
+    font-size: 12px;
+    text-align: center;
+}
+.popup .info .the-info-content{
+	    width: 199px;
+    line-height: 29px;
+    margin: 0 auto;
+}
+.vip-app-bd .road{
+	text-align: center;
+}
+.vip-app-bd .road span{
+	cursor: pointer;
+	text-align: center;
+	font-size: 13px;
+	padding-right: 2px;
+}
+.vip-app-bd .road span.on{
+	color: orangered;
+}
+.popup .content{
+	z-index: 10;
+	width: 300px;
+	background: #FFFFFF;
+	position: absolute;
+	top: 25%;
+	left: 50%;
+	margin-left: -142px;
+	border-radius: 4px;
+}
+.popup .content .head{height: 35px;border-bottom: 1px solid#eeeeee;text-align: center;font-size: 14px;color: #666666;line-height: 35px;}
+.popup .content .info{    min-height: 185px;   padding-top: 20px;   font-size: 14px;   text-align: center;   color: #333333;}
+.popup .content .info input{width: 150px;height: 29px;border: 1px solid#cccccc;margin-top: 20px;}
+.popup .content .info .confirm-button{
+	width: 168px;
+	height: 38px;
+	border-radius: 14px;
+    background: #561A18;
+    margin: 10px auto;
+    text-align: center;
+    line-height: 38px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #FFFFFF;
+    margin-top: 60px;
+    cursor: pointer;
+    }
+/*每天听本书*/
+.clearfix{clear: both;}
+.splitByMonth .title{font-size: 15px;font-weight: 600;color: #666666;margin: 10px;}
+.splitByMonth .top-head{position:relative;font-size: 18px;font-weight: 600;color: #333333;height: 46px;background:#ffffff;line-height: 46px;text-align: center;border-bottom: 1px solid#eeeeee;}
+.splitByMonth .top-head a span{   position: absolute;    width: 22px;    height: 22px;    background: url(../img/back.png) 0px 0px no-repeat;    background-size: 100%;        top: 11px; left: 20px;}
+.splitByMonth .title span{width: 4px;height: 15px;background: #FF4500;display: inline-block;margin-right: 10px;}
+.splitByMonth ul{padding-left: 28px;width:91%;display: inline;white-space: nowrap;overflow-x:scroll;float:left;overflow-y:hidden}
+.splitByMonth ul li{display:inline-block;width: 40px;font-size: 13px;color: #999999;}
+.splitByMonth ul li a{width: 40px;color: #999999;height: 23px; display: block;font-size: 16px;}
+.xiaoshuo ul li{display:inline-block;width: 70px;font-size: 13px;color: #999999;}
+.splitByMonth ul li a{width: 70px;color: #999999;height: 23px; display: block;font-size: 16px;}
+.splitByMonth .book-detail{width: 100%;height: 172px;border-bottom: 1px solid#eeeeee;}
+.splitByMonth .book-detail .book-image{    float: left;   width: 24%;    height: 111px;     margin-left: 30px;    margin-right: 10px;   margin-top: 20px;}
+.splitByMonth .book-detail .book-image img{max-width: 90px;max-height: 175px;}
+.splitByMonth .book-detail .book-right-content{float: left;padding-top: 20px;width: 60%;}
+.splitByMonth .book-detail .book-right-content .book-title{font-size: 15px;font-weight: 600;color: #333333;}
+.splitByMonth .book-detail .book-right-content .book-info{font-size: 13px;color: #999999;margin-top: 8px;}
+.splitByMonth .book-detail .book-right-content .book-time{display: inline-block;font-size:13px;padding-top: 15px;color: #999999;}
+.splitByMonth .book-detail .book-right-content .book-time span{margin-left: 10px;}
+.splitByMonth .book-detail .book-right-content .play-button{width: 68px;height: 26px;float:right;    margin-top: 13px;text-align: center;display:inline-block;border: 1px solid#FF4500;border-radius: 6px;color: #FF4500;font-size: 13px;line-height: 26px;}
+.splitByMonth .bottom-content {height: 53px;  width: 100%;   position: fixed;   bottom: 0px;   margin: 0 auto;   text-align: center;}
+.splitByMonth .bottom-content audio{    height: 45px; width: 80%;}
+/*专区*/
+.area-book .banner{width: 100%;}
+.area-book .banner img{width: 100%;}
+.area-book .author-content{padding: 14px 0px;border-bottom: 1px solid#eeeeee;}
+.area-book .author-content .image-content{float: left;width: 140px;height: 165px;    margin-left: 20px;}
+.area-book .author-content .image-content img{max-width: 120px;max-height: 165px;}
+.area-book .author-content  .right-content{float: left;width: 54%;margin-top: 10px;}
+.area-book .author-content  .right-content .author-title{font-size: 16px;line-height:30px;font-weight: 600;color: #333333;}
+.area-book .author-content  .right-content .author-info{font-size: 14px;line-height:30px;color:#666666;}
+.area-book .author-content  .right-content .content-info{font-size: 14px;line-height:30px;color:#999999;}
+.area-book .author-content  .right-content .goto{font-size: 14px;line-height:30px;color:#FF4500}
+/*首页*/
+.lesson-book-index{background: #ebebeb;}
+.lesson-book-index .banner{width: 100%;    margin-bottom: -3px;}
+.lesson-book-index .banner img{width: 100%;}
+.lesson-book-index .play-first-content{height:100px;margin-top:1px;background: #ffffff;}
+.lesson-book-index .play-first-content .title{height: 40px;line-height: 40px;}
+.lesson-book-index .play-first-content  .all-content{float: right;font-size: 14px;color: #cccccc;font-weight: 100;}
+.lesson-book-index .special-content{margin-top: 4px;background: #ffffff;}
+.lesson-book-index .special-content .title{height: 40px;line-height: 40px;}
+.lesson-book-index .special-content ul li{float: left;    width: 27%;margin-left: 13px;}
+.lesson-book-index .special-content ul li img{width: 100%;}
+.lesson-book-index .special-content  ul{padding: 10px;}  
+.lesson-book-index  .title{font-size: 15px;font-weight: 600;color: #666666;margin: 10px;}
+.lesson-book-index .top-head{position:relative;font-size: 18px;font-weight: 600;color: #333333;height: 46px;background:#ffffff;line-height: 46px;text-align: center;border-bottom: 1px solid#eeeeee;}
+.lesson-book-index .top-head a span{   position: absolute;    width: 26px;    height: 26px;    background: url(../img/back.png) 0px 0px no-repeat;    background-size: 100%;        top: 11px; left: 20px;}
+.lesson-book-index .bottom-content {height: 53px;  width: 100%;   position: fixed;   bottom: 0px;   margin: 0 auto;   text-align: center;}
+.lesson-book-index .bottom-content audio{    height: 45px; width: 80%;}
+.lesson-book-index .play-first-content .play-content .play-button span{     width: 18px;  float:left;  height: 18px;     display: block;   background: url(../img/play_ico.png) 0px 0px no-repeat;    background-size: 100%;  margin: 4px 5px 4px 8px;}
+.lesson-book-index .play-first-content .play-content .content-title{float: left;font-size: 13px;color: #666666;line-height: 25px;}

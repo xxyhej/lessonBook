@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="../css/vip.css" />
+<script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../js/vue.min.js" ></script>
+
+<title>专栏订阅</title>
+
+
+
+</head>
+
+<body>
+	<div id="areaBook" class="area-book splitByMonth" style="display: none;">
+		<div class="top-head"><a href="#" onClick="javascript :history.back(-1);"><span></span></a>专栏订阅</div>
+		<div class="banner"><a href="../lessonBook/dayABook10.html"><img src="../img/every-day-lesson-book.jpg"></a></div>
+		<div class="author-content" v-for="author in authors"> 
+			<a v-bind:href="author.url">
+				<div class="image-content"> <img v-bind:src="author.imageUrl"></div>
+				<div class="right-content"> 
+					<div class="author-title">{{author.authorTitle}}</div>
+					<div class="author-info">{{author.anthorInfo}}</div>
+					<div class="content-info">{{author.contentInfo}}</div>
+					<div class="goto">查看详情</div>
+				</div>
+				
+				<div class="clearfix"></div>
+			</a>
+		</div>
+	
+		<div   v-if="isShowCodePopUp" style="position: fixed;width: 100%;height: 100%;background: #000; filter:alpha(Opacity=50); opacity: 0.5;top: 0;"></div>
+		<div  class="popup" v-if="isShowCodePopUp"> 
+		   <div class="content"> 
+		   	<div class="head">糟糕了！好像过期了</div>
+		   	<div class="info"> 
+		   		<div class="the-info-content">分享到朋友圈获得38个赞联系微信18358597258获取！！</div>
+		   		
+		   		<input v-model="theKey" />
+		   		<div class="confirm-button" @click="activate()">输入激活码</div>
+		   	</div>  
+		   </div>
+		</div>
+
+
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var areaBookApp = new Vue({
+			el:'#areaBook',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				authors:[
+				    {url:"wwgjyrk/wwgjyrk8.html",imageUrl:"../img/areaBook/1.jpg",authorTitle:"万维刚.精英日课",anthorInfo:"万维钢《万万没想到作者》",contentInfo:"帮你和全球精英大脑同步"},
+			        {url:"",imageUrl:"../img/areaBook/2.1.jpg",authorTitle:"通往财富自由之路",anthorInfo:"李笑来 天使投资人 连续创业者",contentInfo:"人人至少都有一次机会"},
+			        {url:"",imageUrl:"../img/areaBook/2.jpg",authorTitle:"武志红的心理课",anthorInfo:"武志红 心理学家 临床心理师",contentInfo:"拥有一个说了算的人生"},
+			        {url:"",imageUrl:"../img/areaBook/3.jpg",authorTitle:"薛兆丰的北大经济课",anthorInfo:"北大发院教授",contentInfo:"只给你地道的经济学思维"},
+			        {url:"",imageUrl:"../img/areaBook/4.jpg",authorTitle:"张潇雨.商业经典案例",anthorInfo:"张潇雨 高盛分析师 商业研究者",contentInfo:"赢家的思路"},
+			        {url:"",imageUrl:"../img/areaBook/5.jpg",authorTitle:"5分钟商学院",anthorInfo:"刘润，中国著名商业顾问",contentInfo:"帮你当好自己的ceo"},
+			        {url:"",imageUrl:"../img/areaBook/6.jpg",authorTitle:"关系攻略",anthorInfo:"熊大行 人际关系洞察家",contentInfo:"残酷社会生存法则"},
+			        {url:"",imageUrl:"../img/areaBook/7.jpg",authorTitle:"李翔商业内参",anthorInfo:"李翔 著名财经记者 得到总编辑",contentInfo:"你的私家商业秘书"},
+			        {url:"",imageUrl:"../img/areaBook/8.jpg",authorTitle:"伯凡 日知录",anthorInfo:"吴柏帆 著名学者",contentInfo:"自我迭代的学习小组"},
+			        {url:"",imageUrl:"../img/areaBook/9.jpg",authorTitle:"给孩子的博物学",anthorInfo:"徐来 果壳网总编",contentInfo:"人人都该听明白的自然科学"},
+			        {url:"",imageUrl:"../img/areaBook/10.jpg",authorTitle:"郝广才.今天",anthorInfo:"郝广才 著名童书出版人",contentInfo:"真实故事滋养好文章"},
+			        {url:"",imageUrl:"../img/areaBook/11.jpg",authorTitle:"卓克.科学思维课",anthorInfo:"卓克 科普达人",contentInfo:"你身边的玩物简史"},
+			        {url:"",imageUrl:"../img/areaBook/12.jpg",authorTitle:"马徐骏 世界名刊速度",anthorInfo:"马徐骏 资深翻译，顶尖演讲教练",contentInfo:"听全球头条，学地道英语"},
+			        {url:"",imageUrl:"../img/areaBook/13.jpg",authorTitle:"严伯钧.西方艺术课",anthorInfo:"严伯钧  西方艺术课",contentInfo:"迅速补上艺术修养"},
+			        {url:"",imageUrl:"../img/areaBook/14.jpg",authorTitle:"全球创新269讲",anthorInfo:"王，海银资本创始合伙人",contentInfo:"社会前沿"},
+			        {url:"",imageUrl:"../img/areaBook/15.jpg",authorTitle:"熊逸书院",anthorInfo:"熊逸 思想隐士",contentInfo:"带你都统52本思想经典"},
+			        {url:"",imageUrl:"../img/areaBook/16.jpg",authorTitle:"宁向东清华管理课",anthorInfo:"宁向东 清华大学管理学教授",contentInfo:"大师就在你身后"},
+			        {url:"",imageUrl:"../img/areaBook/17.jpg",authorTitle:"吴军.硅谷来信",anthorInfo:"吴军 硅谷投资人 计算机科学家",contentInfo:"像时代领航者一样思考"},
+			         {url:"",imageUrl:"../img/areaBook/18.jpg",authorTitle:"前哨 王熠全",anthorInfo:"海银资本创始合伙人",contentInfo:"全球创新的侦查兵"},
+			        {url:"",imageUrl:"../img/areaBook/19.jpg",authorTitle:"卓老板聊科技",anthorInfo:"卓克 科普达人",contentInfo:"给想抓住未来机会的聪明人"},
+			        {url:"",imageUrl:"../img/areaBook/20.jpg",authorTitle:"雪枫音乐会",anthorInfo:"刘雪枫 著名音乐评论家",contentInfo:"让你听懂260首古典音乐"},
+			        {url:"",imageUrl:"../img/areaBook/21.jpg",authorTitle:"万维刚.精英日课",anthorInfo:"万维钢《万万没想到作者》",contentInfo:"帮你和全球精英大脑同步"},
+			        {url:"",imageUrl:"../img/areaBook/22.jpg",authorTitle:"槽边往事",anthorInfo:"和菜头 互联网熊猫",contentInfo:"请你相信 我所的都是错的"},
+			        {url:"",imageUrl:"../img/areaBook/23.jpg",authorTitle:"王烁 大学 问",anthorInfo:"王烁 财经新媒主编",contentInfo:"带你共读美国名校"},
+			        {url:"",imageUrl:"../img/areaBook/24.jpg",authorTitle:"超级个体",anthorInfo:"古典 国内资深个人事业发展顾问",contentInfo:"高效能人的自我修养"},
+			        {url:"",imageUrl:"../img/areaBook/25.jpg",authorTitle:"Dr.魏的家庭教育宝典",anthorInfo:"最强大脑科学评审",contentInfo:"让你的孩子享受最新大脑研究成果"},
+			         {url:"",imageUrl:"../img/areaBook/26.jpg",authorTitle:"何帆大局观",anthorInfo:"何帆 北大教授 经济学家",contentInfo:"有趣有温度的经济课"},
+			        {url:"",imageUrl:"../img/areaBook/27.jpg",authorTitle:"老浦识字",anthorInfo:"老浦 知名学者",contentInfo:"每个字都让你恍然大悟"}
+				]
+			},
+		    created:function () {
+              $("#areaBook").show();
+              var dt = localStorage.getItem("dedao");
+		    	    console.log(dt)
+			        var data = new Date();
+			        var regeditTime = data.getTime();
+			       
+			        if(dt==null){
+			        	localStorage.setItem("dedao",regeditTime);
+			        }
+			        else{
+			        	var nowT= data.getTime();
+			        	pastT=nowT-dt;
+			        	//432000000毫秒=5天
+			        	if(pastT<=432000000){
+			//           alert(pastT);
+			//           alert("没过期");
+			        	}else{
+			            this.isShowCodePopUp=true;
+					             
+			        	}
+			        }
+		    	
+		    },
+			methods:{
+				 
+				  activate:function(){
+				   	var dd=this.theKey;
+					for(i=0;i<dd.length;i++){
+				   
+				    	if(dd.charAt(0)=='y'&&dd.charAt(1)=='x'&&dd.charAt(dd.length-2)=="d"){
+				//  		alert("22")
+				          localStorage.setItem("dedao","9904624053231");
+				           this.isShowCodePopUp=false;
+				    		
+				    	}
+				      }
+				    }
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+

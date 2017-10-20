@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="../../css/vip.css" />
+<script type="text/javascript" src="../../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../../js/vue.min.js" ></script>
+
+<title>每天听本书</title>
+
+
+
+</head>
+
+<body>
+	<div id="xxfjjk" class="splitByMonth">
+		<div class="top-head"><a href="#" onClick="javascript :history.back(-1);"><span></span></a>薛兆丰经济学</div>
+		<div class="title"><span></span>按月查询</div>
+		<ul>
+			<li><a href="xxfjjk2.html">2月</a></li>
+			<li><a href="xxfjjk3.html">3月</a></li>
+			<li><a href="xxfjjk4.html">4月</a></li>
+			<li><a href="xxfjjk5.html">5月</a></li>
+			<li><a href="xxfjjk6.html">6月</a></li>
+			<li><a href="xxfjjk7.html">7月</a></li>
+			<li><a href="xxfjjk8.html">8月</a></li>
+			<li><a href="xxfjjk9.html">9月</a></li>
+			<li><a href="xxfjjk10.html">10月</a></li>
+			<div class="clearfix"></div>
+		</ul>
+		<div class="book-detail" v-for="book in books">
+			<div class="book-image"><img src="../../img/book-default.jpg"></div>
+			<div class="book-right-content"> 
+				<div class="book-title">{{book.bookName}}</div>
+				<div class="book-info">{{book.info}}</div>
+				<div class="book-time" @click="allArticle(book.url)">查看全文<span>{{book.time}}</span></div>
+				<div class="play-button" v-if="book.voiceUrl!==''" @click="playBook(book.voiceUrl)">播放</div>
+				<div class="play-button" v-if="book.voiceUrl==''" >该课无音频</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="bottom-content" v-if="isShowPlay">
+			<audio autoplay="autoplay" controls="controls"loop="loop" preload="preload"
+            v-bind:src="voiceUrl">
+
+            </audio>
+
+		</div>
+	
+		
+		<div   v-if="isShowCodePopUp" style="position: fixed;width: 100%;height: 100%;background: #000; filter:alpha(Opacity=50); opacity: 0.5;top: 0;"></div>
+		<div  class="popup" v-if="isShowCodePopUp"> 
+		   <div class="content"> 
+		   	<div class="head">糟糕了！好像过期了</div>
+		   	<div class="info"> 
+		   		<div class="the-info-content">分享到朋友圈获得38个赞联系微信18358597258获取！！</div>
+		   		
+		   		<input v-model="theKey" />
+		   		<div class="confirm-button" @click="activate()">输入激活码</div>
+		   	</div>  
+		   </div>
+		</div>	
+		
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var xxfjjkApp = new Vue({
+			el:'#xxfjjk',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				books:[
+				    { bookName:"0221发刊词丨只给你地道的经济学思维",voiceUrl:"http://l.na.ppsrc.com/24XJJJ7tfXDHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"第001讲丨战俘营里的经济组织",voiceUrl:"http://l.na.ppsrc.com/qSDnphcuCibHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第003讲丨看得见的和看不见的",voiceUrl:"http://l.na.ppsrc.com/OsosMaoV2k3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第004讲丨经济学不关心阴谋论",voiceUrl:"http://l.na.ppsrc.com/ZTgeTKtZzb3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"问答丨薛老师“敲黑板”帮你划重点",voiceUrl:"http://l.na.ppsrc.com/ONIZ5TL2eZ_HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第005讲：不确定性，进化与经济理论",voiceUrl:"http://l.na.ppsrc.com/9utP0Y8ShdTHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"第006讲丨亚当·斯密的人性观",voiceUrl:"http://l.na.ppsrc.com/EfsYxPdfHNPHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第007讲丨铅笔的故事",voiceUrl:"http://l.na.ppsrc.com/T5pMbc7N4PfHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第008讲丨商业是最大的慈善",voiceUrl:"http://l.na.ppsrc.com/bnc12TGpsUjHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第2周问答丨帮助弱者，才叫慈善",voiceUrl:"http://l.na.ppsrc.com/piwFuK0lhWzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第009讲丨稀缺",voiceUrl:"http://l.na.ppsrc.com/KcrWYSKlqpXHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第010讲丨选择和歧视",voiceUrl:"http://l.na.ppsrc.com/_w9sj9g3LafHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    {bookName:"第011讲丨凡歧视必得付代价",voiceUrl:"http://l.na.ppsrc.com/fuEniV-Jnq3HrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"第012讲丨歧视的作用和限制歧视的恶果",voiceUrl:"http://l.na.ppsrc.com/TXwFaKy3igjHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第3周问答丨选总统比选伴侣更容易出现歧视行为",voiceUrl:"http://l.na.ppsrc.com/-gbem3upqTLHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第013讲丨一句话给成本下定义",voiceUrl:"http://l.na.ppsrc.com/114KWSE4GurHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第014讲丨你的成本由别人决定",voiceUrl:"http://l.na.ppsrc.com/cdsja6G7-VDHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第015讲丨别只盯着钱",voiceUrl:"http://l.na.ppsrc.com/oNn1cLJ37BfHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"第016讲丨沉没成本不是成本",voiceUrl:"http://l.na.ppsrc.com/Cg2C8hJKPU3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第4周问答-药价为何越来越高？",voiceUrl:"http://l.na.ppsrc.com/_3rxaVNtjhjHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第017讲丨从成本角度理解盈利与亏损",voiceUrl:"http://l.na.ppsrc.com/8qqlaGqmennHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第018讲丨最终产品的供需决定原材料的成本",voiceUrl:"http://l.na.ppsrc.com/LpH-Ovxt6FvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第19讲 必定还有租",voiceUrl:"http://l.na.ppsrc.com/OTKzpV17T6zHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第20讲寻租乞丐没有白拿施舍",voiceUrl:"http://l.na.ppsrc.com/g0W8WKo6mC3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"当皇帝不一定是好职业",voiceUrl:"http://l.na.ppsrc.com/pSL13Mt9dzLHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第021讲：社会成本问题-伤害与被伤害",voiceUrl:"http://l.na.ppsrc.com/JXG-iDuA7wDHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第022讲社会成本问题-值得与不值得",voiceUrl:"http://l.na.ppsrc.com/Ai_6-rWcGV3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    {bookName:"第023讲，谁用得好就归谁",voiceUrl:"http://l.na.ppsrc.com/1DWl9z0UCerHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"第024讲：越富足越健康",voiceUrl:"http://l.na.ppsrc.com/JidUxSmYrXXHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第6周问答：为什么女人越来越自由了",voiceUrl:"http://l.na.ppsrc.com/4yHUyK7KG3DHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第025讲丨有人群就有交易费用",voiceUrl:"http://l.na.ppsrc.com/kbamWvNAnlHHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第026讲丨征地的权衡2",voiceUrl:"http://l.na.ppsrc.com/ZeIXiAbjDOLHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第027讲：寻求合作解",voiceUrl:"http://l.na.ppsrc.com/pd1BUcmehCjHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"第028讲成本概念的递进",voiceUrl:"http://l.na.ppsrc.com/XyPxAYesxODHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第7周问答：中国式过马路到底好不不好？",voiceUrl:"http://l.na.ppsrc.com/ZCNcqcpzUGrHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"29讲个人主义的主观价值论",voiceUrl:"http://l.na.ppsrc.com/gfUp9UOixTTHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第0330讲，边际革命",voiceUrl:"http://l.na.ppsrc.com/3uH-QCQaZkvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第031讲，需求第一定律（1）",voiceUrl:"http://l.na.ppsrc.com/i8Gi3EH1ZWPHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第032讲：需求第一定律（2）",voiceUrl:"http://l.na.ppsrc.com/4QmMEwD4Y4PHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第8周问答：人们为什么送礼而不送钱？",voiceUrl:"http://l.na.ppsrc.com/cslRm7AJHeTHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第033讲，需求第二定律（1_3)",voiceUrl:"http://l.na.ppsrc.com/6bkXWM1-8unHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第034讲：需求第二定律（2_3）",voiceUrl:"http://l.na.ppsrc.com/y4BLXl4g_bnHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第035讲：需求第二定律（3_3）",voiceUrl:"http://l.na.ppsrc.com/9z2Pq_n9tH7HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第036讲需求第三定律",voiceUrl:"http://l.na.ppsrc.com/7H9097nKDsfHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第037讲丨经济计算问题",voiceUrl:"http://l.na.ppsrc.com/kHFwS2UUPQPHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第038讲丨知识在社会中的运用",voiceUrl:"http://l.na.ppsrc.com/0A5DYZIdmFDHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第039讲丨如何分饼决定饼做多大",voiceUrl:"http://l.na.ppsrc.com/tnuO2XM97fHHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第040讲丨换个角度看发国难财的行为2",voiceUrl:"http://l.na.ppsrc.com/gFfzTvDLhGHHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第10周问答  为什么人工智能不能替代人",voiceUrl:"http://l.na.ppsrc.com/tWP7xZmfevvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第041讲丨世上有哪些竞争规则",voiceUrl:"http://l.na.ppsrc.com/DvkE-9oHC53HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第042讲",voiceUrl:"http://l.na.ppsrc.com/61GrJIVfotzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第043讲 何为短缺和过剩",voiceUrl:"http://l.na.ppsrc.com/Yn7SVjmf1-XHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第044讲丨最省事儿地违反价格管制2",voiceUrl:"http://l.na.ppsrc.com/GCcqOwlqaovHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第11周问答  美国石油短缺为何在一夜之间消失",voiceUrl:"http://l.na.ppsrc.com/xSYRy_sQ_9vHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第045讲丨春运火车票价还不够高",voiceUrl:"http://l.na.ppsrc.com/YVF1RuayTnnHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第046讲丨美国的房租管制2",voiceUrl:"http://l.na.ppsrc.com/AxrtSD9a0-fHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第047讲丨解除价格管制——果断与沉稳的拿捏",voiceUrl:"http://l.na.ppsrc.com/HaynB9Bkjc_HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第048讲丨实物补贴和货币补贴的权衡",voiceUrl:"http://l.na.ppsrc.com/7EXZhE408lvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第12周问答  讨好领导和讨好客户哪个更划算",voiceUrl:"http://l.na.ppsrc.com/XqDbqtzdZDvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第049讲丨房价上升好不好",voiceUrl:"http://l.na.ppsrc.com/65xKONcPO8rHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第050讲丨廉价保障房更贵",voiceUrl:"http://l.na.ppsrc.com/7occx1jYsKfHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第051讲丨没有“使用需求”就没有“投资需求”",voiceUrl:"http://l.na.ppsrc.com/xieamMXv0abHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第052讲丨价格是高度分权的结果",voiceUrl:"http://l.na.ppsrc.com/oZmOwNbySebHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第13周问答丨城市兴衰有其内在规律",voiceUrl:"http://l.na.ppsrc.com/_5mUKn538O3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+			        {bookName:"第一季度复盘丨为什么珍稀动物越保护越少？",voiceUrl:"http://l.na.ppsrc.com/cE6lK0yApIjHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第053讲丨权利有别于能力",voiceUrl:"http://l.na.ppsrc.com/Cvv1Wb5pLLDHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第054讲丨权利是人赋的而非天赋的",voiceUrl:"http://l.na.ppsrc.com/gmtZTUKB_APHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第055讲丨自由不等于免费",voiceUrl:"http://l.na.ppsrc.com/FJK8KcfkM9HHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第056讲丨产权保护物理属性而非经济属性",voiceUrl:"http://l.na.ppsrc.com/hB3iKs-aA-HHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第14周问答  广告拦截软件到底有没有侵权？”",voiceUrl:"http://l.na.ppsrc.com/Cjjb3S7HoMnHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第057讲丨产权的兴起",voiceUrl:"http://l.na.ppsrc.com/VqZF1J10oEfHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第058讲丨产权：使用权、收益权和转让权",voiceUrl:"http://l.na.ppsrc.com/SZI5n30OpwXHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    {bookName:"第059讲丨产权保护之一：财产原则",voiceUrl:"http://l.na.ppsrc.com/xkG7KXdRpC7HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第060讲丨产权保护之二：责任原则",voiceUrl:"http://l.na.ppsrc.com/coKjw5lTCWXHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第15周问答  应不应该和刘翔竞争短跑？",voiceUrl:"http://l.na.ppsrc.com/gqHdMv2igzDHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第061讲丨产权保护之三：不可转让原则2",voiceUrl:"http://l.na.ppsrc.com/t1HUzQ4DniXHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第062讲丨产权保护之三：不可转让原则（续）",voiceUrl:"http://l.na.ppsrc.com/0lcqWFsQW03HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第063讲丨边际收益递减定律",voiceUrl:"http://l.na.ppsrc.com/75Svb7GjFwzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+			        {bookName:"第064讲丨集体所有制",voiceUrl:"http://l.na.ppsrc.com/r3C4a_5q4UvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第065讲丨私有制",voiceUrl:"http://l.na.ppsrc.com/oRZjiNZIM4jHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第066讲丨全员所有制",voiceUrl:"http://l.na.ppsrc.com/rWcx00irINvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第067讲丨公地真会悲剧吗？",voiceUrl:"http://l.na.ppsrc.com/Jf-2t2Bk_a7HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第068讲丨政府所有制",voiceUrl:"http://l.na.ppsrc.com/SYjSDqKh0IPHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第17周问答  每个人都有自己的“渔船”",voiceUrl:"http://l.na.ppsrc.com/KnJxS_CMiHLHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第069讲丨经济学家百年论堵",voiceUrl:"http://l.na.ppsrc.com/I1mRxzVQiqPHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第070讲丨拥堵费的实践",voiceUrl:"http://l.na.ppsrc.com/0Dd6Ow90G2jHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第071讲丨公用品和私用品",voiceUrl:"http://l.na.ppsrc.com/bFcI41Sh80HHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第072讲丨灯塔的故事",voiceUrl:"http://l.na.ppsrc.com/MUcwN6Voze7HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第18周问答丨成长就是变得复杂",voiceUrl:"http://l.na.ppsrc.com/HAT3n_eqvQDHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第073讲丨易耗品与耐用品",voiceUrl:"http://l.na.ppsrc.com/NsD_pFDkbWzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第074讲丨不耐产生交易",voiceUrl:"http://l.na.ppsrc.com/XSTGz57sXS3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第075讲丨利率管制与高利贷",voiceUrl:"http://l.na.ppsrc.com/ponJmxhdW4XHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				]
+			},
+		    created:function () {
+
+		    	    var dt = localStorage.getItem("Mtime");
+		    	    console.log(dt)
+			        var data = new Date();
+			        var regeditTime = data.getTime();
+			      
+			        if(dt==null){
+			        	localStorage.setItem("Mtime",regeditTime);
+			        }
+			        else{
+			        	var nowT= data.getTime();
+			        	pastT=nowT-dt;
+			        	console.log(pastT)
+			        	//432000000毫秒=5天
+			        	if(pastT<=432000000){
+			//           alert(pastT);
+			//           alert("没过期");
+			        	}else{
+			            this.isShowCodePopUp=true;
+					             
+			        	}
+			        }
+		    },
+			methods:{
+				   allArticle:function(url){
+				   	  var articleDetail="articleDetail.html"+"?"+"articleUrl="+url
+				   	  window.location.assign(articleDetail); 
+				      console.log(articleDetail)
+				   },
+				   playBook:function(voiceUrl){
+				   	  this.isShowPlay=true;
+				   	  this.voiceUrl=voiceUrl;
+				   },
+				   activate:function(){
+				   	var dd=this.theKey;
+					for(i=0;i<dd.length;i++){
+				   
+				    	if(dd.charAt(0)=='y'&&dd.charAt(1)=='x'&&dd.charAt(dd.length-1)=="f"){
+				//  		alert("22")
+				          localStorage.setItem("Mtime","9904624053231");
+				           this.isShowCodePopUp=false;
+				    		
+				    	}
+				    }
+				   }
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+

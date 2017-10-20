@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+<META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
+<META HTTP-EQUIV="expires" CONTENT="0">
+
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="css/vip.css" />
+<script type="text/javascript" src="js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="js/vue.min.js" ></script>
+
+<title>专栏订阅</title>
+
+
+
+</head>
+
+<body>
+	<div id="areaBook" class="lesson-book-index " style="display: none;">
+		<div class="top-head"></a>快听</div>
+		<div class="banner">
+			<img src="img/banner.jpg">
+		</div>
+	    <div class="play-first-content"> 
+	    	<div class="title">逻辑思维
+	    	<a href="" class="all-content">查看全部 ></a>
+	    	</div>
+	    	<div class="play-content" v-for="luojisiwei in luojisiweis">
+	    		<div class="play-button" @click="playBook(luojisiwei.url)">
+	    			<span></span>
+	    			<div class="content-title">{{luojisiwei.title}}</div>
+	    		</div>
+	    	</div>
+	    	
+	    </div>
+	    <div class="special-content"> 
+	    	<div class="title"><span></span>经典专栏</div>
+	    	<ul> 
+	    		<li><a href="zhuanlan/index.html"><img src="img/zldedao.jpg"></a></li>
+                <li><a href="xiaoshuo/index.html"><img src="img/zlxiaoshuo.jpg"></a></li>
+                <li><a href=""><img src=""></a></li>
+                <div class="clearfix"></div>
+	    	</ul>
+	    </div>
+	    
+	    <div class="bottom-content" v-if="isShowPlay">
+			<audio autoplay="autoplay" controls="controls"loop="loop" preload="auto"
+            v-bind:src="voiceUrl">
+
+            </audio>
+
+		</div>
+		
+
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var areaBookApp = new Vue({
+			el:'#areaBook',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				luojisiweis:[
+				    {url:"http://igetoss.cdn.igetget.com/mp3/201710/16/64000_201710160911267325402368.mp3",title:"第363期｜外线战略"},
+			        ]
+			},
+		    created:function () {
+               $('#areaBook').show();
+		    	
+		    },
+			methods:{
+				 allArticle:function(url){
+				   	  var articleDetail="articleDetail.html"+"?"+"articleUrl="+url
+				   	  window.location.assign(articleDetail); 
+				      console.log(articleDetail)
+				   },
+				   playBook:function(voiceUrl){
+				   	  this.isShowPlay=true;
+				   	  this.voiceUrl=voiceUrl;
+				   },
+				  
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+

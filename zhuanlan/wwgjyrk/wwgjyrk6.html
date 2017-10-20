@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="../../css/vip.css" />
+<script type="text/javascript" src="../../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../../js/vue.min.js" ></script>
+
+<title>每天听本书</title>
+
+
+
+</head>
+
+<body>
+	<div id="wwgjyrk" class="splitByMonth" style="display: none;">
+		<div class="top-head"><a href="#" onClick="javascript :history.back(-1);"><span></span></a>万维钢精英日课</div>
+		<div class="title"><span></span>按月查询</div>
+		<ul>
+			
+			<li><a href="wwgjyrk8.html">8月</a></li>
+			<li><a href="wwgjyrk7.html">7月</a></li>
+			<li><a href="wwgjyrk6.html" style="color: #FF4500;">6月</a></li>
+			<li><a href="wwgjyrk5.html">5月</a></li>
+			<li><a href="wwgjyrk4.html">4月</a></li>
+			<li><a href="wwgjyrk3.html">3月</a></li>
+			<li><a href="wwgjyrk2.html">2月</a></li>
+			
+			<div class="clearfix"></div>
+		</ul>
+		<div class="book-detail" v-for="book in books">
+			<div class="book-image"><img src="../../img/book-default.jpg"></div>
+			<div class="book-right-content"> 
+				<div class="book-title">{{book.bookName}}</div>
+				<div class="book-info">{{book.info}}</div>
+				<div class="book-time" @click="allArticle(book.url)">查看全文<span>{{book.time}}</span></div>
+				<div class="play-button" v-if="book.voiceUrl!==''" @click="playBook(book.voiceUrl)">播放</div>
+				<div class="play-button" v-if="book.voiceUrl==''" >该课无音频</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="bottom-content" v-if="isShowPlay">
+			<audio autoplay="autoplay" controls="controls"loop="loop" preload="preload"
+            v-bind:src="voiceUrl">
+
+            </audio>
+
+		</div>
+	
+		
+		<div   v-if="isShowCodePopUp" style="position: fixed;width: 100%;height: 100%;background: #000; filter:alpha(Opacity=50); opacity: 0.5;top: 0;"></div>
+		<div  class="popup" v-if="isShowCodePopUp"> 
+		   <div class="content"> 
+		   	<div class="head">糟糕了！好像过期了</div>
+		   	<div class="info"> 
+		   		<div class="the-info-content">分享到朋友圈获得38个赞联系微信18358597258获取！！</div>
+		   		
+		   		<input v-model="theKey" />
+		   		<div class="confirm-button" @click="activate()">输入激活码</div>
+		   	</div>  
+		   </div>
+		</div>	
+		
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var wwgjyrkApp = new Vue({
+			el:'#wwgjyrk',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				books:[
+				    {bookName:"jy0630日课221丨领导吃了文化的亏",voiceUrl:"http://l.na.ppsrc.com/y30qr6aJaznHrOczY7uuTg",url:"",info:"欢迎大家继续学习第二季",time:""},				
+				    { bookName:"jy0629日课220丨通往超人之路",voiceUrl:"http://l.na.ppsrc.com/yVJVkSpu_O_HrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"jy0628日课219丨权力带来的脑损伤",voiceUrl:"http://l.na.ppsrc.com/R49aHm0N5S3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy0627日课218丨宇宙的视角",voiceUrl:"http://l.na.ppsrc.com/-6hsz_uIMQzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy0626特别放送丨精英的智慧",voiceUrl:"http://l.na.ppsrc.com/NkhYJE1a_mjHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy0624日课217丨暗能量的惆怅",voiceUrl:"http://l.na.ppsrc.com/BrcBAEOpgnnHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy0623日课216丨经验 = 对小概率意外的熟悉程度",voiceUrl:"http://l.na.ppsrc.com/BOn3VvlcfqLHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"jy0622日课215丨暗物质的陪伴",voiceUrl:"http://l.na.ppsrc.com/Re7iSxOs9-jHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					 { bookName:"jy0621日课214丨现代人怎么都不穿正装了？",voiceUrl:"http://l.na.ppsrc.com/FvxQrp6c2fzHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"jy0620日课213丨幸运是这个宇宙的通行证",voiceUrl:"http://l.na.ppsrc.com/JbJnIukdrO3HrOczY7uuTg	",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					 {bookName:"jy0619周末小议丨平均的终结：人不是工业品",voiceUrl:"http://l.na.ppsrc.com/PiaDNwZp8j_HrOczY7uuTg",url:"",info:"欢迎大家继续学习第二季",time:""},				
+				    { bookName:"jy0617日课212丨蜘蛛侠套装",voiceUrl:"http://l.na.ppsrc.com/fFa7V6urZ8XHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"jy0616日课211丨面对两难选择，最好量化决策",voiceUrl:"http://l.na.ppsrc.com/D2BHLvtc6iHHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0615jy日课210～2S谁愿意嫁给爱因斯坦",voiceUrl:"http://l.na.ppsrc.com/QZfWLaQAqv3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy0614日课209丨谈资比名牌包贵的社会",voiceUrl:"http://l.na.ppsrc.com/6xCd_G22R4HHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy0613日课208丨从“迷之自信”到“自我关怀”",voiceUrl:"http://l.na.ppsrc.com/4_EAAE1zz6_HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy0610日课207丨外向好还是内向好？",voiceUrl:"http://l.na.ppsrc.com/k7QzLFsOID3HrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"jy0609日课206丨企业家精神和包办婚姻",voiceUrl:"http://l.na.ppsrc.com/BvcBX1KVwgjHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					 { bookName:"jy0608日课205丨坚持坚持再坚持",voiceUrl:"http://l.na.ppsrc.com/xGevw_cm1zLHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"jy0607日课204丨主要看气质",voiceUrl:"http://l.na.ppsrc.com/-ntY-BzYeJjHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					 {bookName:"jy0606日课203丨为什么优等生不能改变世界",voiceUrl:"http://l.na.ppsrc.com/x6puZbYU2aHHrOczY7uuTg",url:"",info:"欢迎大家继续学习第二季",time:""},				
+				    { bookName:"jy0603日课202丨《人人说谎》解读8：大数据的不能和不愿",voiceUrl:"http://l.na.ppsrc.com/eZsLF6knKJTHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"jy0602日课201丨《人人说谎》解读7：意料之外的有用和没用",voiceUrl:"http://l.na.ppsrc.com/0lwa75D44QvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy0601日课200丨《人人说谎》解读6：隐藏的规律",voiceUrl:"http://l.na.ppsrc.com/288LPvgdUlHHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					
+				]
+			},
+		    created:function () {
+                    $('#wwgjyrk').show();
+		    	    var dt = localStorage.getItem("wanweigang");
+		    	    console.log(dt)
+			        var data = new Date();
+			        var regeditTime = data.getTime();
+			      
+			        if(dt==null){
+			        	localStorage.setItem("wanweigang",regeditTime);
+			        }
+			        else{
+			        	var nowT= data.getTime();
+			        	pastT=nowT-dt;
+			        	console.log(pastT)
+			        	//432000000毫秒=5天
+			        	if(pastT<=432000000){
+			//           alert(pastT);
+			//           alert("没过期");
+			        	}else{
+			            this.isShowCodePopUp=true;
+					             
+			        	}
+			        }
+		    },
+			methods:{
+				   allArticle:function(url){
+				   	  var articleDetail="articleDetail.html"+"?"+"articleUrl="+url
+				   	  window.location.assign(articleDetail); 
+				      console.log(articleDetail)
+				   },
+				   playBook:function(voiceUrl){
+				   	  this.isShowPlay=true;
+				   	  this.voiceUrl=voiceUrl;
+				   },
+				   activate:function(){
+				   	var dd=this.theKey;
+					for(i=0;i<dd.length;i++){
+				   
+				    	if(dd.charAt(0)=='y'&&dd.charAt(1)=='x'&&dd.charAt(dd.length-1)=="f"){
+				//  		alert("22")
+				          localStorage.setItem("wanweigang","9904624053231");
+				           this.isShowCodePopUp=false;
+				    		
+				    	}
+				    }
+				   }
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+

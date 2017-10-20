@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="../css/vip.css" />
+<script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../js/vue.min.js" ></script>
+
+<title>每天听本书</title>
+
+
+
+</head>
+
+<body>
+	<div id="everyDayLesson" class="xiaoshuo splitByMonth">
+		<div class="top-head"><a href="#" onClick="javascript :history.back(-1);"><span></span></a>晓说</div>
+		<div class="title"><span></span>按季查询</div>
+		<ul>
+			<li><a href="xiaoshuo1.html">2017</a></li>
+			<li><a href="xiaoshuo2.html">第四季</a></li>
+			<li><a href="xiaoshuo3.html">第三季</a></li>
+			<li><a href="xiaoshuo4.html">第二季</a></li>
+			<li><a href="xiaoshuo5.html">第一季</a></li>
+
+			
+			<div class="clearfix"></div>
+		</ul>
+		<div class="book-detail" v-for="book in books">
+			<div class="book-image"><img src="../img/xiaoshuo.jpg"></div>
+			<div class="book-right-content"> 
+				<div class="book-title">{{book.bookName}}</div>
+				<div class="book-info">{{book.info}}</div>
+				<div class="book-time" @click="allArticle(book.url)">查看全文<span>{{book.time}}</span></div>
+				<div class="play-button" @click="playBook(book.voiceUrl)">播放</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="bottom-content" v-if="isShowPlay">
+			<audio autoplay="autoplay" controls="controls"loop="loop" preload="auto"
+            v-bind:src="voiceUrl">
+
+            </audio>
+
+		</div>
+	
+		
+		
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var everyDayLessonApp = new Vue({
+			el:'#everyDayLesson',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				books:[
+				    { bookName:"1期：第一季120316第1期《揭秘奥斯卡“黑幕” 无删减版》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/62dea9a5-2c13-4139-92fb-be4e945eb060.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"2期：第一季120323第2期《高晓松炮轰：汉人无音乐都怪老祖宗》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/b797d7ff-df01-4abd-9822-1b8dcd9c76a9.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"3期：第一季120329第3期 《梦回青楼》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/66c824f4-6859-4861-a98d-6a62090f8e67.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"4期：第一季120405第4期《梦回青楼》 下",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/5a8fdb8f-c3c1-4df0-a561-6d5ee4f8947e.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"5期：第一季第120412第5期《张学良观虎斗 旧电报还原军阀“宫心计”》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/054ab5a4-d41e-4de1-bd3b-90bcf0130421.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"6期：第一季120419第6期《郑和的大航海时代？》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/e3df8ce9-a313-40b2-a187-0e6cdf4f9e9c.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"7期：第一季120426第7期《镖局—最后的江湖（上）》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/809dd60a-200c-459e-844b-98011ebf3d02.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"8期：第一季120503第8期《镖局——最后的江湖（下）》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/6956248f-ed94-492c-b509-e93d6d1f076e.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"9期：第一季120511第9期《多如牛毛严酷无比 高晓松趣谈美国那些法》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/a4bcc366-ad2a-472b-8539-b3063fae05aa.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"10期：第一季120518第10期《高晓松现身说法 趣谈美国交规那些事》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/003ddc88-637c-4ae1-86d8-530e81ee2ce2.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"11期：第一季120524第11期《揭秘我党历史上最危险的叛徒——顾顺章》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/6289633f-819a-45c2-9f6e-fc5cd13c7657.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"12期：第一季120531第12期《高晓松看病连遇怪事 揭秘美国社会毒瘤》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/138662b5-eb92-480f-91ef-1b55716f1d9d.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"13期：第一季120614第13期《赌球无删减版》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/5c014cb5-6572-4c66-9ba7-350e16cb0dee.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"14期：第一季120615第14期《高晓松揭秘战争秘闻 朝鲜战争62年祭(上)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/15d77854-cb18-4197-88ec-2af07157d812.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"15期：第一季120622第15期《高晓松刨根问祖 揭秘欧洲列强恩仇录》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/3250ecce-e38b-4853-9663-3857d2533590.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"16期：第一季120629第16期《古代科举那些事——由来》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/e3946dd7-7b16-4f39-bcd9-3e7ee8949fb2.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"17期：第一季120706第17期《高晓松揭秘战争秘闻 朝鲜战争62年祭(下) 》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/cdeea04f-a576-46e9-bb3b-426602259f86.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"18期：第一季120712第18期《古代科举那些事——招生》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/dda64665-c8f9-4fcb-9503-67cad610ad82.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"19期：第一季120719第19期《千年科举那些事——官场》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/9c1608fd-9882-4b36-9676-05feb20ef46c.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20期：第一季120727第20期《看美国系列之《美国人与物》》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/4b20ab8f-68be-4feb-9544-db1a79b9d401.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"21期：第一季第21期《看美国系列之《日裔步兵团的奋战》》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/e6301a32-25e9-450b-b93d-7f2f7b821bb8.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"22期：第一季120809第22期《看美国系列之人类精华犹太人(上)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/c0129efa-2b0f-4c59-8063-ec0988b62a10.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"23期：第一季120817第23期《大师照亮八十年代》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/5150c63a-f887-4643-9161-c6c8176a0ffd.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"24期：第一季120824第24期《“看美国”系列之人类精华犹太人(下)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/45c9577b-8247-40d8-b6c6-700472995489.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"25期：第一季120831第25期《“看美国”系列之《两极分化的黑人》》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/f2e70fdf-ab1f-458e-bb68-2b8a8d82b971.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"26期：第一季120907第26期《艺术北纬三十度——回忆印度（上）》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/bf1ee035-208a-4637-b1dc-9e5a14813967.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					 { bookName:"27期：第一季120914第27期《艺术北纬三十度——回忆印度（下）》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/b52ac19a-10f6-4fee-88f2-5ebaa2a28abb.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"28期：第一季120921第28期《“看美国”系列之《枪口下的美国》》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/b8456dde-4061-4426-8ead-9c348198ca15.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"29期：第一季120927第29期《海上霸主航母（上）》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/3be3ab9f-e470-45e9-83a1-743de6e2d5ff.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"30期：第一季121004第30期《海上霸主航母(无删减版)》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/5f2216c7-5342-4cc6-be82-82c671c295bf.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"31期：第一季121011第31期《无比强大的美国工会》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/6be81bb1-a8e9-45a1-b0d7-47c36e1700c7.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"32期：第一季121019第32期《抗战史上最悲壮一幕——淞沪战役（上）》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/264df32f-e6df-4f9e-9779-9ad3514fd643.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"33期：第一季121026第33期《淞沪战役中红军的战绩》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/43bd6b54-8802-434f-9d88-05e0a87700c8.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"34期：第一季121102第34期《政治也娱乐——美国大选（上）》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/71e1a5c0-ecd2-4059-9fbd-04b67807c0df.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"35期：第一季121108第35期《政治也娱乐——美国大选（下）》",voiceUrl:"",url:"http://image.kaolafm.net/mz/audios/201603/209857ad-8122-4a39-a26c-de20c75df8d2.mp3",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"36期：第一季121116第36期《看美国系列终极篇—血脉相连的美籍华人一》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/ac1f5f02-96dd-4f79-8a3b-bc3d5719109f.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"37期：第一季121123第37期《看美国系列终极篇—血脉相连的美籍华人二》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/6184cf5f-0b20-4d94-94b1-70b3d5fdb7e0.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"38期：第一季121129第38期《看美国系列终极篇—血脉相连的美籍华人三》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/1626d591-48e1-4aad-9825-5d6d4430dc43.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"39期：第一季121207第39期《Top Gun 浅谈我军新战机》",voiceUrl:"",url:"http://image.kaolafm.net/mz/audios/201603/0a123814-718b-4d6a-8135-71561dbedd99.mp3",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"40期：第一季121214第40期《开国将帅授衔秘闻（一）》",voiceUrl:"",url:"http://image.kaolafm.net/mz/audios/201603/f8142ec8-53d4-4e1e-8a6a-b28641bce299.mp3",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"41期：第一季121221第41期《开国将帅授衔秘闻二粟裕大将未评元帅之谜》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/c0723693-d6b9-49aa-8060-7145a5a27256.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"42期：第一季121228第42期《开国将帅授衔秘闻（三）》",voiceUrl:"",url:"http://image.kaolafm.net/mz/audios/201603/0184145c-06cb-400a-97d6-574371f55395.mp3",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"43期：第一季130104第43期《淞沪战役（下）：战火背后的内幕》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/334a5533-18de-4e67-9c94-35cc73da2beb.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					 { bookName:"44期：第一季130111第44期《光阴的故事——华语乐坛三十年》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/b094f327-c19f-4488-b65f-147e2c7c3ee0.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"45期：第一季130118第45期《民国往事之才貌双全林徽因》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/73260c94-2dd4-45e3-b167-8686096cba99.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"46期：第一季130125第46期《好莱坞启示录》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/1a6e5a8d-d49d-4052-b8c5-f764719bbd6b.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"47期：第一季130201第47期《民国往事之刺客列传（上）》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/1ca6bf4b-9748-4f7d-9e47-ca143d368478.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"48期：第一季130208第48期《民国往事之刺客列传（下）》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/e4bb0a27-d6ec-4ce1-b862-c8c9235f8528.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"49期：第一季130215第49期《民国往事之最美好的两天》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/e4ad4080-883b-4300-b374-b3ec1fd1106d.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"50期：第一季130222第50期《红色警戒—中国邻国武力值大PK上》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/553d1be7-d4ff-46ed-99bf-2fe729a73bb2.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"51期：第一季130301第51期《红色警戒—中国周边国家武力值大PK下》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/182f3074-b414-4b8e-8a18-c8709225f451.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"52期：第一季130308第52期《说说心里话》",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/450c7e63-6721-4a1c-8306-1bfae0f2894d.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"53期：第一季130315季外篇（一）",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/4d2bfa7e-3b1b-4cdc-8855-c6889cf16ad0.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"54期：第一季130322季外篇（二）",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/c2254910-f951-4590-a3d6-c60a3d5653ec.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"55期：第一季130329季外篇（三）",voiceUrl:"http://image.kaolafm.net/mz/audios/201603/64361554-acec-4745-8d8d-a786fc29d5ab.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				   
+				]
+			},
+		  
+			methods:{
+				   allArticle:function(url){
+				   	  var articleDetail="articleDetail.html"+"?"+"articleUrl="+url
+				   	  window.location.assign(articleDetail); 
+				      console.log(articleDetail)
+				   },
+				   playBook:function(voiceUrl){
+				   	  this.isShowPlay=true;
+				   	  this.voiceUrl=voiceUrl;
+				   }
+				   
+				 
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+

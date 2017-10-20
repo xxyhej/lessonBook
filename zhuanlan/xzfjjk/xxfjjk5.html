@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="../../css/vip.css" />
+<script type="text/javascript" src="../../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../../js/vue.min.js" ></script>
+
+<title>每天听本书</title>
+
+
+
+</head>
+
+<body>
+	<div id="xxfjjk" class="splitByMonth">
+		<div class="top-head"><a href="#" onClick="javascript :history.back(-1);"><span></span></a>薛兆丰经济学</div>
+		<div class="title"><span></span>按月查询</div>
+		<ul>
+			<li><a href="xxfjjk2.html">2月</a></li>
+			<li><a href="xxfjjk3.html">3月</a></li>
+			<li><a href="xxfjjk4.html">4月</a></li>
+			<li><a href="xxfjjk5.html">5月</a></li>
+			<li><a href="xxfjjk6.html">6月</a></li>
+			<li><a href="xxfjjk7.html">7月</a></li>
+			<li><a href="xxfjjk8.html">8月</a></li>
+			<li><a href="xxfjjk9.html">9月</a></li>
+			<li><a href="xxfjjk10.html">10月</a></li>
+			<div class="clearfix"></div>
+		</ul>
+		<div class="book-detail" v-for="book in books">
+			<div class="book-image"><img src="../../img/book-default.jpg"></div>
+			<div class="book-right-content"> 
+				<div class="book-title">{{book.bookName}}</div>
+				<div class="book-info">{{book.info}}</div>
+				<div class="book-time" @click="allArticle(book.url)">查看全文<span>{{book.time}}</span></div>
+				<div class="play-button" v-if="book.voiceUrl!==''" @click="playBook(book.voiceUrl)">播放</div>
+				<div class="play-button" v-if="book.voiceUrl==''" >该课无音频</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="bottom-content" v-if="isShowPlay">
+			<audio autoplay="autoplay" controls="controls"loop="loop" preload="preload"
+            v-bind:src="voiceUrl">
+
+            </audio>
+
+		</div>
+	
+		
+		<div   v-if="isShowCodePopUp" style="position: fixed;width: 100%;height: 100%;background: #000; filter:alpha(Opacity=50); opacity: 0.5;top: 0;"></div>
+		<div  class="popup" v-if="isShowCodePopUp"> 
+		   <div class="content"> 
+		   	<div class="head">糟糕了！好像过期了</div>
+		   	<div class="info"> 
+		   		<div class="the-info-content">分享到朋友圈获得38个赞联系微信18358597258获取！！</div>
+		   		
+		   		<input v-model="theKey" />
+		   		<div class="confirm-button" @click="activate()">输入激活码</div>
+		   	</div>  
+		   </div>
+		</div>	
+		
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var xxfjjkApp = new Vue({
+			el:'#xxfjjk',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				books:[
+				    {bookName:"第041讲丨世上有哪些竞争规则",voiceUrl:"http://l.na.ppsrc.com/DvkE-9oHC53HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第042讲",voiceUrl:"http://l.na.ppsrc.com/61GrJIVfotzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第043讲 何为短缺和过剩",voiceUrl:"http://l.na.ppsrc.com/Yn7SVjmf1-XHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第044讲丨最省事儿地违反价格管制2",voiceUrl:"http://l.na.ppsrc.com/GCcqOwlqaovHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第11周问答  美国石油短缺为何在一夜之间消失",voiceUrl:"http://l.na.ppsrc.com/xSYRy_sQ_9vHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第045讲丨春运火车票价还不够高",voiceUrl:"http://l.na.ppsrc.com/YVF1RuayTnnHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第046讲丨美国的房租管制2",voiceUrl:"http://l.na.ppsrc.com/AxrtSD9a0-fHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第047讲丨解除价格管制——果断与沉稳的拿捏",voiceUrl:"http://l.na.ppsrc.com/HaynB9Bkjc_HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第048讲丨实物补贴和货币补贴的权衡",voiceUrl:"http://l.na.ppsrc.com/7EXZhE408lvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第12周问答  讨好领导和讨好客户哪个更划算",voiceUrl:"http://l.na.ppsrc.com/XqDbqtzdZDvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第049讲丨房价上升好不好",voiceUrl:"http://l.na.ppsrc.com/65xKONcPO8rHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第050讲丨廉价保障房更贵",voiceUrl:"http://l.na.ppsrc.com/7occx1jYsKfHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第051讲丨没有“使用需求”就没有“投资需求”",voiceUrl:"http://l.na.ppsrc.com/xieamMXv0abHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第052讲丨价格是高度分权的结果",voiceUrl:"http://l.na.ppsrc.com/oZmOwNbySebHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第13周问答丨城市兴衰有其内在规律",voiceUrl:"http://l.na.ppsrc.com/_5mUKn538O3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+			        {bookName:"第一季度复盘丨为什么珍稀动物越保护越少？",voiceUrl:"http://l.na.ppsrc.com/cE6lK0yApIjHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第053讲丨权利有别于能力",voiceUrl:"http://l.na.ppsrc.com/Cvv1Wb5pLLDHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第054讲丨权利是人赋的而非天赋的",voiceUrl:"http://l.na.ppsrc.com/gmtZTUKB_APHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第055讲丨自由不等于免费",voiceUrl:"http://l.na.ppsrc.com/FJK8KcfkM9HHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第056讲丨产权保护物理属性而非经济属性",voiceUrl:"http://l.na.ppsrc.com/hB3iKs-aA-HHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第14周问答  广告拦截软件到底有没有侵权？”",voiceUrl:"http://l.na.ppsrc.com/Cjjb3S7HoMnHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第057讲丨产权的兴起",voiceUrl:"http://l.na.ppsrc.com/VqZF1J10oEfHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"第058讲丨产权：使用权、收益权和转让权",voiceUrl:"http://l.na.ppsrc.com/SZI5n30OpwXHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    {bookName:"第059讲丨产权保护之一：财产原则",voiceUrl:"http://l.na.ppsrc.com/xkG7KXdRpC7HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					]
+			},
+		    created:function () {
+
+		    	    var dt = localStorage.getItem("Mtime");
+		    	    console.log(dt)
+			        var data = new Date();
+			        var regeditTime = data.getTime();
+			      
+			        if(dt==null){
+			        	localStorage.setItem("Mtime",regeditTime);
+			        }
+			        else{
+			        	var nowT= data.getTime();
+			        	pastT=nowT-dt;
+			        	console.log(pastT)
+			        	//432000000毫秒=5天
+			        	if(pastT<=432000000){
+			//           alert(pastT);
+			//           alert("没过期");
+			        	}else{
+			            this.isShowCodePopUp=true;
+					             
+			        	}
+			        }
+		    },
+			methods:{
+				   allArticle:function(url){
+				   	  var articleDetail="articleDetail.html"+"?"+"articleUrl="+url
+				   	  window.location.assign(articleDetail); 
+				      console.log(articleDetail)
+				   },
+				   playBook:function(voiceUrl){
+				   	  this.isShowPlay=true;
+				   	  this.voiceUrl=voiceUrl;
+				   },
+				   activate:function(){
+				   	var dd=this.theKey;
+					for(i=0;i<dd.length;i++){
+				   
+				    	if(dd.charAt(0)=='y'&&dd.charAt(1)=='x'&&dd.charAt(dd.length-1)=="f"){
+				//  		alert("22")
+				          localStorage.setItem("Mtime","9904624053231");
+				           this.isShowCodePopUp=false;
+				    		
+				    	}
+				    }
+				   }
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+

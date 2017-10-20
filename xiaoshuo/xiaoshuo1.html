@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+<META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
+<META HTTP-EQUIV="expires" CONTENT="0">
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="../css/vip.css" />
+<script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../js/vue.min.js" ></script>
+
+<title>每天听本书</title>
+
+
+
+</head>
+
+<body>
+	<div id="everyDayLesson" class="xiaoshuo splitByMonth">
+		<div class="top-head"><a href="#" onClick="javascript :history.back(-1);"><span></span></a>晓说</div>
+		<div class="title"><span></span>按季查询</div>
+		<ul>
+			<li><a href="xiaoshuo1.html">2017</a></li>
+			<li><a href="xiaoshuo2.html">第四季</a></li>
+			<li><a href="xiaoshuo3.html">第三季</a></li>
+			<li><a href="xiaoshuo4.html">第二季</a></li>
+			<li><a href="xiaoshuo5.html">第一季</a></li>
+
+			
+			<div class="clearfix"></div>
+		</ul>
+		<div class="book-detail" v-for="book in books">
+			<div class="book-image"><img src="../img/xiaoshuo.jpg"></div>
+			<div class="book-right-content"> 
+				<div class="book-title">{{book.bookName}}</div>
+				<div class="book-info">{{book.info}}</div>
+				<div class="book-time" @click="allArticle(book.url)">查看全文<span>{{book.time}}</span></div>
+				<div class="play-button" @click="playBook(book.voiceUrl)">播放</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="bottom-content" v-if="isShowPlay">
+			<audio autoplay="autoplay" controls="controls"loop="loop" preload="auto"
+            v-bind:src="voiceUrl">
+
+            </audio>
+
+		</div>
+	
+		
+		
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var everyDayLessonApp = new Vue({
+			el:'#everyDayLesson',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				books:[
+				    { bookName:"晓说第27期： 三体（三）死神永生",voiceUrl:"http://audio.xmcdn.com/group34/M03/15/51/wKgJYVnd9V6S9yykAQsbbF9wyKk768.m4a",url:"",info:"以圣母开头，以圣母结束，高晓松深扒《三体》。",time:"12：00"},
+				    { bookName:"晓说第26期： 三体（二）黑暗森林",voiceUrl:"http://audio.xmcdn.com/group34/M08/04/8D/wKgJYVnWVjbB1vsIAPrZ3hevitw913.m4a",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"晓说第25期：三体（一）圣母和小镇青年",voiceUrl:"http://audio.xmcdn.com/group30/M08/0D/07/wKgJXlnLXpmz3defARcueNh1Xl8989.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"晓说第24期：口述历史对谈马未都（下）京城旧事",voiceUrl:"http://audio.xmcdn.com/group31/M05/FF/04/wKgJSVnCNubBRflFATwq8Oyrx4o082.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"晓说第23期：口述历史对谈马未都（上）老北京寻宝记",voiceUrl:"http://audio.xmcdn.com/group32/M0A/92/03/wKgJnFm5A0_RZMdGAP0lPlj0TMQ759.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"晓说第22期：三国梦之队（六）军师的女人们",voiceUrl:"http://audio.xmcdn.com/group33/M09/44/AF/wKgJnVmw9tGjW_yYAU1QF1EaCQs239.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"晓说第21期：三国梦之队（五）军师联盟",voiceUrl:"http://audio.xmcdn.com/group32/M04/F0/49/wKgJS1mn4czRQbaPARlvkywQniA684.m4a",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"晓说第20期：三国梦之队（四）十项全能CEO",voiceUrl:"http://audio.xmcdn.com/group32/M04/71/9C/wKgJnFmdSUbSRGs6AS2RyPfDELA342.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"晓说第19期：三国梦之队（三）谁是董事长",voiceUrl:"http://audio.xmcdn.com/group26/M0A/F9/3F/wKgJWFmUGWbhE66LASxb7evNh6k148.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"晓说第18期：三国梦之队（二）连环劫",voiceUrl:"http://audio.xmcdn.com/group31/M00/B6/6B/wKgJSVmK1oizmJV9ASc4OCk3BHY545.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"晓说第17期：三国梦之队（一）魏天时蜀地利吴人和",voiceUrl:"http://audio.xmcdn.com/group30/M07/6B/4C/wKgJXlmDBCXRGRE5AT5aafWU6GY084.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"晓说第16期：拿破仑尾声（下）王者荣耀",voiceUrl:"http://audio.xmcdn.com/group31/M02/B0/DE/wKgJX1l5l96CGQp3APP3v8zv2I8594.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"晓说第15期：拿破仑尾声（上）一份遗嘱引发的血案",voiceUrl:"http://audio.xmcdn.com/group30/M0B/54/D0/wKgJXllwaRmzzwl_ATRsjawcCxU703.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"晓说第14期：鲁迅尾声（下）鲁郭茅巴老曹",voiceUrl:"http://audio.xmcdn.com/group28/M00/49/87/wKgJSFloJ9fDpFltASN8RdOC40Q680.m4a",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"晓说第13期：鲁迅尾声（上）那些教科书没讲的事",voiceUrl:"http://audio.xmcdn.com/group29/M03/B3/8B/wKgJWVleA3nR79WgAS2tq6csrRI480.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"晓说第12期：一张唱片的诞生（下）夏天快乐",voiceUrl:"http://audio.xmcdn.com/group28/M08/3B/EA/wKgJXFlU9drCZtHZAQ9VprXvwr8541.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"晓说第11期：一张唱片的诞生（上）那些弹琴少年",voiceUrl:"http://audio.xmcdn.com/group29/M07/B2/1B/wKgJWVlLNtDgI5F1ASMA6YXfvbc118.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"晓说第10期：金瓶梅拾遗（下） 明朝房市揭秘",voiceUrl:"http://audio.xmcdn.com/group28/M01/37/5C/wKgJXFlCYpniNDiLARsKva4dGSU633.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"晓说第9期：金瓶梅拾遗（上）明朝那些事",voiceUrl:"http://audio.xmcdn.com/group29/M05/B1/A6/wKgJWVk5SnaADZ-UAQMyc34GNTM576.m4a",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"晓说第8期：高晓松YY未来世界（下）败给AlphaGo之后",voiceUrl:"http://audio.xmcdn.com/group28/M09/1F/AE/wKgJXFkwFtiA_qikAThXfSgxwOo395.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"晓说第7期：高晓松YY未来世界（上）",voiceUrl:"http://audio.xmcdn.com/group28/M04/5E/02/wKgJSFkn1hXi7fSvAQqKDH-W3n0847.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"晓说第6期：朝花夕拾之回忆胶片时代",voiceUrl:"http://audio.xmcdn.com/group29/M0B/30/95/wKgJXVkdigHhW4d9ATkmiaxv2XY128.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"晓说第5期：《金瓶梅》--国民老公现形记",voiceUrl:"http://audio.xmcdn.com/group26/M08/83/51/wKgJWFkUXQWSKEIgAV0TWmiFwaU473.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"晓说第4期：《金瓶梅》--西门庆创业史",voiceUrl:"http://audio.xmcdn.com/group27/M02/FA/42/wKgJR1kK_ZyDvBTHASCQ1htIu6c771.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"晓说第3期：《金瓶梅》--金莲和黛玉",voiceUrl:"http://audio.xmcdn.com/group27/M02/F6/E6/wKgJR1kKxVzymo35ARgPJ-2fWNE361.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"晓说第2期：攻陷好莱坞",voiceUrl:"http://audio.xmcdn.com/group27/M01/F6/F8/wKgJR1kKxqbSlqUsARMb4TZE8qQ047.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"高晓松回归喜马拉雅：首期漫谈颁奖季",voiceUrl:"http://audio.xmcdn.com/group26/M08/FB/70/wKgJWFkKx07RW3KkAIyL33UmkEk802.m4a",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					
+				]
+			},
+		  
+			methods:{
+				   allArticle:function(url){
+				   	  var articleDetail="articleDetail.html"+"?"+"articleUrl="+url
+				   	  window.location.assign(articleDetail); 
+				      console.log(articleDetail)
+				   },
+				   playBook:function(voiceUrl){
+				   	  this.isShowPlay=true;
+				   	  this.voiceUrl=voiceUrl;
+				   }
+				   
+				 
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+

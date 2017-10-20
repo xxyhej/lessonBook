@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="../../css/vip.css" />
+<script type="text/javascript" src="../../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../../js/vue.min.js" ></script>
+
+<title>每天听本书</title>
+
+
+
+</head>
+
+<body>
+	<div id="wwgjyrk" class="splitByMonth" style="display: none;">
+		<div class="top-head"><a href="#" onClick="javascript :history.back(-1);"><span></span></a>万维钢精英日课</div>
+		<div class="title"><span></span>按月查询</div>
+		<ul>
+			
+			<li><a href="wwgjyrk8.html">8月</a></li>
+			<li><a href="wwgjyrk7.html">7月</a></li>
+			<li><a href="wwgjyrk6.html">6月</a></li>
+			<li><a href="wwgjyrk5.html">5月</a></li>
+			<li><a href="wwgjyrk4.html">4月</a></li>
+			<li><a href="wwgjyrk3.html"style="color: #FF4500;" >3月</a></li>
+			<li><a href="wwgjyrk2.html">2月</a></li>
+			
+			<div class="clearfix"></div>
+		</ul>
+		<div class="book-detail" v-for="book in books">
+			<div class="book-image"><img src="../../img/book-default.jpg"></div>
+			<div class="book-right-content"> 
+				<div class="book-title">{{book.bookName}}</div>
+				<div class="book-info">{{book.info}}</div>
+				<div class="book-time" @click="allArticle(book.url)">查看全文<span>{{book.time}}</span></div>
+				<div class="play-button" v-if="book.voiceUrl!==''" @click="playBook(book.voiceUrl)">播放</div>
+				<div class="play-button" v-if="book.voiceUrl==''" >该课无音频</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="bottom-content" v-if="isShowPlay">
+			<audio autoplay="autoplay" controls="controls"loop="loop" preload="preload"
+            v-bind:src="voiceUrl">
+
+            </audio>
+
+		</div>
+	
+		
+		<div   v-if="isShowCodePopUp" style="position: fixed;width: 100%;height: 100%;background: #000; filter:alpha(Opacity=50); opacity: 0.5;top: 0;"></div>
+		<div  class="popup" v-if="isShowCodePopUp"> 
+		   <div class="content"> 
+		   	<div class="head">糟糕了！好像过期了</div>
+		   	<div class="info"> 
+		   		<div class="the-info-content">分享到朋友圈获得38个赞联系微信18358597258获取！！</div>
+		   		
+		   		<input v-model="theKey" />
+		   		<div class="confirm-button" @click="activate()">输入激活码</div>
+		   	</div>  
+		   </div>
+		</div>	
+		
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var wwgjyrkApp = new Vue({
+			el:'#wwgjyrk',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				books:[
+				    {bookName:"jy0331日课157丨给你一点虚幻的控制感",voiceUrl:"http://l.na.ppsrc.com/orYhdj2bzirHrOczY7uuTg",url:"",info:"欢迎大家继续学习第二季",time:""},				
+				    { bookName:"jy0329日课155丨领导力 ≠ 权力",voiceUrl:"http://l.na.ppsrc.com/z5Tw4Sg6MlLHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"jy0328日课154丨高手修炼手册2：指挥官的派头",voiceUrl:"http://l.na.ppsrc.com/ds9YYLE4fI3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0327周末小议丨第一性原理",voiceUrl:"http://l.na.ppsrc.com/m1c0UTDm9nbHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0325高手修炼手册1：系统，灵感和技能",voiceUrl:"http://l.na.ppsrc.com/JWJ0ulmnTdXHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0324日课152丨心理治疗师的刻意练习",voiceUrl:"http://l.na.ppsrc.com/DZCmIVAIyF3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0323日课151丨不稳定终将到来",voiceUrl:"http://l.na.ppsrc.com/eq-i_Q-UP__HrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"03-22-日课150丨有关学校教育的大实话",voiceUrl:"http://l.na.ppsrc.com/l7ww21EmMsvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					 { bookName:"03-21-日课149丨通往固化之路",voiceUrl:"http://l.na.ppsrc.com/BsQhjKftNI7HrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"03-20-周末小议丨竞争不充分的领域里，才有英雄",voiceUrl:"http://l.na.ppsrc.com/66OIjzeGkmvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					 {bookName:"03-18-日课148丨匹配者和奋斗者",voiceUrl:"http://l.na.ppsrc.com/k7iSlJbfzBvHrOczY7uuTg",url:"",info:"欢迎大家继续学习第二季",time:""},				
+				    { bookName:"03-17-日课147丨天才和疯子的一线之隔",voiceUrl:"http://l.na.ppsrc.com/KreN6GZ7yJnHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"03-16-日课146｜美国失去创造力了吗？",voiceUrl:"http://l.na.ppsrc.com/LwiPrTK2Q5bHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"0315特别放送",voiceUrl:"http://l.na.ppsrc.com/tSo_3W1eMPHHrOczY7uuTg	",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"03-15-日课145｜谁想要意外发现",voiceUrl:"http://l.na.ppsrc.com/DYRMyQrX_kzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"03-14-日课144｜老大美国说",voiceUrl:"http://l.na.ppsrc.com/a4TDwq-cE3XHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"03-13-周末小议｜量子纠缠",voiceUrl:"http://l.na.ppsrc.com/1KAR1b0R7qHHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"03-11-日课143｜有关糖的犯罪推理",voiceUrl:"http://l.na.ppsrc.com/tK8arCAyDCTHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					 { bookName:"03-10-三种浪漫体制",voiceUrl:"http://l.na.ppsrc.com/XmcVwqDZN0XHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"j03-09-日课141｜《俭省》解读4窈窕淑女效应",voiceUrl:"http://l.na.ppsrc.com/pg6IsJSqUHjHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					 {bookName:"03-08-日课140｜爱心和理性",voiceUrl:"http://l.na.ppsrc.com/HG4xlysY89HHrOczY7uuTg",url:"",info:"欢迎大家继续学习第二季",time:""},				
+				    { bookName:"03-07-日课139｜《俭省》解读3 ：从“刻意练习”到“功夫在诗外”",voiceUrl:"http://l.na.ppsrc.com/R8KGI993UHHHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					 { bookName:"03-04-日课138  《俭省》解读2 ： “有差别的”人类劳动",voiceUrl:"http://l.na.ppsrc.com/cw12RBUFcezHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					 {bookName:"03-03-日课137  哪有那么容易颠覆",voiceUrl:"http://l.na.ppsrc.com/Db6DHihGGrDHrOczY7uuTg",url:"",info:"欢迎大家继续学习第二季",time:""},				
+				    { bookName:"03-02-日课136｜《俭省》解读1： 追逐者的绝境",voiceUrl:"http://l.na.ppsrc.com/1NPeQre-irHHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					 { bookName:"03-01-日课135｜中产家长焦虑症",voiceUrl:"http://l.na.ppsrc.com/5udOqIQGy9LHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					
+				]
+			},
+		    created:function () {
+                    $('#wwgjyrk').show();
+		    	    var dt = localStorage.getItem("wanweigang");
+		    	    console.log(dt)
+			        var data = new Date();
+			        var regeditTime = data.getTime();
+			      
+			        if(dt==null){
+			        	localStorage.setItem("wanweigang",regeditTime);
+			        }
+			        else{
+			        	var nowT= data.getTime();
+			        	pastT=nowT-dt;
+			        	console.log(pastT)
+			        	//432000000毫秒=5天
+			        	if(pastT<=432000000){
+			//           alert(pastT);
+			//           alert("没过期");
+			        	}else{
+			            this.isShowCodePopUp=true;
+					             
+			        	}
+			        }
+		    },
+			methods:{
+				   allArticle:function(url){
+				   	  var articleDetail="articleDetail.html"+"?"+"articleUrl="+url
+				   	  window.location.assign(articleDetail); 
+				      console.log(articleDetail)
+				   },
+				   playBook:function(voiceUrl){
+				   	  this.isShowPlay=true;
+				   	  this.voiceUrl=voiceUrl;
+				   },
+				   activate:function(){
+				   	var dd=this.theKey;
+					for(i=0;i<dd.length;i++){
+				   
+				    	if(dd.charAt(0)=='y'&&dd.charAt(1)=='x'&&dd.charAt(dd.length-1)=="f"){
+				//  		alert("22")
+				          localStorage.setItem("wanweigang","9904624053231");
+				           this.isShowCodePopUp=false;
+				    		
+				    	}
+				    }
+				   }
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="../css/vip.css" />
+<script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../js/vue.min.js" ></script>
+
+<title>每天听本书</title>
+
+
+
+</head>
+
+<body>
+	<div id="everyDayLesson" class="xiaoshuo splitByMonth">
+		<div class="top-head"><a href="#" onClick="javascript :history.back(-1);"><span></span></a>晓说</div>
+		<div class="title"><span></span>按季查询</div>
+		<ul>
+			<li><a href="xiaoshuo1.html">2017</a></li>
+			<li><a href="xiaoshuo2.html">第四季</a></li>
+			<li><a href="xiaoshuo3.html">第三季</a></li>
+			<li><a href="xiaoshuo4.html">第二季</a></li>
+			<li><a href="xiaoshuo5.html">第一季</a></li>
+
+			
+			<div class="clearfix"></div>
+		</ul>
+		<div class="book-detail" v-for="book in books">
+			<div class="book-image"><img src="../img/xiaoshuo.jpg"></div>
+			<div class="book-right-content"> 
+				<div class="book-title">{{book.bookName}}</div>
+				<div class="book-info">{{book.info}}</div>
+				<div class="book-time" @click="allArticle(book.url)">查看全文<span>{{book.time}}</span></div>
+				<div class="play-button" @click="playBook(book.voiceUrl)">播放</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="bottom-content" v-if="isShowPlay">
+			<audio autoplay="autoplay" controls="controls"loop="loop" preload="auto"
+            v-bind:src="voiceUrl">
+
+            </audio>
+
+		</div>
+	
+		
+		
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var everyDayLessonApp = new Vue({
+			el:'#everyDayLesson',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				books:[
+				    { bookName:"140606.“旗”妙物语世界杯一 欧罗巴余晖",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/96/90/3344584442.aac",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"140613.“旗”妙物语世界杯二 黑非洲殖民泪",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/67/20/994053502.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"140620.世界杯之西班牙折戟拉美",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/84/61/3098412554.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"140627.世界杯之拉美自相残杀",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/25/40/284473937.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"140704.世界杯之夜闯巴西贫民窟",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/40/76/3490202500.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"140711.世界杯之挥霍天赋的巴西人",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/75/21/2096631580.aac",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"140718.金砖老二 巴西",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/43/24/974322828.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"140725.南明悲歌 (一)",voiceUrl:"http://ip.h5.re03.sycdn.kuwo.cn/resource/a2/99/28/1321170612.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"140801.南明悲歌 (二) 爱国与卖国",voiceUrl:"http://ip.h5.re03.sycdn.kuwo.cn/resource/a2/41/18/2570291967.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"140808.南明悲歌(三) 江南大屠杀",voiceUrl:"http://ip.h5.re03.sycdn.kuwo.cn/resource/a2/65/75/2877634427.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"140815.南明悲歌(四)名臣与名妓",voiceUrl:"http://ip.h5.re03.sycdn.kuwo.cn/resource/a1/0/95/645934809.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"140822.南明悲歌(五) 真假太子案",voiceUrl:"http://ip.h5.re03.sycdn.kuwo.cn/resource/a2/21/76/2653006360.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"140829.南明悲歌(六) 南明大结局",voiceUrl:"http://ip.h5.rf03.sycdn.kuwo.cn/resource/a3/45/7/3742834318.aac",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"140905.澳大利亚的种族歧视",voiceUrl:"http://ip.h5.rf03.sycdn.kuwo.cn/resource/a2/23/5/3995516287.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"140912.澳大利亚之澳新军团",voiceUrl:"http://ip.h5.rf03.sycdn.kuwo.cn/resource/a1/91/49/363705194.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"140919.一战1913（上",voiceUrl:"http://ip.h5.rf03.sycdn.kuwo.cn/resource/a3/22/55/2625744869.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"140926.一战1913（下） 敢爱故事之文艺时代",voiceUrl:"http://ip.h5.rf03.sycdn.kuwo.cn/resource/a1/90/90/2154744639.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"141003.梦露之死与共济会（上）",voiceUrl:"http://ip.h5.rf03.sycdn.kuwo.cn/resource/a2/82/39/1233658100.aac",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"141010.梦露之死与共济会（中）",voiceUrl:"http://ip.h5.rf03.sycdn.kuwo.cn/resource/a3/27/19/1054616778.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"141017.梦露之死与共济会（下）",voiceUrl:"http://ip.h5.rf03.sycdn.kuwo.cn/resource/a1/44/33/1175713466.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"141024.致白衣飘飘的年代",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/62/60/373503974.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"141031.台湾观感(上)",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/43/18/2626654229.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"141107.台湾观感（下）",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/74/40/191268714.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"141114.台湾历史真相(一)台湾民主国",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/59/87/1542421143.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"141121.台湾历史真相（二）日据时代",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/66/37/2122400096.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"141128.台湾历史真相（三）二二八惨案",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/34/68/2219929428.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					 { bookName:"141205.台湾历史真相（四） 揭秘蒋介石日记",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/70/0/3604618923.aac",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"141212.两岸秘史（一）北平无战事？",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/37/84/1622392444.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"141219.两岸秘史（二）土鳖恨海龟",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/68/95/732900161.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"141226.两岸秘史（三） 国共风投创业记",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/55/72/985303043.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150102.两岸秘史（四） 蒋介石权术秘籍",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/49/99/3476410570.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150106.离骚1949（上）",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/86/89/352009384.aac",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"150116.离骚1949（下）",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/79/16/4165656094.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150123.台湾启示录（上）台湾无法独立原因",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/97/94/3106558169.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150130.台湾启示录(下)绿营威逼马英九出柜",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/61/31/3322179651.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150206.朝花夕拾(一) 十年浩劫中的晓松全家[极速]",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/42/89/800339424.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150212.朝花夕拾（中）文革时期何以笙箫默",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/64/75/1095731472.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150227.朝花夕拾（下）心酸的“公园野合”",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/23/93/2788864833.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"150306.妄人列传马可·波罗（上）从未来中国",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/52/73/39521686.aac",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					 { bookName:"150312.妄人列传马可·波罗（下）",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/79/27/195778857.aac",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"150320.乱世佳人（上） 国民女神们终嫁何人",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/64/19/2822646550.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150402.乱世佳人（下）作女、腐女、励志女",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/87/31/2142598414.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150409.扒一扒美利坚1—假乳房与橘子（上）",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/52/58/341300043.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150416.扒一扒美利坚2—假乳房与橘子（下）",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/36/16/154105805.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150520.扒一扒美利坚3——赌城风云",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/15/41/2674439869.aac",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"150424.胜利下的阴影（1）解密七百里战俘营",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/90/32/3628666251.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150501.胜利下的阴影2高帅富征服德意日女性",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/20/75/3611304503.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150507.胜利下的阴影（3）失贞与叛国",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/57/53/4236346799.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150514.胜利下的阴影（4） 中国没有大和族",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/66/95/462043870.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150529.胜利阴影下5——无辜与灭族",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/67/87/1631548600.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150605.胜利阴影下6——犹太复国血泪史",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/10/21/3325447250.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"150612.扒一扒美利坚4——枪与堕胎药",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/8/44/2369017973.aac",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{ bookName:"150619.扒一扒美利坚5——第一死刑州",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/93/7/1535016680.aac",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"150626.扒一扒美利坚6——拿破仑与小龙虾",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/25/22/2939959646.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150703.扒一扒美利坚7—南部顽固对抗同性恋",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/38/41/1255765882.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150710.禅让与革命1——华夏第一帝国",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/64/90/2276826986.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150717.禅让与革命2——罗马皇帝传位同性恋人",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/79/81/248607432.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150724.禅让与革命3——纯种汉人去哪儿了",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/46/52/3394904600.aac",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"150731.扒一扒美利坚8——成人的童话乐园",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/60/66/4166929410.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150809.扒一扒美利坚9——种族歧视蝴蝶效应",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/60/89/1724981382.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150828.扒一扒美利坚10——西雅图特产垄断寡头",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/15/99/1310499939.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					
+				]
+			},
+		  
+			methods:{
+				   allArticle:function(url){
+				   	  var articleDetail="articleDetail.html"+"?"+"articleUrl="+url
+				   	  window.location.assign(articleDetail); 
+				      console.log(articleDetail)
+				   },
+				   playBook:function(voiceUrl){
+				   	  this.isShowPlay=true;
+				   	  this.voiceUrl=voiceUrl;
+				   }
+				   
+				 
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+

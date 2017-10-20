@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="../css/vip.css" />
+<script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../js/vue.min.js" ></script>
+
+<title>每天听本书</title>
+
+
+
+</head>
+
+<body>
+	<div id="everyDayLesson" class="xiaoshuo splitByMonth">
+		<div class="top-head"><a href="#" onClick="javascript :history.back(-1);"><span></span></a>晓说</div>
+		<div class="title"><span></span>按季查询</div>
+		<ul>
+			<li><a href="xiaoshuo1.html">2017</a></li>
+			<li><a href="xiaoshuo2.html">第四季</a></li>
+			<li><a href="xiaoshuo3.html">第三季</a></li>
+			<li><a href="xiaoshuo4.html">第二季</a></li>
+			<li><a href="xiaoshuo5.html">第一季</a></li>
+
+			
+			<div class="clearfix"></div>
+		</ul>
+		<div class="book-detail" v-for="book in books">
+			<div class="book-image"><img src="../img/xiaoshuo.jpg"></div>
+			<div class="book-right-content"> 
+				<div class="book-title">{{book.bookName}}</div>
+				<div class="book-info">{{book.info}}</div>
+				<div class="book-time" @click="allArticle(book.url)">查看全文<span>{{book.time}}</span></div>
+				<div class="play-button" @click="playBook(book.voiceUrl)">播放</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="bottom-content" v-if="isShowPlay">
+			<audio autoplay="autoplay" controls="controls"loop="loop" preload="auto"
+            v-bind:src="voiceUrl">
+
+            </audio>
+
+		</div>
+	
+		
+		
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var everyDayLessonApp = new Vue({
+			el:'#everyDayLesson',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				books:[
+					{bookName:"20170120晓松奇谈之世界很小 后会有期",voiceUrl:"http://l.na.ppsrc.com/KlTpbFVR2aLHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20170113晓松奇谈之匠心依旧",voiceUrl:"http://l.na.ppsrc.com/n40WuGtg-3THrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20170106晓松奇谈之战士不死",voiceUrl:"http://l.na.ppsrc.com/Ga8qCS5rjJzHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"20161230晓松奇谈之不说再见​",voiceUrl:"http://l.na.ppsrc.com/tAiYZxV3XG_HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20161223晓松奇谈之CIA暗杀笔记",voiceUrl:"http://l.na.ppsrc.com/iNARFhMaxanHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20161216晓松奇谈之卡斯特罗与切·格瓦拉",voiceUrl:"http://l.na.ppsrc.com/XcpsE4rUJdDHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20161209晓松奇谈之卡斯特罗正传",voiceUrl:"http://l.na.ppsrc.com/rO3TYgLa8cXHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20161202晓松奇谈之揭秘日本道文化 看摇滚巨匠沙漠之旅",voiceUrl:"http://l.na.ppsrc.com/Z6gQ6wpkg3bHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20161125晓松奇谈之匠心之旅：迷失京都",voiceUrl:"http://l.na.ppsrc.com/XvM7D9OwdwvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"20161118晓松奇谈之匠心之旅：日本料理PK中华美食",voiceUrl:"http://l.na.ppsrc.com/uO1gGBkXbzjHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"20161111晓松奇谈之反思美国大选",voiceUrl:"http://l.na.ppsrc.com/jcY2EOOwI4zHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20161028晓松奇谈之高晓松探访星战圣地天行者庄园 下",voiceUrl:"http://l.na.ppsrc.com/2ePtwbYfBUbHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20161021晓松奇谈之高晓松谈文青的一周 同台飚戏金城武",voiceUrl:"http://l.na.ppsrc.com/jB3Z2jQlFZrHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20161014晓松奇谈之波罗的海的奋斗",voiceUrl:"http://l.na.ppsrc.com/OjENWWCrr8bHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				{ bookName:"20161007晓松奇谈之国际纵队 永别了武器",voiceUrl:"http://l.na.ppsrc.com/DLbUGbyfh5HHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"20160930晓松奇谈之揭秘国际纵队 海明威竟陷身性绯闻",voiceUrl:"http://l.na.ppsrc.com/vLOGcQplP87HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20160923晓松奇谈之校园民谣熟悉的恋恋风尘",voiceUrl:"http://l.na.ppsrc.com/N-fdQqWT--HHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20160916晓松奇谈之扒一扒加拿大4： 白宫陷落",voiceUrl:"http://l.na.ppsrc.com/TDt0TBJy0VHHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20160909晓松奇谈之扒一扒加拿大3： 文艺之都蒙特利尔",voiceUrl:"http://l.na.ppsrc.com/i9ycttJfxWrHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20160902晓松奇谈之扒一扒加拿大2：原住民酋长",voiceUrl:"http://l.na.ppsrc.com/JzhIFkQTuWvHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"20160819晓松奇谈之扒一扒加拿大1：来了，温哥华​",voiceUrl:"http://l.na.ppsrc.com/IJiDLjJ2_0DHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20160812晓松奇谈之扒一扒北欧：当童话照进现实",voiceUrl:"http://l.na.ppsrc.com/Eu78euGVxRTHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20160805晓松奇谈之扒一扒北欧：瑞典女王",voiceUrl:"http://l.na.ppsrc.com/azaTkEPEI-jHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20160729晓松奇谈之扒一扒北欧：安徒生与维京海盗",voiceUrl:"http://l.na.ppsrc.com/frqMhIh3_5THrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20160722晓松奇谈之睡在上铺的兄弟：海子",voiceUrl:"http://l.na.ppsrc.com/DFuN87hoW77HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20160715晓松奇谈之一个国家的诞生：伪装者",voiceUrl:"http://l.na.ppsrc.com/eXErz91jgsvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"20160708晓松奇谈之口述历史：北戴河秘闻",voiceUrl:"http://l.na.ppsrc.com/y0fHFeA-9K7HrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"20160701晓松奇谈之口述历史：周恩来解放后密会蒋经国",voiceUrl:"http://l.na.ppsrc.com/AjRu8gvD_IrHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20160624晓松奇谈之口述历史之对谈张治中女儿",voiceUrl:"http://l.na.ppsrc.com/e6G35m-b4cLHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20160617晓松奇谈之好莱坞精英：犹太大亨vs中国大款",voiceUrl:"http://l.na.ppsrc.com/egK_KhLSqhHHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20160610晓松奇谈之好莱坞精英：恶棍天使",voiceUrl:"http://l.na.ppsrc.com/OGaVgUsvRTzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"20160603晓松奇谈之唱片时代与美国大选",voiceUrl:"http://l.na.ppsrc.com/-lO6JhQkF_LHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+				    { bookName:"160527.谁越过了三八线",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/94/42/3263117579.aac",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"160520 晓松奇谈之不成熟小建议之三个首次回应的问题",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/19/41/3893720367.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"160513 晓松奇谈之谁是白眼狼",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/81/70/3632384278.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"160506 扒一扒韩国：大长今",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/92/61/417657031.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"160429.扒一扒韩国：请回答2016",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/54/16/962184714.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"160422.扒一扒：来自星星的你",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/2/64/1193746897.aac",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"160415.扒一扒韩国：继承者们",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/76/35/2569002625.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"160408.扒一扒韩国：太阳的后裔",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/24/65/3708216429.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"晓松奇谈之1860年代：太平天国与南北战争(下)",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/78/41/1359857195.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"160325.晓松奇谈之1860年代：太平天国与南北战争",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/53/9/3291652355.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"160318.张学良：西安事变（下）",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/41/85/3480401181.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"160310.张学良：西安事变（上",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/9/80/3468244739.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"160304.张学良（二）九一八真相",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/9/80/3468244739.aac",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"160225.2016颁奖季：格莱美与奥斯卡",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/88/88/1001670637.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"160219.张学良（一）风流少帅",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/28/74/234034647.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"160212.2016说说心里话",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/42/7/2697167420.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"160205.清明上河图（下）",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/16/4/1033508309.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"160129.清明上河图（上）",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/75/70/1546495690.aac",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"160122.大众记忆（下）：摇滚老炮儿",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/22/85/3887024546.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"160115.大众记忆（上）：北京老炮儿",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/77/99/3140624219.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"160108.扒一扒以色列下：共产主义实现之后",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/14/95/567883252.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"160101.扒一扒以色列上：盗墓笔记",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/93/88/1486498511.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"151225.1860年代：维多利亚的秘密",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/74/90/2824517216.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"151218.1860年代：欧洲残酷扩张",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/78/83/2115808375.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"151211.1860年代：高潮来临",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/68/18/2204658984.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"151204.代号大富翁",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/7/26/3599724897.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					 { bookName:"151127.美国生活成本报告",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/9/76/3419746345.aac",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"151120.ISIS肆虐与中国出兵护侨",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/68/16/1599242785.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"151113.北洋拾遗（上）：天价赔款收回之迷",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/67/13/838118094.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"151106.张勋和他的北洋(4)复辟正确打开方式",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/56/39/1028201510.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"151030.张勋和他的北洋（3）被忽悠的冤大头",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/86/24/2247445818.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"151023.女王的骑士团",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/76/78/484079476.aac",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"151016.马与美国大选",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/40/23/2395687576.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"151009.TPP和欧洲难民危机",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/5/56/2885063878.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"151002.张勋和他的北洋2：权力的游戏",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a1/50/86/2094677422.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150925.张勋和他的北洋1：草莽时代的小咖秀",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/88/6/1442300756.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150918.大电影·看历史2：阿甘正传（下）",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/81/13/3363629833.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"150911.大电影看历史：阿甘正传（上）",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a2/97/37/1575047056.aac",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"150904.两个抓紧时间看的问题",voiceUrl:"http://ip.h5.rh03.sycdn.kuwo.cn/resource/a3/34/13/834668885.aac",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					
+				]
+			},
+		  
+			methods:{
+				   allArticle:function(url){
+				   	  var articleDetail="articleDetail.html"+"?"+"articleUrl="+url
+				   	  window.location.assign(articleDetail); 
+				      console.log(articleDetail)
+				   },
+				   playBook:function(voiceUrl){
+				   	  this.isShowPlay=true;
+				   	  this.voiceUrl=voiceUrl;
+				   }
+				   
+				 
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+
