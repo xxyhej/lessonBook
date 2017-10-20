@@ -127,7 +127,7 @@ div ,a,span,body{font-family: "Microsoft YaHei"}
 .lesson-book-index .play-first-content  .all-content{float: right;font-size: 14px;color: #cccccc;font-weight: 100;}
 .lesson-book-index .special-content{margin-top: 4px;background: #ffffff;}
 .lesson-book-index .special-content .title{height: 40px;line-height: 40px;}
-.lesson-book-index .special-content ul li{float: left;    width: 27%;margin-left: 13px;}
+.lesson-book-index .special-content ul li{float: left;    width: 27%;margin-left: 13px;    min-height: 124px;}
 .lesson-book-index .special-content ul li img{width: 100%;}
 .lesson-book-index .special-content  ul{padding: 10px;}  
 .lesson-book-index  .title{font-size: 15px;font-weight: 600;color: #666666;margin: 10px;}

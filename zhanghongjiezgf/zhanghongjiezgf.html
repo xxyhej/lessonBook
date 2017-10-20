@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+<META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
+<META HTTP-EQUIV="expires" CONTENT="0">
+
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="../css/vip.css" />
+<script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../js/vue.min.js" ></script>
+
+<title>每天听本书</title>
+
+
+
+</head>
+
+<body>
+	<div id="everyDayLesson" class="splitByMonth" style="display: none;">
+		<div class="top-head"><a href="#" onClick="javascript :history.back(-1);"><span></span></a>张宏杰曾国藩</div>
+		
+		<div class="book-detail" v-for="book in books">
+			<div class="book-image"><img src="../img/book-default.jpg"></div>
+			<div class="book-right-content"> 
+				<div class="book-title">{{book.bookName}}</div>
+				<div class="book-info">{{book.info}}</div>
+				<div class="book-time" @click="allArticle(book.url)">查看全文<span>{{book.time}}</span></div>
+				<div class="play-button" @click="playBook(book.voiceUrl)">播放</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="bottom-content" v-if="isShowPlay">
+			<audio autoplay="autoplay" controls="controls"loop="loop" preload="auto"
+            v-bind:src="voiceUrl">
+
+            </audio>
+
+		</div>
+	
+		
+		<div   v-if="isShowCodePopUp" style="position: fixed;width: 100%;height: 100%;background: #000; filter:alpha(Opacity=50); opacity: 0.5;top: 0;"></div>
+		<div  class="popup" v-if="isShowCodePopUp"> 
+		   <div class="content"> 
+		   	<div class="head">糟糕了！好像过期了</div>
+		   	<div class="info"> 
+		   		<div class="the-info-content">分享到朋友圈获得38个赞联系微信18358597258获取！！</div>
+		   		
+		   		<input v-model="theKey" />
+		   		<div class="confirm-button" @click="activate()">输入激活码</div>
+		   	</div>  
+		   </div>
+		</div>	
+		
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var everyDayLessonApp = new Vue({
+			el:'#everyDayLesson',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				books:[
+				 { bookName:"学习曾国藩“锦囊”一：我们为什么要学习曾国藩？普通人也能像他一样脱胎换骨吗？",voiceUrl:"http://l.na.ppsrc.com/li1q2WChEMPHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"学习曾国藩“锦囊”二：逢考必挂，曾国藩的“鲤鱼跳龙门”靠什么闯关成功？",voiceUrl:"http://l.na.ppsrc.com/U6Mcpmg-cQ3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"学习曾国藩“锦囊”三：浮躁冲动，虚伪又好色的曾国藩，如何改掉恶习？",voiceUrl:"http://l.na.ppsrc.com/OUk0Ixq35nLHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"学习曾国藩“锦囊”四：从曾国藩的戒烟、写日记中，我们能学到怎样的修身立志之法？",voiceUrl:"http://l.na.ppsrc.com/SqjV-VHkuh7HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"学习曾国藩“锦囊”五：在反复中磨砺，曾国藩的修身立志之法，给我们哪些启示？",voiceUrl:"http://l.na.ppsrc.com/c60BZsYDmyLHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"学习曾国藩“锦囊”六：十年拿下副部级，什么样的为官之道创造了如此奇迹？",voiceUrl:"http://l.na.ppsrc.com/mAxx08ZDCKrHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"学习曾国藩“锦囊”七：给曾国藩算算账，清廉京官儿的痛苦生活",voiceUrl:"http://l.na.ppsrc.com/tonfbbaL7m3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"学习曾国藩“锦囊”八：“八交九不交”，曾国藩如何营造自己的朋友圈和人脉圈？",voiceUrl:"http://l.na.ppsrc.com/h5T_wN2Fu7zHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"学习曾国藩“锦囊”九：官升副部长，死磕最高领导咸丰帝，曾国藩意欲何为？",voiceUrl:"http://l.na.ppsrc.com/wxaoYTdBVC3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"学习曾国藩“锦囊”十：跟咸丰死磕，跟权要死磕，跟天下官员死磕，曾国藩这是怎么了？",voiceUrl:"http://l.na.ppsrc.com/UZ5b5Oa9ierHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"学习曾国藩“锦囊”十一：守孝逢贼乱，治乱遭大辱，曾国藩如何在逆境中奋进？",voiceUrl:"http://l.na.ppsrc.com/K2pZlbfQ4HjHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"学习曾国藩“锦囊”十二：打脱牙和血吞，知耻而后勇，曾国藩练湘军之法有哪些启示？",voiceUrl:"http://l.na.ppsrc.com/jQhTlP8fMZvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"学习曾国藩“锦囊”十三：以绿营兵为鉴，颠覆创新，曾国藩如何打造湘军战斗力",voiceUrl:"http://l.na.ppsrc.com/RcOKNd2pFYvHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"学习曾国藩“锦囊”十四：组织创新，塑造军魂，曾国藩如何打造湘军的价值观？",voiceUrl:"http://l.na.ppsrc.com/nA09phGNwLrHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"学习曾国藩“锦囊”十六：勤俭节约，清贫寒酸，曾国藩到底有没有灰色收入？",voiceUrl:"http://l.na.ppsrc.com/8j0VpqY8ojbHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"学习曾国藩“锦囊”十七：一面清规戒律，一面收礼送礼，曾国藩到底是清是浊？",voiceUrl:"http://l.na.ppsrc.com/KqAZURGQYEbHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"学习曾国藩“锦囊”十八：良田万亩，曾氏十堂，曾国藩家是如何变成世家大族的？",voiceUrl:"http://l.na.ppsrc.com/ksUJPo6qO13HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"学习曾国藩“锦囊”十九：曾国荃在南京到底发了多少财？",voiceUrl:"http://l.na.ppsrc.com/YHRsEA0YnL_HrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"学习曾国藩“锦囊”二十四：病痛缠身，透支早衰，曾国藩留给我们哪些精神遗产？",voiceUrl:"http://l.na.ppsrc.com/bjfaxQYWIObHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					
+				]
+			},
+		    created:function () {
+                $('#everyDayLesson').show();
+		    },
+			methods:{
+				   allArticle:function(url){
+				   	  var articleDetail="articleDetail.html"+"?"+"articleUrl="+url
+				   	  window.location.assign(articleDetail); 
+				      console.log(articleDetail)
+				   },
+				   playBook:function(voiceUrl){
+				   	  this.isShowPlay=true;
+				   	  this.voiceUrl=voiceUrl;
+				   },
+				   activate:function(){
+				   	var dd=this.theKey;
+					for(i=0;i<dd.length;i++){
+				   
+				    	if(dd.charAt(0)=='y'&&dd.charAt(1)=='x'&&dd.charAt(dd.length-1)=="f"){
+				//  		alert("22")
+				          localStorage.setItem("Mtime","9904624053231");
+				           this.isShowCodePopUp=false;
+				    		
+				    	}
+				    }
+				   }
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+
