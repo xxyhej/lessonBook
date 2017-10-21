@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+<META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
+<META HTTP-EQUIV="expires" CONTENT="0">
+
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="../css/vip.css" />
+<script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../js/vue.min.js" ></script>
+
+<title>陈默-做不焦虑家长</title>
+
+
+
+</head>
+
+<body>
+	<div id="everyDayLesson" class="splitByMonth" style="display: none;">
+		<div class="top-head"><a href="#" onClick="javascript :history.back(-1);"><span></span></a>陈默-做不焦虑家长</div>
+		
+		<div class="book-detail" v-for="book in books">
+			<div class="book-image"><img src="../img/zlchengmo.jpg"></div>
+			<div class="book-right-content"> 
+				<div class="book-title">{{book.bookName}}</div>
+				<div class="book-info">{{book.info}}</div>
+				<!--<div class="book-time" @click="allArticle(book.url)">查看全文<span>{{book.time}}</span></div>-->
+				<div class="play-button" @click="playBook(book.voiceUrl)">播放</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="bottom-content" v-if="isShowPlay">
+			<audio autoplay="autoplay" controls="controls"loop="loop" preload="auto"
+            v-bind:src="voiceUrl">
+
+            </audio>
+
+		</div>
+	
+		
+		<div   v-if="isShowCodePopUp" style="position: fixed;width: 100%;height: 100%;background: #000; filter:alpha(Opacity=50); opacity: 0.5;top: 0;"></div>
+		<div  class="popup" v-if="isShowCodePopUp"> 
+		   <div class="content"> 
+		   	<div class="head">糟糕了！好像过期了</div>
+		   	<div class="info"> 
+		   		<div class="the-info-content">分享到朋友圈获得38个赞联系微信18358597258获取！！</div>
+		   		
+		   		<input v-model="theKey" />
+		   		<div class="confirm-button" @click="activate()">输入激活码</div>
+		   	</div>  
+		   </div>
+		</div>	
+		
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var everyDayLessonApp = new Vue({
+			el:'#everyDayLesson',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				books:[
+				 { bookName:"第1课【开篇导言】建立正确的家庭教育观（上）",voiceUrl:"http://l.na.ppsrc.com/bRXvmEvn2c_HrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"002.第2课【开篇导言】建立正确的家庭教育观（下）",voiceUrl:"http://l.na.ppsrc.com/GTpRIpG1A0DHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"003.第3课【学习动力】 如何激发孩子学习动力",voiceUrl:"http://l.na.ppsrc.com/UeGi_ybrNJrHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"004.第4课【学习动力】孩子为什么不要学习",voiceUrl:"http://l.na.ppsrc.com/PPHtsS41J6_HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"005.第5课【学习动力】如何合理的奖惩孩子",voiceUrl:"http://l.na.ppsrc.com/kZuCn24ZDJPHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"006.第6课【学习动力】 孩子学习缺乏自信该如何鼓励",voiceUrl:"http://l.na.ppsrc.com/tFe98GqmzMTHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"007.第7课【学习动力】 如何平衡玩和学习？孩子沉迷游戏怎么办？",voiceUrl:"http://l.na.ppsrc.com/B2paxh7FPf3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"008.第8课【学习动力】为什么成绩优异的学生输不起",voiceUrl:"http://l.na.ppsrc.com/R4squvM9MaPHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"009.第9课【学习动力】孩子不愿意举手发言，不愿意演讲怎么办",voiceUrl:"http://l.na.ppsrc.com/aDVYBzKy9RLHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"010.第10课【学习动力】如何激发孩子的潜能",voiceUrl:"http://l.na.ppsrc.com/sfjqjRw67qrHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"011.第11课【学习习惯和方法】如何制定学习上的规则",voiceUrl:"http://l.na.ppsrc.com/Y_Z8fiTexPPHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"012.第12课【学习习惯和方法】孩子写作业磨磨蹭蹭怎么办",voiceUrl:"http://l.na.ppsrc.com/P7vA48X2XpLHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"013.第13课【学习习惯和方法】孩子作业不会做怎么办",voiceUrl:"http://l.na.ppsrc.com/GB_CNbhS0BXHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"014.第14课【学习习惯和方法】为什么学校各种教学安排都要把家长拖进来",voiceUrl:"http://l.na.ppsrc.com/ayaAOtXjXqvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"015.第15课【学习习惯和方法】孩子上课不专心怎么办？如何鉴别多动症？",voiceUrl:"http://l.na.ppsrc.com/uzk7LDBS7fXHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"016.第16课【学习习惯和方法】 孩子粗心大意怎么办？为何有的题一错再错？",voiceUrl:"http://l.na.ppsrc.com/EDqXfzdLSu3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"017.第17课【学习习惯和方法】 如何培养孩子的阅读习惯？学校命题作文写不出怎么办？",voiceUrl:"http://l.na.ppsrc.com/uzk7LDBS7fXHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"018.第18课【学习习惯和方法】孩子学习缺乏计划性怎么办 寒暑假该制定时间表吗",voiceUrl:"http://l.na.ppsrc.com/B6ijntYHwabHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"019.第19课【学习习惯和方法】孩子学习偏科怎么办？不喜欢某一门学科的老师怎么办？",voiceUrl:"http://l.na.ppsrc.com/81chv_gurejHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"020.第20课【学习习惯和方法】 孩子抗拒死记硬背怎么办？孩子只会死记硬背怎么办？",voiceUrl:"http://l.na.ppsrc.com/NPNP1M5StzHHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"021.第21课【学习习惯和方法】祖父母能管好孩子学习吗？",voiceUrl:"http://l.na.ppsrc.com/ZszP1hPBev_HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"022.第22课【学习能力】什么是原发性学习障碍？后天如何指导？",voiceUrl:"http://l.na.ppsrc.com/OugQ7d4TA47HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"023.第23课【学习能力】 为什么孩子读不好书 1 - 单亲家庭",voiceUrl:"http://l.na.ppsrc.com/_lYccuwBuzLHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"024.第24课【学习能力】为什么孩子读不好书 2 - 重组家庭",voiceUrl:"http://l.na.ppsrc.com/OHzs3hcHDfLHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"025.第25课【学习能力】为什么孩子读不好书 3 - 四合一关系",voiceUrl:"http://l.na.ppsrc.com/_esI8bHAHo_HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"026.第26课【学习能力】为什么孩子读不好书 4 - 夫妻关系",voiceUrl:"http://l.na.ppsrc.com/DKfjZsPN6mrHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"027.第27课【学习能力】 为什么孩子读不好书 5 - 创伤性经历",voiceUrl:"http://l.na.ppsrc.com/mzxbOtrUBNLHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"028.第28课【学习能力】孩子一到考试就失常怎么办",voiceUrl:"http://l.na.ppsrc.com/cjYsVtbxF8DHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"029.第29课【情绪、行为和沟通问题】 孩子脾气暴躁、精神萎靡等情绪和行为问题怎么办？",voiceUrl:"http://l.na.ppsrc.com/y-zv_WmSzYrHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"030.第30课【情绪、行为和沟通问题】孩子常常嫉妒比他优秀的同学怎么办",voiceUrl:"http://l.na.ppsrc.com/JftgV1fUaMzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"031.第31课【情绪、行为和沟通问题】孩子缺乏自我要求、抗挫力弱怎么办？",voiceUrl:"http://l.na.ppsrc.com/VhXaAMrOig7HrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"032.第32课【情绪、行为和沟通问题】孩子社交困难怎么办？如何建立良好的同伴关系？",voiceUrl:"http://l.na.ppsrc.com/W7V7xa9AwkjHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"033.第33课【情绪、行为和沟通问题】 老二来了，老大成绩直线下降怎么办",voiceUrl:"http://l.na.ppsrc.com/P36X5QxoEdPHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"034.第34课【情绪、行为和沟通问题】 如何建立良好的亲子关系？",voiceUrl:"http://l.na.ppsrc.com/vj5KMJUfUkbHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"035.第35课【情绪、行为和沟通问题】如何跟孩子有效沟通",voiceUrl:"http://l.na.ppsrc.com/scR9-VgkYz3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"036.第36课【情绪、行为和沟通问题】 幼升小，该如何择校？零基础孩子怎样适应小学生活？",voiceUrl:"http://l.na.ppsrc.com/QASCWz-PhMLHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"037.第37课【情绪、行为和沟通问题】奥数到底要不要学？小升初到底看不看证书？_mixdown",voiceUrl:"http://l.na.ppsrc.com/6W23Hq6c-xvHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"038.第38课【情绪、行为和沟通问题】什么样的孩子适合出国留学？",voiceUrl:"http://l.na.ppsrc.com/-YhusKOGCzTHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"039.第39课【情绪、行为和沟通问题】 如何看待眼下所谓的精英教育？",voiceUrl:"http://l.na.ppsrc.com/d4p1mgAnWbXHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"040.第40课【情绪、行为和沟通问题】 家庭教育和学校理念矛盾怎么办？",voiceUrl:"http://l.na.ppsrc.com/M-SPw1qcJPnHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"如何激发孩子学习动力",voiceUrl:"http://l.na.ppsrc.com/DItpXteZI-rHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"作业磨蹭怎么办家长要不要陪读",voiceUrl:"http://l.na.ppsrc.com/sY-EsWkl0R3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					
+				]
+			},
+		    created:function () {
+                $('#everyDayLesson').show();
+		    },
+			methods:{
+				   allArticle:function(url){
+				   	  var articleDetail="articleDetail.html"+"?"+"articleUrl="+url
+				   	  window.location.assign(articleDetail); 
+				      console.log(articleDetail)
+				   },
+				   playBook:function(voiceUrl){
+				   	  this.isShowPlay=true;
+				   	  this.voiceUrl=voiceUrl;
+				   },
+				   activate:function(){
+				   	var dd=this.theKey;
+					for(i=0;i<dd.length;i++){
+				   
+				    	if(dd.charAt(0)=='y'&&dd.charAt(1)=='x'&&dd.charAt(dd.length-1)=="f"){
+				//  		alert("22")
+				          localStorage.setItem("Mtime","9904624053231");
+				           this.isShowCodePopUp=false;
+				    		
+				    	}
+				    }
+				   }
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+
