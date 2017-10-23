@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<META HTTP-EQUIV="pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+<META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
+<META HTTP-EQUIV="expires" CONTENT="0">
+
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="../css/vip.css" />
+<script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../js/vue.min.js" ></script>
+
+<title>蒋勋-细说红楼梦</title>
+
+
+
+</head>
+
+<body>
+	<div id="everyDayLesson" class="splitByMonth" style="display: none;">
+		<div class="top-head"><a href="#" onClick="javascript :history.back(-1);"><span></span></a>蒋勋-细说红楼梦</div>
+		
+		<div class="book-detail" v-for="book in books">
+			<div class="book-image"><img src="../img/zljiangxunxshlm.jpg"></div>
+			<div class="book-right-content"> 
+				<div class="book-title">{{book.bookName}}</div>
+				<div class="book-info">{{book.info}}</div>
+				<!--<div class="book-time" @click="allArticle(book.url)">查看全文<span>{{book.time}}</span></div>-->
+				<div class="play-button" @click="playBook(book.voiceUrl)">播放</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="bottom-content" v-if="isShowPlay">
+			<audio autoplay="autoplay" controls="controls"loop="loop" preload="auto"
+            v-bind:src="voiceUrl">
+
+            </audio>
+
+		</div>
+	
+		
+		<div   v-if="isShowCodePopUp" style="position: fixed;width: 100%;height: 100%;background: #000; filter:alpha(Opacity=50); opacity: 0.5;top: 0;"></div>
+		<div  class="popup" v-if="isShowCodePopUp"> 
+		   <div class="content"> 
+		   	<div class="head">糟糕了！好像过期了</div>
+		   	<div class="info"> 
+		   		<div class="the-info-content">分享到朋友圈获得38个赞联系微信18358597258获取！！</div>
+		   		
+		   		<input v-model="theKey" />
+		   		<div class="confirm-button" @click="activate()">输入激活码</div>
+		   	</div>  
+		   </div>
+		</div>	
+		
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var everyDayLessonApp = new Vue({
+			el:'#everyDayLesson',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				books:[
+				 { bookName:"蒋勋细说红楼梦第1集",voiceUrl:"http://fdfs.xmcdn.com/group1/M00/2C/A1/wKgDrVLYiWPzxJXNAjYnpFBitYk300.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第2集",voiceUrl:"http://fdfs.xmcdn.com/group1/M00/2C/AB/wKgDrVLYoIOQpprRAh0h7dlJVWE447.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第3集",voiceUrl:"http://fdfs.xmcdn.com/group2/M02/51/0E/wKgDsFLYq9mSFcW5AkfF2BSO7tQ519.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第4集",voiceUrl:"http://fdfs.xmcdn.com/group2/M00/51/21/wKgDr1LYlPHgRW2hAkb1ryXChBY173.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第5集",voiceUrl:"http://fdfs.xmcdn.com/group1/M01/2C/A5/wKgDrlLYtT6zrmgMAjgT42jd6-I424.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第6集",voiceUrl:"http://fdfs.xmcdn.com/group3/M00/C2/F4/wKgDslLYs_DgZVS5AkEs3iTEf2U430.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第7集",voiceUrl:"http://fdfs.xmcdn.com/group2/M01/51/2E/wKgDr1LYt0Pgij3WAkAivnb3mME883.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第8集",voiceUrl:"http://fdfs.xmcdn.com/group3/M02/C2/F6/wKgDslLYtiSBe821AkcAS1UQoG0659.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第9集",voiceUrl:"http://fdfs.xmcdn.com/group3/M04/C2/F7/wKgDslLYuQSw9jd5AkNYyWb7aOA310.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第10集",voiceUrl:"http://fdfs.xmcdn.com/group3/M00/C2/F6/wKgDslLYuD6SGB-OAjjZcPn4t6o772.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第11集",voiceUrl:"http://fdfs.xmcdn.com/group2/M02/51/31/wKgDr1LYunSiUTGmAkgzPDCgmh4929.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第12集",voiceUrl:"http://fdfs.xmcdn.com/group1/M01/2C/A7/wKgDrlLYuZzhG_gqAkfwS00R19Y412.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"蒋勋细说红楼梦第13集",voiceUrl:"http://fdfs.xmcdn.com/group3/M03/C3/57/wKgDsVLYvCGDziU2Aj92gDJ3gF0926.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第14集",voiceUrl:"http://fdfs.xmcdn.com/group1/M00/2C/A8/wKgDrlLYu1STOGXZAjwugKoFi18560.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第15集",voiceUrl:"http://fdfs.xmcdn.com/group1/M00/2C/B8/wKgDrVLYvWnQVOpAAi4741GSzH4443.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第16集",voiceUrl:"http://fdfs.xmcdn.com/group3/M01/C3/58/wKgDsVLYvP3h98cZAkJIaWdkBXk191.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第17集",voiceUrl:"http://fdfs.xmcdn.com/group3/M02/C3/59/wKgDsVLYvruyB_jJAjTKiSjdf-E243.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第18集",voiceUrl:"http://fdfs.xmcdn.com/group2/M01/51/34/wKgDr1LYvhPS8Uv6Ajcrgy69huQ372.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第19集",voiceUrl:"http://fdfs.xmcdn.com/group3/M00/C2/FA/wKgDslLYv6qBOR38Ajoz12jGxl0513.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第20集",voiceUrl:"http://fdfs.xmcdn.com/group1/M00/2C/AC/wKgDrlLYwKChAY-KAkNi6VGBanU823.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第21集",voiceUrl:"http://fdfs.xmcdn.com/group1/M00/2C/AC/wKgDrlLYwg-gIsrGAis5mlmCO_4515.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第22集",voiceUrl:"http://fdfs.xmcdn.com/group1/M00/2C/AD/wKgDrlLYwvOiQ7TlAjpYn9NTLbI974.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"蒋勋细说红楼梦第23集",voiceUrl:"http://fdfs.xmcdn.com/group1/M01/2C/AD/wKgDrlLYw4PBxldIAjjmgA0Mez0420.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第24集",voiceUrl:"http://fdfs.xmcdn.com/group3/M04/C2/FC/wKgDslLYxGuxCXxNAgbsNmKks2A500.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第25集",voiceUrl:"http://fdfs.xmcdn.com/group3/M01/C3/5A/wKgDsVLYwZngsTMwAh-HzrOWH94007.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第26集",voiceUrl:"http://fdfs.xmcdn.com/group2/M02/51/1E/wKgDsFLYxYfgzpDXAimd2D-srvA492.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第27集",voiceUrl:"http://fdfs.xmcdn.com/group1/M01/2C/AF/wKgDrlLYxjvxDfMkAkCS6eDFOxQ940.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第28集",voiceUrl:"http://fdfs.xmcdn.com/group3/M01/C3/5D/wKgDsVLYxxKQASUIAgza6YHieQE748.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第29集",voiceUrl:"http://fdfs.xmcdn.com/group1/M01/2C/BE/wKgDrVLYx4SgL6IzAjJ25199Ds0015.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第30集",voiceUrl:"http://fdfs.xmcdn.com/group2/M02/51/1D/wKgDsFLYxNjD7sV9AhvlwgzQ64s024.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第31集",voiceUrl:"http://fdfs.xmcdn.com/group2/M02/51/21/wKgDsFLYyVuABaoFAjCmaVsBln0653.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第32集",voiceUrl:"http://fdfs.xmcdn.com/group1/M00/2C/B1/wKgDrlLYyeHz8WYyAfajPEykE54857.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第33集",voiceUrl:"http://fdfs.xmcdn.com/group4/M02/51/52/wKgDtFNglfzwc7anAiygt02OX38174.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第34集",voiceUrl:"http://fdfs.xmcdn.com/group4/M01/4D/E5/wKgDs1NglgWTmLmDAhEKuP6x54U842.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第35集",voiceUrl:"http://fdfs.xmcdn.com/group1/M01/2C/C0/wKgDrVLYzErz4uONAjzJmh88a1w233.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"蒋勋细说红楼梦第36集",voiceUrl:"http://fdfs.xmcdn.com/group1/M00/2C/C1/wKgDrVLYzODjgdvRAjZf-JUW-Mg038.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第37集",voiceUrl:"http://fdfs.xmcdn.com/group1/M01/2C/B4/wKgDrlLYzU2A479MAj_aF-dYm3k549.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第38集",voiceUrl:"http://fdfs.xmcdn.com/group3/M03/C3/02/wKgDslLYzgGyLraDAkVeVmmR3fs175.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第39集",voiceUrl:"http://fdfs.xmcdn.com/group2/M01/51/3E/wKgDr1LYzuegQAuwAkDtMcy4ll8203.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第40集",voiceUrl:"http://fdfs.xmcdn.com/group1/M00/2C/BE/wKgDrVLYyHnRQj4KAkTI8kGGx0g685.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第41集",voiceUrl:"http://fdfs.xmcdn.com/group2/M00/51/24/wKgDsFLY0B-iNNp5Ajs9r-OmJTs943.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第42集",voiceUrl:"http://fdfs.xmcdn.com/group1/M01/2C/C4/wKgDrVLY0OnCjhYsAkPKQXvnqdo106.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{ bookName:"蒋勋细说红楼梦第43集",voiceUrl:"http://fdfs.xmcdn.com/group2/M02/51/25/wKgDsFLY0RiwaNLYAj5hUB0iHoo651.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第44集",voiceUrl:"http://fdfs.xmcdn.com/group3/M01/C3/05/wKgDslLY0fPgCfoiAkOhzu5T83E591.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第45集",voiceUrl:"",url:"http://fdfs.xmcdn.com/group1/M01/2C/C5/wKgDrVLY0nzAitIxAix2Al7Ztgc089.mp3",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第46集",voiceUrl:"http://fdfs.xmcdn.com/group1/M01/2C/B8/wKgDrlLY0wmiePV4AjjAIgfWyD0355.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第47集",voiceUrl:"http://fdfs.xmcdn.com/group1/M00/2C/B9/wKgDrlLY0_fAPWYCAi43zv76nUM335.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第48集",voiceUrl:"http://fdfs.xmcdn.com/group2/M00/51/27/wKgDsFLY1Knglrx1Ajc0Nl7RcVc116.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第49集",voiceUrl:"http://fdfs.xmcdn.com/group3/M03/C3/66/wKgDsVLY1XHySURzAje7uQ69RhA878.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第50集",voiceUrl:"http://fdfs.xmcdn.com/group1/M00/2C/C3/wKgDrVLYz07DsJ-zAiZrEkuj8lc669.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第51集",voiceUrl:"http://fdfs.xmcdn.com/group2/M00/51/42/wKgDr1LY1gLijT9-Ai-JwwEX0rk858.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第52集",voiceUrl:"http://fdfs.xmcdn.com/group3/M07/22/49/wKgDsVMLO72TnxwYAhlsinIzsjw196.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第53集",voiceUrl:"http://fdfs.xmcdn.com/group3/M06/22/B6/wKgDsVMLZavDGtuUAkfZcG8pznY106.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第54集",voiceUrl:"http://fdfs.xmcdn.com/group3/M07/22/41/wKgDslMLWQjBMCaQAgqKvtQEa6E853.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"蒋勋细说红楼梦第55集",voiceUrl:"http://fdfs.xmcdn.com/group3/M08/22/D4/wKgDsVMLeJrBfhCHAkNwdd5LlTQ907.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第56集",voiceUrl:"http://fdfs.xmcdn.com/group3/M07/22/7F/wKgDslMLdAHh21kwAkeUDUZGMEw997.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第57集",voiceUrl:"http://fdfs.xmcdn.com/group3/M08/22/DC/wKgDsVMLgnmhYL9CAkFTPCuG8Kg510.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第58集",voiceUrl:"http://fdfs.xmcdn.com/group3/M06/22/E0/wKgDsVMLh5aD8RhfAjVMDQzvCnM793.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第59集",voiceUrl:"http://fdfs.xmcdn.com/group3/M07/22/94/wKgDslMLjG_inyYSAjetB7cOBdg895.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第60集",voiceUrl:"http://fdfs.xmcdn.com/group3/M05/22/99/wKgDslMLmhPjmT8zAg9femj-Juc355.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第61集",voiceUrl:"http://fdfs.xmcdn.com/group3/M08/22/96/wKgDslMLkOzzqWcaAjoA8m9Z3BM114.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第62集",voiceUrl:"http://fdfs.xmcdn.com/group3/M08/22/98/wKgDslMLlZKgP1unAiQHpGYIQh0694.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第63集",voiceUrl:"http://fdfs.xmcdn.com/group3/M07/22/9B/wKgDslMLnxbwomq3Aie6lJ2hkhs197.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第64集",voiceUrl:"http://fdfs.xmcdn.com/group3/M08/22/9C/wKgDslMLoySB2I37AgYUtFyGGgc607.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"蒋勋细说红楼梦第65集",voiceUrl:"http://fdfs.xmcdn.com/group3/M06/22/EB/wKgDsVMLqCKRHc1tAkdktIjYCA4049.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第66集",voiceUrl:"http://fdfs.xmcdn.com/group3/M07/22/9D/wKgDslMLrNPxnKEmAitzPBsRc9c336.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第67集",voiceUrl:"http://fdfs.xmcdn.com/group3/M08/22/9E/wKgDslMLsZrCu4srAjCyF1Ynw0g289.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第68集",voiceUrl:"http://fdfs.xmcdn.com/group3/M06/22/EE/wKgDsVMLtuCgMTKEAkGmgH_1Q9o565.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第69集",voiceUrl:"http://fdfs.xmcdn.com/group3/M05/22/EF/wKgDsVMLu7mR-TAoAjpcYNmIhc4367.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第70集",voiceUrl:"http://fdfs.xmcdn.com/group3/M07/22/A1/wKgDslMLwKLDXrbjAkAY8kQ011o536.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第71集",voiceUrl:"http://fdfs.xmcdn.com/group3/M08/22/A2/wKgDslMLxUDTL4vhAke4yRV6BQg598.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第72集",voiceUrl:"http://fdfs.xmcdn.com/group3/M06/22/F3/wKgDsVMLygyzinH1AjgB7ZTmE7E896.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第73集",voiceUrl:"http://fdfs.xmcdn.com/group3/M07/22/A6/wKgDslMLzqix-h_AAh3sYMKG4UI326.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第74集",voiceUrl:"http://fdfs.xmcdn.com/group3/M08/22/A8/wKgDslML05eQ-oFoAkbZ7Q6TdYw101.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第75集",voiceUrl:"http://fdfs.xmcdn.com/group3/M08/22/F9/wKgDsVML2M3SL86AAkOJw5OCrhY747.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第76集",voiceUrl:"http://fdfs.xmcdn.com/group3/M07/22/AE/wKgDslML3bWQPdGmAkalr_50fvs704.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第77集",voiceUrl:"http://fdfs.xmcdn.com/group3/M06/22/FE/wKgDsVML4jHDSXKDAj42gNsxMIc565.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				    { bookName:"蒋勋细说红楼梦第78集",voiceUrl:"http://fdfs.xmcdn.com/group3/M08/24/62/wKgDsVMMh2bSUiqWAkSegOVPOdM921.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第79集",voiceUrl:"http://fdfs.xmcdn.com/group3/M08/22/89/wKgDslMLfZKC4440AkWBcAi2i8g154.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第80集",voiceUrl:"http://fdfs.xmcdn.com/group3/M07/22/38/wKgDsVMLNLHDMplqAkauqamUwjg771.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第81集",voiceUrl:"http://fdfs.xmcdn.com/group3/M01/99/44/wKgDsVKufmiRwLTwAj0vpOwQ-8k518.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第82集",voiceUrl:"http://fdfs.xmcdn.com/group3/M02/98/DB/wKgDslKufpyymk2PAjQKazy7Gbk324.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第83集",voiceUrl:"http://fdfs.xmcdn.com/group3/M04/99/46/wKgDsVKuf9LwNFhgAkRgdeVw7BQ785.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第84集",voiceUrl:"http://fdfs.xmcdn.com/group3/M00/99/46/wKgDsVKugD2AlYKFAkaFB4NAncM358.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第85集",voiceUrl:"http://fdfs.xmcdn.com/group3/M03/99/47/wKgDsVKugQbzWvw1AjTInzWO0HU149.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第86集",voiceUrl:"http://fdfs.xmcdn.com/group3/M02/99/49/wKgDsVKuglqS34NlAkVo8tYko24787.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第87集",voiceUrl:"http://fdfs.xmcdn.com/group3/M04/99/49/wKgDsVKugrORZ5yAAkfLj0oEOJc120.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第88集",voiceUrl:"http://fdfs.xmcdn.com/group3/M02/99/4B/wKgDsVKug_iCApjSAjspRj-36W4053.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第89集",voiceUrl:"http://fdfs.xmcdn.com/group3/M02/98/E3/wKgDslKuhKWzIZ0PAkfeVvP4KMs326.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第90集",voiceUrl:"http://fdfs.xmcdn.com/group3/M04/99/43/wKgDsVKufSrT8lo1AkIFMRWiYkE138.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第91集",voiceUrl:"http://fdfs.xmcdn.com/group3/M04/98/E5/wKgDslKuhpWz4rEpAkak3otye-c865.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第92集",voiceUrl:"http://fdfs.xmcdn.com/group3/M02/98/E6/wKgDslKuhwazVmSvAbnCvgVYu8A661.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第93集",voiceUrl:"http://fdfs.xmcdn.com/group3/M01/98/E7/wKgDslKuh32ScBvzAkWuVvlBLac952.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第94集",voiceUrl:"http://fdfs.xmcdn.com/group3/M03/98/E8/wKgDslKuiGOw5A6MAkIegAedqhs334.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第95集",voiceUrl:"http://fdfs.xmcdn.com/group3/M00/99/53/wKgDsVKuiSDRJL6kAj5oS6CfHc0565.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第96集",voiceUrl:"http://fdfs.xmcdn.com/group3/M03/98/EA/wKgDslKuidazmufgAj0lBwPNTlU510.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第97集",voiceUrl:"http://fdfs.xmcdn.com/group3/M00/98/EB/wKgDslKuinjjqyuXAj_jEhMRMvE868.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第98集",voiceUrl:"http://fdfs.xmcdn.com/group3/M04/99/55/wKgDsVKuiunym6C3Ajtver_cC34317.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第99集",voiceUrl:"http://fdfs.xmcdn.com/group3/M01/98/ED/wKgDslKui9TSN4fJAkIgIrpLw-I527.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第100集",voiceUrl:"http://fdfs.xmcdn.com/group3/M00/99/57/wKgDsVKujDTTojB7AkRvpJW7vCU110.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第101集",voiceUrl:"http://fdfs.xmcdn.com/group3/M00/98/EE/wKgDslKujOihF4qpAkDxRnH6UTw071.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第102集",voiceUrl:"http://fdfs.xmcdn.com/group3/M02/98/EF/wKgDslKujdWT0JLfAkS1W2WObHg620.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第103集",voiceUrl:"http://fdfs.xmcdn.com/group3/M04/99/59/wKgDsVKujlDSiNGIAkDKF1ECar4471.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第104集",voiceUrl:"http://fdfs.xmcdn.com/group3/M01/99/5A/wKgDsVKujv_AzyMnAkHmLAF1jhM950.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第105集",voiceUrl:"http://fdfs.xmcdn.com/group3/M02/98/F3/wKgDslKuj_nADXajAjtaQVN8Yoo087.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第106集",voiceUrl:"http://fdfs.xmcdn.com/group3/M00/98/F4/wKgDslKukKHAS87dAj5B7S4EDTc019.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第107集",voiceUrl:"http://fdfs.xmcdn.com/group3/M02/99/5D/wKgDsVKukTWiEzrQAkBUihKo3wU876.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第108集",voiceUrl:"http://fdfs.xmcdn.com/group3/M03/98/F5/wKgDslKukhii-TvjAkSyF7FoyxQ773.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第109集",voiceUrl:"http://fdfs.xmcdn.com/group3/M04/99/5F/wKgDsVKuks_QsONfAj2DuWAAluo921.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第110集",voiceUrl:"http://fdfs.xmcdn.com/group3/M01/98/F7/wKgDslKuk3LivofoAkBQdTPm5w4864.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第111集",voiceUrl:"http://fdfs.xmcdn.com/group3/M03/98/F8/wKgDslKulBqAVxXmAjt3pJkoXJs205.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第112集",voiceUrl:"http://fdfs.xmcdn.com/group3/M00/98/F8/wKgDslKulI_z6sGOAkRe04mWeJk505.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第113集",voiceUrl:"http://fdfs.xmcdn.com/group3/M02/99/62/wKgDsVKulWqisBckAi2jPG3J35I138.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第114集",voiceUrl:"http://fdfs.xmcdn.com/group3/M03/99/63/wKgDsVKuldnjJFJ8AjFmgDCI1ks000.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第115集",voiceUrl:"http://fdfs.xmcdn.com/group3/M01/99/64/wKgDsVKulo-R5U2cAjvoS6f13vQ382.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第116集",voiceUrl:"http://fdfs.xmcdn.com/group3/M02/98/FB/wKgDslKulv_DH3abAc1QdZBVX6A485.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第117集",voiceUrl:"http://fdfs.xmcdn.com/group3/M01/99/65/wKgDsVKul7_R6fQeAkOjEsSxj5M167.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第118集",voiceUrl:"http://fdfs.xmcdn.com/group3/M04/99/66/wKgDsVKumHjQvavTAjWCvuE5VQ4738.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第119集",voiceUrl:"http://fdfs.xmcdn.com/group3/M03/98/FD/wKgDslKumR-CdN5zAkQGqe0nNho299.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第120集",voiceUrl:"http://fdfs.xmcdn.com/group3/M02/99/4D/wKgDsVKuhbaj9jUiAfYDPMnGXIE171.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第121集",voiceUrl:"http://fdfs.xmcdn.com/group3/M01/99/7F/wKgDsVKupsDx_MUvAj9cYCY4Zfg052.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第122集",voiceUrl:"http://fdfs.xmcdn.com/group3/M00/99/80/wKgDsVKupx-yfcUYAizPzg5iScc947.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第123集",voiceUrl:"http://fdfs.xmcdn.com/group3/M02/99/81/wKgDsVKup8WQyI68AjsSa5_NcbA026.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第124集",voiceUrl:"http://fdfs.xmcdn.com/group3/M01/99/1A/wKgDslKuqGjQyNitAiyZHKh4V7I435.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第125集",voiceUrl:"http://fdfs.xmcdn.com/group3/M00/99/1B/wKgDslKuqRWxFTiRAkfuqbK7bF4962.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第126集",voiceUrl:"http://fdfs.xmcdn.com/group3/M04/99/84/wKgDsVKuqfmBzFlgAkfctPt0DNM950.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第127集",voiceUrl:"http://fdfs.xmcdn.com/group3/M03/99/1D/wKgDslKuqnbznFymAkbQ8inXYdg091.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第128集",voiceUrl:"http://fdfs.xmcdn.com/group3/M02/99/1D/wKgDslKuq0ui5BCrAjKdhXWrZao395.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第129集",voiceUrl:"http://fdfs.xmcdn.com/group3/M01/99/20/wKgDslKuq_TTKoKPAjh4SyBovio281.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第130集",voiceUrl:"http://fdfs.xmcdn.com/group3/M02/99/14/wKgDslKupgiwNMJ7AjSW0x_3jB8328.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第131集",voiceUrl:"http://fdfs.xmcdn.com/group3/M01/C2/E3/wKgDsVLXszCAW7-cAjUves5rpIc980.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第132集",voiceUrl:"http://fdfs.xmcdn.com/group3/M00/C2/87/wKgDslLXuP7xwDu2Ajn8DRFbrMQ539.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第133集",voiceUrl:"http://fdfs.xmcdn.com/group3/M00/C2/EB/wKgDsVLXvm6Da2vzAkHH-O6NZnQ471.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第134集",voiceUrl:"http://fdfs.xmcdn.com/group2/M02/50/B1/wKgDsFLXw_7zv_3bAjmI8n2OAOA628.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第135集",voiceUrl:"http://fdfs.xmcdn.com/group2/M01/50/D1/wKgDr1LXyYPwneprAjwBmsCPSSU768.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第136集",voiceUrl:"http://fdfs.xmcdn.com/group1/M00/2C/5A/wKgDrVLXzx6gm5YpAkBk3hmt6XI001.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第137集",voiceUrl:"http://fdfs.xmcdn.com/group3/M04/C2/9E/wKgDslLX1PKyhdt5Aj0RcNgEq3U897.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第138集",voiceUrl:"http://fdfs.xmcdn.com/group3/M00/C3/00/wKgDsVLX2oWhWESmAkGctA_TTZY517.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第139集",voiceUrl:"http://fdfs.xmcdn.com/group3/M04/C3/05/wKgDsVLX3-7QsF3MAkSgIq8bXKY058.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第140集",voiceUrl:"http://fdfs.xmcdn.com/group3/M04/C3/09/wKgDsVLX5cmiIB0CAkF5mj9mgNU440.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第141集",voiceUrl:"http://fdfs.xmcdn.com/group3/M01/C3/0D/wKgDsVLX6zySzUDKAkge0wBUUmg493.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第142集",voiceUrl:"http://fdfs.xmcdn.com/group1/M01/2C/73/wKgDrVLX8X7yhRO3AkPAdU3I-6k164.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第143集",voiceUrl:"http://fdfs.xmcdn.com/group2/M00/50/F7/wKgDr1LX9v2CVkcEAkJxw58gUK4116.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第144集",voiceUrl:"http://fdfs.xmcdn.com/group3/M02/C2/BC/wKgDslLX_OTzWpg1Aj01W4yTwQ8173.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第145集",voiceUrl:"http://fdfs.xmcdn.com/group2/M02/50/E2/wKgDsFLYAnmALbyEAjmJw_Jx4UA902.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第146集",voiceUrl:"http://fdfs.xmcdn.com/group1/M00/2C/77/wKgDrlLYCB2yakj5AkVbEqIP150893.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第147集",voiceUrl:"http://fdfs.xmcdn.com/group1/M00/2C/7A/wKgDrlLYDX7wPMq-AiuYyUlJep8979.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第148集",voiceUrl:"http://fdfs.xmcdn.com/group1/M00/2C/7D/wKgDrlLYE1biCaZxAkO2qQFPBzU016.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第149集",voiceUrl:"http://fdfs.xmcdn.com/group3/M00/C2/CB/wKgDslLYGLPxsLTVAio8NlGi7uk099.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第150集",voiceUrl:"http://fdfs.xmcdn.com/group2/M00/50/EB/wKgDsFLYHhrR-mn0Aj5RcPg63Jg797.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第151集",voiceUrl:"http://fdfs.xmcdn.com/group3/M03/C3/2B/wKgDsVLYI8eAM__2AjY3JxLSbgs234.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第152集",voiceUrl:"http://fdfs.xmcdn.com/group1/M00/2C/81/wKgDrlLYKWiC112UAkHKa5joJyc775.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第153集",voiceUrl:"http://fdfs.xmcdn.com/group3/M02/C3/2D/wKgDsVLYLrCTraReAjUfJxkFqL0149.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第154集",voiceUrl:"http://fdfs.xmcdn.com/group3/M04/C2/D0/wKgDslLYNHrTtyotAj9pcFPYHaU789.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第155集",voiceUrl:"http://fdfs.xmcdn.com/group3/M02/C3/2F/wKgDsVLYOdPA__gtAjs8DWVBF7g415.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第156集",voiceUrl:"http://fdfs.xmcdn.com/group3/M03/C3/2F/wKgDsVLYP1KAh9V6AjX57aA-eUY754.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第157集",voiceUrl:"http://fdfs.xmcdn.com/group3/M01/C2/D1/wKgDslLYRP7jGI9AAjKKvvt31Pg684.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第158集",voiceUrl:"http://fdfs.xmcdn.com/group2/M00/50/F1/wKgDsFLYSkPgsaYAAjHAS2BdgYA203.mp3",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"蒋勋细说红楼梦第159集",voiceUrl:"http://fdfs.xmcdn.com/group1/M00/2C/94/wKgDrVLYT8Sh_VuwAje8iid2VCw634.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"蒋勋细说红楼梦第160集",voiceUrl:"http://fdfs.xmcdn.com/group1/M01/2C/94/wKgDrVLYVYPR9TFzAjo-_QcbKLc921.mp3",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+				]
+			},
+		    created:function () {
+                $('#everyDayLesson').show();
+		    },
+			methods:{
+				   allArticle:function(url){
+				   	  var articleDetail="articleDetail.html"+"?"+"articleUrl="+url
+				   	  window.location.assign(articleDetail); 
+				      console.log(articleDetail)
+				   },
+				   playBook:function(voiceUrl){
+				   	  this.isShowPlay=true;
+				   	  this.voiceUrl=voiceUrl;
+				   },
+				   activate:function(){
+				   	var dd=this.theKey;
+					for(i=0;i<dd.length;i++){
+				   
+				    	if(dd.charAt(0)=='y'&&dd.charAt(1)=='x'&&dd.charAt(dd.length-1)=="f"){
+				//  		alert("22")
+				          localStorage.setItem("Mtime","9904624053231");
+				           this.isShowCodePopUp=false;
+				    		
+				    	}
+				    }
+				   }
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+
