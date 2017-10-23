@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+
+<meta name="misapplication-tap-highlight" content="no"/>
+
+<meta name="HandheldFriendly" content="true"/>
+
+<meta name="MobileOptimized" content="320"/>
+<link rel="stylesheet" type="text/css" href="../../css/vip.css" />
+<script type="text/javascript" src="../../js/jquery-3.1.1.min.js" ></script>
+<script type="text/javascript" src="../../js/vue.min.js" ></script>
+
+<title>每天听本书</title>
+
+
+
+</head>
+
+<body>
+	<div id="wwgjyrk" class="splitByMonth" style="display: none;">
+		<div class="top-head"><a href="#" onClick="javascript :history.back(-1);"><span></span></a>万维钢精英日课</div>
+		<div class="title"><span></span>按月查询</div>
+		<ul>
+			
+			<li><a href="wwgjyrk8.html">8月</a></li>
+			<li><a href="wwgjyrk7.html">7月</a></li>
+			<li><a href="wwgjyrk6.html">6月</a></li>
+			<li><a href="wwgjyrk5.html">5月</a></li>
+			<li><a href="wwgjyrk4.html">4月</a></li>
+			<li><a href="wwgjyrk3.html">3月</a></li>
+			<li><a href="wwgjyrk2.html">2月</a></li>
+			<li><a href="wwgjyrk1.html">1月</a></li>
+			<li><a href="wwgjyrk1612.html" style="color: #FF4500;">12月</a></li>
+			
+			<div class="clearfix"></div>
+		</ul>
+		<div class="book-detail" v-for="book in books">
+			<div class="book-image"><img src="../../img/book-default.jpg"></div>
+			<div class="book-right-content"> 
+				<div class="book-title">{{book.bookName}}</div>
+				<div class="book-info">{{book.info}}</div>
+				<div class="book-time" @click="allArticle(book.url)">查看全文<span>{{book.time}}</span></div>
+				<div class="play-button" v-if="book.voiceUrl!==''" @click="playBook(book.voiceUrl)">播放</div>
+				<div class="play-button" v-if="book.voiceUrl==''" >该课无音频</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="bottom-content" v-if="isShowPlay">
+			<audio autoplay="autoplay" controls="controls"loop="loop" preload="preload"
+            v-bind:src="voiceUrl">
+
+            </audio>
+
+		</div>
+	
+		
+		<div   v-if="isShowCodePopUp" style="position: fixed;width: 100%;height: 100%;background: #000; filter:alpha(Opacity=50); opacity: 0.5;top: 0;"></div>
+		<div  class="popup" v-if="isShowCodePopUp"> 
+		   <div class="content"> 
+		   	<div class="head">糟糕了！好像过期了</div>
+		   	<div class="info"> 
+		   		<div class="the-info-content">分享到朋友圈获得38个赞联系微信18358597258获取！！</div>
+		   		
+		   		<input v-model="theKey" />
+		   		<div class="confirm-button" @click="activate()">输入激活码</div>
+		   	</div>  
+		   </div>
+		</div>	
+		
+	</div>
+	
+	
+	
+	<script>
+		window.onload = function(){
+		var wwgjyrkApp = new Vue({
+			el:'#wwgjyrk',
+			data:{
+				isShowPlay:false,
+				isShowCodePopUp:false,
+				theKey:'',
+				voiceUrl:'',
+				books:[
+				    {bookName:"jy-12-01-日课076｜政治争论ABC (上)",voiceUrl:"http://l.na.ppsrc.com/9IVyc6PiVoPHrOczY7uuTg",url:"",info:"欢迎大家继续学习第二季",time:""},				
+				    { bookName:"jy-12-02-日课077｜信用卡行为经济学",voiceUrl:"http://l.na.ppsrc.com/z0FYGpPw3ZbHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"jy-12-03-日课078｜政治争论ABC(下)",voiceUrl:"http://l.na.ppsrc.com/w8Ne-8uS_v3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy-12-06-日课079｜数学家告诉你最好的时间管理",voiceUrl:"http://l.na.ppsrc.com/dgXZap6N0bXHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy-12-07-日课080｜决策左右命运，还是运气左右命运？",voiceUrl:"http://l.na.ppsrc.com/fHj1U1iOe-zHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy-12-08-日课081｜《成功与运气》解读1：运气动力学",voiceUrl:"http://l.na.ppsrc.com/gj9lbw9ROrjHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy-12-09-日课082｜Facebook不想让你知道的大数据算法",voiceUrl:"http://l.na.ppsrc.com/HcyIs0sQT8DHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"jy-12-10-日课083｜《成功与运气》解读2：胜者通吃",voiceUrl:"http://l.na.ppsrc.com/Elf73kPFqqLHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					 { bookName:"jy-12-13-日课084｜《成功与运气》解读3：信命不认命",voiceUrl:"http://l.na.ppsrc.com/8AolhlfUFgTHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"jy-12-14-日课085｜谁是复杂的现代人",voiceUrl:"http://l.na.ppsrc.com/Ykwz-Il7PxHHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					 {bookName:"jy-12-15-日课086｜《成功与运气》解读4：攀比动力学",voiceUrl:"http://l.na.ppsrc.com/T4GGbsIEQ0bHrOczY7uuTg",url:"",info:"欢迎大家继续学习第二季",time:""},				
+				    { bookName:"jy-12-16-日课087｜你会和谁结婚",voiceUrl:"http://l.na.ppsrc.com/Bh5SsYJmiaHHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"jy-12-17-日课088｜《成功与运气》解读5：富而好礼（完）",voiceUrl:"http://l.na.ppsrc.com/XgCPbzHVVjTHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy-12-20-日课089｜哪有什么“标准人”？",voiceUrl:"http://l.na.ppsrc.com/x7AM9kBnqGzHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy-12-21-日课090｜一个让人寝食难安的世界观",voiceUrl:"http://l.na.ppsrc.com/gKEOvu7B5ePHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy-12-22-日课091｜把人变成工业品的思想(上)",voiceUrl:"http://l.na.ppsrc.com/iQOCp8ZnzmHHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy-12-23-日课092｜把人变成工业品的思想(下)",voiceUrl:"http://l.na.ppsrc.com/1zKrK59zoNLHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"jy-12-24-日课093｜老王的体能和老张的灵感",voiceUrl:"http://l.na.ppsrc.com/Y-aMKcju5rTHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jjy-12-25-周末攻略｜什么样的留言会被精选？",voiceUrl:"http://l.na.ppsrc.com/GbpnWsNeliPHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy-12-27-日课094｜不规则人才",voiceUrl:"http://l.na.ppsrc.com/XURvF_gZB2fHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy-12-28-日课095｜优等生、奇人和猛人：斯坦福商学院都招什么人？",voiceUrl:"http://l.na.ppsrc.com/4vw0BFEydo3HrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy-12-29-日课096｜性格…到底是什么意思？jy-12-22-日课091｜把人变成工业品的思想(上)",voiceUrl:"http://l.na.ppsrc.com/wsLHQcAnHKnHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					{bookName:"jy-12-30-日课097｜每条路都是少有人走的路",voiceUrl:"http://l.na.ppsrc.com/ruOx8rMa_cHHrOczY7uuTg",url:"",info:"这个一本书啊啊啊",time:"12：00"},
+					{bookName:"jy-12-31-日课098｜做一只有态度的蜜蜂",voiceUrl:"http://l.na.ppsrc.com/OhBU6s9YFvLHrOczY7uuTg",url:"",info:"这家伙很懒暂时没有写相关说明",time:""},
+					
+				]
+			},
+		    created:function () {
+                    $('#wwgjyrk').show();
+		    	    var dt = localStorage.getItem("wanweigang");
+		    	    console.log(dt)
+			        var data = new Date();
+			        var regeditTime = data.getTime();
+			      
+			        if(dt==null){
+			        	localStorage.setItem("wanweigang",regeditTime);
+			        }
+			        else{
+			        	var nowT= data.getTime();
+			        	pastT=nowT-dt;
+			        	console.log(pastT)
+			        	//432000000毫秒=5天
+			        	if(pastT<=432000000){
+			//           alert(pastT);
+			//           alert("没过期");
+			        	}else{
+			            this.isShowCodePopUp=true;
+					             
+			        	}
+			        }
+		    },
+			methods:{
+				   allArticle:function(url){
+				   	  var articleDetail="articleDetail.html"+"?"+"articleUrl="+url
+				   	  window.location.assign(articleDetail); 
+				      console.log(articleDetail)
+				   },
+				   playBook:function(voiceUrl){
+				   	  this.isShowPlay=true;
+				   	  this.voiceUrl=voiceUrl;
+				   },
+				   activate:function(){
+				   	var dd=this.theKey;
+					for(i=0;i<dd.length;i++){
+				   
+				    	if(dd.charAt(0)=='y'&&dd.charAt(1)=='x'&&dd.charAt(dd.length-1)=="f"){
+				//  		alert("22")
+				          localStorage.setItem("wanweigang","9904624053231");
+				           this.isShowCodePopUp=false;
+				    		
+				    	}
+				    }
+				   }
+			}
+		});
+		}
+	</script>
+</body>
+
+</html>
+
